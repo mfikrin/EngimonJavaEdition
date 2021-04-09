@@ -4,8 +4,8 @@ import src.Entity.Engimon.Engimon;
 
 public class WaterEngimon extends Engimon{
 
-    public WaterEngimon(){
-
+    public WaterEngimon() {
+        super();
     }
 
     public WaterEngimon(String name){

@@ -2,8 +2,8 @@ package src.Entity.Engimon.Fire;
 
 public class Ashatee extends FireEngimon{
 
-    public Ashatee(){
-
+    public Ashatee() {
+        super();
     }
 
     public Ashatee(String name){

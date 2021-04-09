@@ -4,8 +4,8 @@ import src.Entity.Engimon.Engimon;
 
 public class GroundEngimon extends Engimon{
 
-    public GroundEngimon(){
-
+    public GroundEngimon() {
+        super();
     }
 
     public GroundEngimon(String name){

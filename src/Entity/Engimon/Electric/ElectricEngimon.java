@@ -4,7 +4,8 @@ import src.Entity.Engimon.Engimon;
 
 public class ElectricEngimon extends Engimon{
 
-    public ElectricEngimon(){
+    public ElectricEngimon() {
+        super();
     }
 
     public ElectricEngimon(String name) {

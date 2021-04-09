@@ -2,8 +2,8 @@ package src.Entity.Engimon.Ground;
 
 public class Ratatouille extends GroundEngimon {
 
-    public Ratatouille(){
-        
+    public Ratatouille() {
+        super();
     }
 
     public Ratatouille(String name) {

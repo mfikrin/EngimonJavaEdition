@@ -3,8 +3,8 @@ package src.Entity.Engimon.WaterIce;
 import src.Entity.Engimon.Engimon;
 
 public class WaterIceEngimon extends Engimon{
-    public WaterIceEngimon(){
-
+    public WaterIceEngimon() {
+        super();
     }
     public WaterIceEngimon(String name){
         super(name);

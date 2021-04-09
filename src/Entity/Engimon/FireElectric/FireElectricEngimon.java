@@ -3,8 +3,8 @@ package src.Entity.Engimon.FireElectric;
 import src.Entity.Engimon.Engimon;
 
 public class FireElectricEngimon extends Engimon{
-    public FireElectricEngimon(){
-
+    public FireElectricEngimon() {
+        super();
     }
     public FireElectricEngimon(String name){
         super(name);

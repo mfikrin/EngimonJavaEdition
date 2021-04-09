@@ -8,7 +8,7 @@ import src.Entity.Skill.Skill;
 public class Engimon implements Element{
 
     static final int ratio_exp = 100;
-    private String name = getClass().getSimpleName();
+    private String name;
     private int level = 1;
     private int experience = 0;
     private int cumulative_experience = 0;
@@ -21,7 +21,8 @@ public class Engimon implements Element{
         this.name = name;
     }
 
-    public Engimon() {
+    public Engimon(){
+        name = getClass().getSimpleName();
     }
 
     public String get_name(){ return name;}
