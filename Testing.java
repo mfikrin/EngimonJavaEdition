@@ -22,5 +22,8 @@ public class Testing {
         for(Engimon i : list){
             System.out.println(i.get_name());
         }
+
+        double rand = Math.random();
+        System.out.println(rand);
     }
 }
