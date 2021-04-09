@@ -7,11 +7,11 @@ import src.Entity.Engimon.Electric.*;
 import src.Entity.Engimon.Ice.*;
 
 public class EngimonGenerator {
-    public int rand(int min, int max){
+    public static int rand(int min, int max){
         double resdouble = (Math.random() * ((max-min) + 1)) + min;
         return (int) resdouble;
     }
-    public Engimon generate_fire(){
+    public static Engimon generate_fire(){
         int determine = rand(1,1);
         if (determine == 1){
             return new Ashatee();

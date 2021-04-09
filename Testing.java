@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import src.Entity.Engimon.Engimon;
+import src.Entity.Engimon.EngimonGenerator;
 import src.Entity.Engimon.Fire.Ashatee;
 import src.Entity.Engimon.Ground.Ratatouille;
 import src.Entity.Engimon.Water.Gurame;
@@ -25,5 +26,8 @@ public class Testing {
 
         double rand = Math.random();
         System.out.println(rand);
+
+        Engimon random = EngimonGenerator.generate_fire();
+        System.out.println(random.is_fire());
     }
 }
