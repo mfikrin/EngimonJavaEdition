@@ -3,14 +3,11 @@ package src.Entity.Engimon;
 import src.Entity.Engimon.Fire.*;
 import src.Entity.Engimon.Water.*;
 import src.Entity.Engimon.Ground.*;
+import src.Entity.Generator;
 import src.Entity.Engimon.Electric.*;
 import src.Entity.Engimon.Ice.*;
 
-public class EngimonGenerator {
-    public static int rand(int min, int max){
-        double resdouble = (Math.random() * ((max-min) + 1)) + min;
-        return (int) resdouble;
-    }
+public class EngimonGenerator extends Generator{
     public static Engimon generate_fire(){
         int determine = rand(1,5);
         if (determine == 1){
