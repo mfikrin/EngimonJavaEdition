@@ -3,15 +3,9 @@ package src.Entity.Skill;
 import src.Entity.Element;
 
 public class Skill implements Element{
-    private String name;
-    private int numerik_base_power;
-    private int mastery_level; //maks level 3
-
-    public Skill(String name, int numerik_base_power, int mastery_level){
-        this.name = name;
-        this.numerik_base_power = numerik_base_power;
-        this.mastery_level = mastery_level;
-    }
+    private String name = getClass().getSimpleName();
+    private int numerik_base_power = 100;
+    private int mastery_level = 1; //maks level 3
 
     public int get_nbpower(){return numerik_base_power;}
     public int get_mlevel(){return mastery_level;}

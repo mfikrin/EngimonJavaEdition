@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
-import src.Entity.Engimon.Ashatee;
 import src.Entity.Engimon.Engimon;
-import src.Entity.Engimon.Gurame;
+import src.Entity.Engimon.Fire.Ashatee;
+import src.Entity.Engimon.Water.Gurame;
 
 public class Testing {
     public static void main(String[] args) {

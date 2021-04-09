@@ -1,4 +1,6 @@
-package src.Entity.Engimon;
+package src.Entity.Engimon.Ground;
+
+import src.Entity.Engimon.Engimon;
 
 public class Ratatouille extends Engimon {
 

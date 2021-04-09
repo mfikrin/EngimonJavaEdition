@@ -1,12 +1,14 @@
-package src.Entity.Engimon;
+package src.Entity.Engimon.Water;
+
+import src.Entity.Engimon.Engimon;
 
 public class Gurame extends Engimon{
 
+    public Gurame() {
+    }
+    
     public Gurame(String name){
         super(name);
-    }
-
-    public Gurame() {
     }
 
     @Override

@@ -1,6 +1,12 @@
-package src.Entity.Engimon;
+package src.Entity.Engimon.Ice;
+
+import src.Entity.Engimon.Engimon;
 
 public class Kuulkahs extends Engimon{
+
+    public Kuulkahs(){
+        
+    }
 
     public Kuulkahs(String name){
         super(name);

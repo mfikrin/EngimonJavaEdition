@@ -1,12 +1,15 @@
-package src.Entity.Engimon;
+package src.Entity.Engimon.Fire;
+
+import src.Entity.Engimon.Engimon;
 
 public class Ashatee extends Engimon{
 
-    public Ashatee(String name){
-        super(name);
+    public Ashatee(){
+        
     }
 
-    public Ashatee() {
+    public Ashatee(String name){
+        super(name);
     }
 
     @Override

@@ -1,6 +1,12 @@
-package src.Entity.Engimon;
+package src.Entity.Engimon.Electric;
+
+import src.Entity.Engimon.Engimon;
 
 public class Peelen extends Engimon {
+
+    public Peelen(){
+        
+    }
 
     public Peelen(String name){
         super(name);

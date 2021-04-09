@@ -6,8 +6,8 @@ public class SkillItem {
     private Skill contained_skill;
     private int number;
 
-    public SkillItem(String name, int numerik_base_power, int mastery_level){
-        contained_skill = new Skill(name,numerik_base_power,mastery_level);
+    public SkillItem(Skill skill){
+        contained_skill = skill;
         number = 1;
     }
     public void incr_n(){
