@@ -7,11 +7,7 @@ public class WaterEngimon extends Engimon{
     public WaterEngimon() {
         super();
     }
-
-    public WaterEngimon(String name){
-        super(name);
-    }
-
+    
     @Override
     public boolean is_water() {
         // TODO Auto-generated method stub

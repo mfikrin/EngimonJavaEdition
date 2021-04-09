@@ -6,9 +6,7 @@ public class FireEngimon extends Engimon{
     public FireEngimon() {
         super();
     }
-    public FireEngimon(String name){
-        super(name);
-    }
+    
     @Override
     public boolean is_fire() {
         // TODO Auto-generated method stub

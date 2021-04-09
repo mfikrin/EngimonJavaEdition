@@ -8,10 +8,6 @@ public class GroundEngimon extends Engimon{
         super();
     }
 
-    public GroundEngimon(String name){
-        super(name);
-    }
-
     @Override
     public boolean is_ground() {
         // TODO Auto-generated method stub

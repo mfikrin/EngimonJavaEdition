@@ -4,7 +4,4 @@ public class Gambut extends GroundEngimon{
     public Gambut() {
         super();
     }
-    public Gambut(String name){
-        super(name);
-    }
 }

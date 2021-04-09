@@ -7,10 +7,6 @@ public class IceEngimon extends Engimon{
         super();
     }
 
-    public IceEngimon(String name){
-        super(name);
-    }
-
     @Override
     public boolean is_ice() {
         // TODO Auto-generated method stub

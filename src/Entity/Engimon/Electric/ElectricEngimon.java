@@ -8,10 +8,6 @@ public class ElectricEngimon extends Engimon{
         super();
     }
 
-    public ElectricEngimon(String name) {
-        super(name);
-    }
-
     @Override
     public boolean is_electric() {
         // TODO Auto-generated method stub

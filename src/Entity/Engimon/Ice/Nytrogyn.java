@@ -4,7 +4,4 @@ public class Nytrogyn extends IceEngimon{
     public Nytrogyn() {
         super();
     }
-    public Nytrogyn(String name){
-        super(name);
-    }
 }

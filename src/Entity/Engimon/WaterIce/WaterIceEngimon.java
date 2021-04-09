@@ -6,9 +6,6 @@ public class WaterIceEngimon extends Engimon{
     public WaterIceEngimon() {
         super();
     }
-    public WaterIceEngimon(String name){
-        super(name);
-    }
     @Override
     public boolean is_water(){
         return true;

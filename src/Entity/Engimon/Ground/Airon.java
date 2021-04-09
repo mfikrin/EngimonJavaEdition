@@ -4,7 +4,4 @@ public class Airon extends GroundEngimon{
     public Airon() {
         super();
     }
-    public Airon(String name){
-        super(name);
-    }
 }

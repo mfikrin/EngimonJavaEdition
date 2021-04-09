@@ -17,10 +17,6 @@ public class Engimon implements Element{
     private ArrayList<ArrayList<String>> parent;
     private ArrayList<Skill> list_skill;
 
-    public Engimon(String name){
-        this.name = name;
-    }
-
     public Engimon(){
         name = getClass().getSimpleName();
     }

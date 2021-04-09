@@ -4,8 +4,4 @@ public class Zerokelv extends IceEngimon{
     public Zerokelv() {
         super();
     }
-    public Zerokelv(String name){
-        super(name);
-    }
-    
 }

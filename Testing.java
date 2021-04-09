@@ -10,7 +10,7 @@ public class Testing {
     public static void main(String[] args){
         ArrayList<Engimon> list = new ArrayList<>();
         Gurame gurame = new Gurame();
-        Ashatee ashatee = new Ashatee("budi");
+        Ashatee ashatee = new Ashatee();
         Ratatouille kunyit = new Ratatouille();
 
         list.add(gurame);

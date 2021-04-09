@@ -4,7 +4,4 @@ public class Buckoo extends IceEngimon{
     public Buckoo() {
         super();
     }
-    public Buckoo(String name){
-        super(name);
-    }
 }

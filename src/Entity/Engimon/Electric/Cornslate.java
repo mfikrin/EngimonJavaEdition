@@ -4,7 +4,4 @@ public class Cornslate extends ElectricEngimon{
     public Cornslate() {
         super();
     }
-    public Cornslate(String name){
-        super(name);
-    }
 }
