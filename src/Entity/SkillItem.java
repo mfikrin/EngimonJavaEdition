@@ -1,5 +1,7 @@
 package src.Entity;
 
+import src.Entity.Skill.Skill;
+
 public class SkillItem {
     private Skill contained_skill;
     private int number;

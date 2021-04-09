@@ -1,11 +1,9 @@
 package src.Entity.Engimon;
 
-import java.util.*;
+import java.util.ArrayList;
 
 import src.Entity.Element;
-import src.Entity.Skill;
-
-import java.lang.Math;
+import src.Entity.Skill.Skill;
 
 public class Engimon implements Element{
 
@@ -20,7 +18,7 @@ public class Engimon implements Element{
     private ArrayList<Skill> list_skill;
 
     public Engimon(){
-        this.name = this.getClass().getName();
+        this.name = this.getClass().getSimpleName();
     }
 
     public Engimon(String name){
