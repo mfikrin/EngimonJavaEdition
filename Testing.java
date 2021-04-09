@@ -6,7 +6,7 @@ import src.Entity.Engimon.Ground.Ratatouille;
 import src.Entity.Engimon.Water.Gurame;
 
 public class Testing {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         ArrayList<Engimon> list = new ArrayList<>();
         Gurame gurame = new Gurame();
         Ashatee ashatee = new Ashatee("budi");
@@ -16,9 +16,11 @@ public class Testing {
         list.add(ashatee);
         list.add(kunyit);
 
+        Engimon test = list.get(0);
+        test.set_name("megalodon");
+
         for(Engimon i : list){
             System.out.println(i.get_name());
-            System.out.println(i.is_ground());
         }
     }
 }

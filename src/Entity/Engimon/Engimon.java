@@ -33,6 +33,7 @@ public class Engimon implements Element{
     public int get_skill_size(){return list_skill.size();}
     public ArrayList<ArrayList<String>> get_parent(){return parent;}
     public int get_max_exp(){return current_max_exp;}
+    public String get_species(){return getClass().getSimpleName();}
 
     public void set_name(String name){this.name = name;}
     public void set_level(int level){this.level = level;}
