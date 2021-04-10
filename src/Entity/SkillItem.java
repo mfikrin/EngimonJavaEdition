@@ -1,5 +1,6 @@
 package src.Entity;
 
+import src.Entity.Engimon.Engimon;
 import src.Entity.Skill.Skill;
 
 public class SkillItem {
@@ -22,4 +23,8 @@ public class SkillItem {
     public Skill get_skill(){
         return contained_skill;
     }
+    public void learn(Engimon learner){
+        
+    }
+    //untuk lebih dari 4 skill kayaknya diatur di player atau gui2an
 }

@@ -6,6 +6,13 @@ public class WaterSkill extends Skill{
     public WaterSkill(){
         super();
     }
+    public WaterSkill(WaterSkill other){
+        super(other);
+    }
+    @Override
+    public WaterSkill clone(){
+        return new WaterSkill(this);
+    }
     @Override
     public boolean is_water() {
         return true;

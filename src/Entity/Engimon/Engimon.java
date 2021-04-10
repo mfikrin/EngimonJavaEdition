@@ -2,12 +2,14 @@ package src.Entity.Engimon;
 
 import java.util.ArrayList;
 
+import src.Entity.Clone;
 import src.Entity.Element;
 import src.Entity.Skill.Skill;
 
-public class Engimon implements Element{
+public class Engimon implements Element,Clone<Engimon>{
 
     static final int ratio_exp = 100;
+    static final int max_skills = 4;
     private String name = getClass().getSimpleName();
     private int level = 1;
     private int experience = 0;
@@ -20,6 +22,24 @@ public class Engimon implements Element{
     public Engimon(){
         parent = new ArrayList<>();
         list_skill = new ArrayList<>();
+    }
+
+    public Engimon(Engimon other){
+        this.level = other.level;
+        this.experience = other.experience;
+        this.cumulative_experience = other.cumulative_experience;
+        this.current_max_exp = other.current_max_exp;
+        this.live = other.live;
+        this.parent = new ArrayList<>();
+        this.list_skill = new ArrayList<>();
+        //clone parent blom
+        for (Skill skill : other.list_skill) {
+            this.list_skill.add(skill.clone());
+        }
+    }
+
+    public Engimon clone(){
+        return new Engimon(this);
     }
 
     public String get_name(){ return name;}
@@ -39,6 +59,7 @@ public class Engimon implements Element{
     public void set_cexp(int cumulative_experience){this.cumulative_experience = cumulative_experience;}
     public void set_live(int live){this.live = live;}
     public void add_skill(Skill new_skill){list_skill.add(new_skill);}
+    //bagian gaboleh lebih dari 4 skill kayaknya diatur di player atau gui2an
     public void set_skill(Skill new_skill, int i){list_skill.set(i,new_skill);}
     public void add_parent(ArrayList<String> parent_){parent.add(parent_);}
     public void set_max_exp(int current_max_exp){this.current_max_exp = current_max_exp;}

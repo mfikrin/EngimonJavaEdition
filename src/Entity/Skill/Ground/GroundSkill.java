@@ -6,6 +6,13 @@ public class GroundSkill extends Skill{
     public GroundSkill(){
         super();
     }
+    public GroundSkill(GroundSkill other){
+        super(other);
+    }
+    @Override
+    public GroundSkill clone(){
+        return new GroundSkill(this);
+    }
     @Override
     public boolean is_ground(){
         return true;

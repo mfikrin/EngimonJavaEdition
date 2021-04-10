@@ -7,6 +7,15 @@ public class ElectricSkill extends Skill{
         super();
     }
 
+    public ElectricSkill(ElectricSkill other){
+        super(other);
+    }
+
+    @Override
+    public Skill clone(){
+        return new ElectricSkill(this);
+    }
+
     @Override
     public boolean is_electric() {
         return true;
