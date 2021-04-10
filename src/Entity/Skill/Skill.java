@@ -4,7 +4,7 @@ import src.Entity.Element;
 
 public class Skill implements Element{
     private String name = getClass().getSimpleName();
-    private int numerik_base_power = 100;
+    private int numerik_base_power = 0;
     private int mastery_level = 1; //maks level 3
 
     public int get_nbpower(){return numerik_base_power;}
