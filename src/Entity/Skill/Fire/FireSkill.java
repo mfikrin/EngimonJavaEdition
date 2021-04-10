@@ -4,7 +4,7 @@ import src.Entity.Skill.Skill;
 
 public class FireSkill extends Skill{
     public FireSkill(){
-        
+        super();
     }
     @Override
     public boolean is_fire() {

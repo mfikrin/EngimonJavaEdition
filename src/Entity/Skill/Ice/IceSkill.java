@@ -4,7 +4,7 @@ import src.Entity.Skill.Skill;
 
 public class IceSkill extends Skill{
     public IceSkill(){
-
+        super();
     }
 
     @Override
