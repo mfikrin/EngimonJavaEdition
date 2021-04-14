@@ -31,10 +31,10 @@ public class Player {
     public void move(char input){
         //masalah decr incr bisa disesuaikan dengan guinya nanti mapnya gmn2
         if(input == 'w'){
-            pos.incr_y();
+            pos.decr_y();
             pos_engimon.incr_y();
         }else if(input == 's'){
-            pos.decr_y();
+            pos.incr_y();
             pos_engimon.decr_y();
         }else if(input == 'a'){
             pos.decr_x();
@@ -43,6 +43,43 @@ public class Player {
             pos.incr_x();
             pos_engimon.incr_x();
         }
+    }
+
+    public void show_certain_engimon(int i){
+        Engimon showed = i_engimon.get_item(i);
+        //ngapain dah tuh
+    }
+
+    public void show_engimon_inventory(){
+        //show inventory of engimon
+    }
+
+    public void show_skillitem_inventory(){
+        //show inventory of skillitem
+    }
+
+    public int get_total_inventory_capacity(){
+        int skillitemq = 0;
+        int engimonq = i_engimon.size();
+        for(int i = 0; i < i_skillitem.size(); ++i){
+            skillitemq += i_skillitem.get_item(i).get_quantity();
+        }
+        return skillitemq + engimonq;
+    }
+
+    public boolean teach(int idx_engimon, int idx_skillitem){
+        return i_skillitem.get_item(idx_skillitem).learn(i_engimon.get_item(idx_engimon));
+    }
+
+    public boolean breed(int engimon1, int engimon2){
+        Engimon parent1 = i_engimon.get_item(engimon1);
+        Engimon parent2 = i_engimon.get_item(engimon2);
+        if (parent1.get_level() < 4 || parent2.get_level() < 4){
+            return false;
+        }
+        if((parent1.is_fire() && parent2.is_electric()) || (parent1.is_electric() && parent2.is_fire())){
+
+        }else if()
     }
 
     //nampilin list command
