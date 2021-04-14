@@ -10,7 +10,7 @@ import src.Entity.Skill.Electric.ElectricSkill;
 import src.Entity.Skill.Electric.NaturalSkills.Charge;
 
 public class Testing {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         // ArrayList<Engimon> list = new ArrayList<>();
         // Engimon satu = EngimonGenerator.generate_fire();
         // Engimon dua = EngimonGenerator.generate_water();
@@ -23,8 +23,8 @@ public class Testing {
         // list.add(empat);
         // list.add(lima);
         // for (Engimon engimon : list) {
-        //     System.out.println(engimon.get_species());
-        //     System.out.println(engimon.is_ice());
+        // System.out.println(engimon.get_species());
+        // System.out.println(engimon.is_ice());
         // }
         Skill testing = new Charge();
         Skill kedua = testing.clone();
