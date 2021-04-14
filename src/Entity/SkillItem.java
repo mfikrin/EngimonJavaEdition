@@ -24,5 +24,8 @@ public class SkillItem {
         }
         return false;
     }
+    public int get_quantity(){
+        return quantity;
+    }
     //untuk lebih dari 4 skill kayaknya diatur di player atau gui2an
 }
