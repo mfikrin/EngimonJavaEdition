@@ -34,6 +34,10 @@ public class Skill implements Element,Clone<Skill>{
     public void incr_mlevel(){mastery_level++;}
     //bagian gaboleh mastery lebih dari 3 kayaknya dihandle di player atau engimon atau gui2an
 
+    public boolean is_max_level(){
+        return mastery_level == max_mastery_level;
+    }
+
     @Override
     public boolean is_fire() {
         // TODO Auto-generated method stub

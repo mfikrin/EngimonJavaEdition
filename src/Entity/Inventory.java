@@ -13,4 +13,7 @@ public class Inventory <T>{
     public T get_item(int i){
         return inventory.get(i);
     }
+    public int size(){
+        return inventory.size();
+    }
 }

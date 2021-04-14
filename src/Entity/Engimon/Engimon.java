@@ -16,12 +16,11 @@ public class Engimon implements Element,Clone<Engimon>{
     private int experience = 0;
     private int cumulative_experience = 0;
     private int current_max_exp = 100;
-    private int live = 3;
-    private ArrayList<ArrayList<String>> parent;
+    private int live = 1; //kalau liar 1 kalau active 3
+    private String[][] parent = new String[2][2];
     private ArrayList<Skill> list_skill;
 
     public Engimon(){
-        parent = new ArrayList<>();
         list_skill = new ArrayList<>();
     }
 
@@ -33,9 +32,8 @@ public class Engimon implements Element,Clone<Engimon>{
         this.cumulative_experience = other.cumulative_experience;
         this.current_max_exp = other.current_max_exp;
         this.live = other.live;
-        this.parent = new ArrayList<>();
+        this.parent = other.parent.clone();
         this.list_skill = new ArrayList<>();
-        //clone parent blom
         for (Skill skill : other.list_skill) {
             this.list_skill.add(skill.clone());
         }
@@ -52,7 +50,7 @@ public class Engimon implements Element,Clone<Engimon>{
     public int get_live(){return live;}
     public Skill get_skill(int i){return list_skill.get(i);}
     public int get_skill_size(){return list_skill.size();}
-    public ArrayList<ArrayList<String>> get_parent(){return parent;}
+    public String[][] get_parent(){return parent;}
     public int get_max_exp(){return current_max_exp;}
     public String get_species(){return species;}
 
@@ -62,15 +60,31 @@ public class Engimon implements Element,Clone<Engimon>{
     public void set_cexp(int cumulative_experience){this.cumulative_experience = cumulative_experience;}
     public void set_live(int live){this.live = live;}
     public boolean add_skill(Skill new_skill){
+        if (!is_same_element(new_skill)){
+            return false;
+        }
         if (list_skill.size() < max_skills){
             list_skill.add(new_skill);
             return true;
         }
         return false;
     }
-    //bagian gaboleh lebih dari 4 skill kayaknya diatur di player atau gui2an
+
+    public boolean is_same_element(Element element_object){
+        return ((this.is_electric() && element_object.is_electric()) ||
+        (this.is_fire() && element_object.is_fire()) ||
+        (this.is_ground() && element_object.is_ground()) ||
+        (this.is_ice() && element_object.is_ice()) ||
+        (this.is_water() && element_object.is_water()));
+    }
+    
     public void set_skill(Skill new_skill, int i){list_skill.set(i,new_skill);}
-    public void add_parent(ArrayList<String> parent_){parent.add(parent_);}
+    public void set_parent(String parent1, String species1, String parent2, String species2){
+        parent[0][0] = parent1;
+        parent[0][1] = species1;
+        parent[1][0] = parent2;
+        parent[1][1] = species2;
+    }
     public void set_max_exp(int current_max_exp){this.current_max_exp = current_max_exp;}
 
     public void incr_live(){live++;}
