@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import src.Entity.Clone;
 import src.Entity.Element;
 import src.Entity.Skill.Skill;
-
+import src.Entity.Position;
 public class Engimon implements Element,Clone<Engimon>{
 
     static final int ratio_exp = 100;
@@ -20,8 +20,11 @@ public class Engimon implements Element,Clone<Engimon>{
     private String[][] parent = new String[2][2];
     private ArrayList<Skill> list_skill;
 
+    private Position engimonPosition;
+
     public Engimon(){
         list_skill = new ArrayList<>();
+        this.engimonPosition = new Position(0,14);
     }
 
     public Engimon(Engimon other){
@@ -53,6 +56,8 @@ public class Engimon implements Element,Clone<Engimon>{
     public String[][] get_parent(){return parent;}
     public int get_max_exp(){return current_max_exp;}
     public String get_species(){return species;}
+
+    public Position get_position(){return engimonPosition;}
 
     public void set_name(String name){this.name = name;}
     public void set_level(int level){this.level = level;}

@@ -1,5 +1,8 @@
 package src.GUI;
 
+import src.Entity.Engimon.Electric.Aroos;
+import src.Entity.Engimon.Engimon;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +19,7 @@ public class Model extends JPanel implements ActionListener {
 
     private Dimension d;
     private final Font smallFont = new Font("Arial", Font.BOLD, 14);
-    private boolean inGame = false;
+    private boolean inGame = true;
 
     private final int BLOCK_SIZE = 24;
     private final int N_BLOCKS = 15;
@@ -24,11 +27,13 @@ public class Model extends JPanel implements ActionListener {
     private int req_dx, req_dy;
 
     private  Image pokemon;
+    private Engimon pokemongo;
 
-    private int levelData[] = new int[225];
 
-    private short[] screenData;
+    private int levelData[][] = new int[15][15];
     public Model() {
+
+        this.pokemongo = new Aroos();
         loadImages();
         initVariables();
         addKeyListener(new TAdapter());
@@ -37,8 +42,6 @@ public class Model extends JPanel implements ActionListener {
     }
     private void loadImages() {
         pokemon = new ImageIcon("./src/GUI/images/ghost.gif").getImage();
-        int a = new ImageIcon("./src/GUI/images/ghost.gif").getIconWidth();
-        System.out.println(a);
     }
 
     private void initVariables() {
@@ -47,15 +50,17 @@ public class Model extends JPanel implements ActionListener {
 
             Scanner scan = new Scanner(file);
 
-            int j = 0;
+            int i = 0;
             while(scan.hasNextLine()){
                 String getDataString = scan.nextLine();
-                for (int i = 0; i < getDataString.length(); i++)
+                for (int j = 0; j < getDataString.length(); j++)
                 {
-                    char c = getDataString.charAt(i);
-                    this.levelData[j] = Character.getNumericValue(c);
-                    j+=1;
+                    char c = getDataString.charAt(j);
+                    this.levelData[i][j] = Character.getNumericValue(c);
+                    System.out.print(this.levelData[i][j]);
                 }
+                System.out.println();
+                i+=1;
             }
 
 
@@ -64,7 +69,10 @@ public class Model extends JPanel implements ActionListener {
         }catch(FileNotFoundException ex){
             System.out.println("File Tidak Ditemukan");
         }
-        screenData = new short[N_BLOCKS * N_BLOCKS];
+        int x = pokemongo.get_position().get_x();
+        int y = pokemongo.get_position().get_y();
+        System.out.println(x);
+        System.out.println(y);
         d = new Dimension(400, 400);
 
     }
@@ -74,35 +82,37 @@ public class Model extends JPanel implements ActionListener {
 
     private void drawMaze(Graphics2D g2d) {
 
-        short i = 0;
+        int i = 0;
         int x, y;
-
         for (y = 0; y < SCREEN_SIZE; y += BLOCK_SIZE) {
+            int j = 0;
             for (x = 0; x < SCREEN_SIZE; x += BLOCK_SIZE) {
-
-                if (levelData[i]  == 1) {
-                    g2d.setColor(new Color(255,255,255));
-                    g2d.fillOval(x + 10, y + 10, 6, 6);
-                }
-                else if (levelData[i]  == 2) {
-                    g2d.setColor(new Color(55,55,55));
-                    g2d.fillOval(x + 10, y + 10, 6, 6);
-                }
-                else if (levelData[i]  == 3) {
-                    g2d.setColor(new Color(20,20,20));
-                    g2d.fillOval(x + 10, y + 10, 6, 6);
-                }
-                else if (levelData[i]  == 4) {
-                    g2d.setColor(new Color(100,100,100));
-                    g2d.fillOval(x + 10, y + 10, 6, 6);
-                }
-                else  if (levelData[i]  == 5) {
+                if (j == pokemongo.get_position().get_x() && i == pokemongo.get_position().get_y())
+                {
                     drawPokemon(g2d,x + 10, y + 10 );
+                } else{
+                    if (levelData[i][j]  == 1) {
+                        g2d.setColor(new Color(255,255,255));
+                        g2d.fillOval(x + 10, y + 10, 6, 6);
+                    }
+                    else if (levelData[i][j]  == 2) {
+                        g2d.setColor(new Color(55,55,55));
+                        g2d.fillOval(x + 10, y + 10, 6, 6);
+                    }
+                    else if (levelData[i][j]  == 3) {
+                        g2d.setColor(new Color(20,20,20));
+                        g2d.fillOval(x + 10, y + 10, 6, 6);
+                    }
+                    else if (levelData[i][j]  == 4) {
+                        g2d.setColor(new Color(100,100,100));
+                        g2d.fillOval(x + 10, y + 10, 6, 6);
+                    }
                 }
 
 
-                i++;
+                j+=1;
             }
+            i+=1;
         }
     }
 
@@ -129,17 +139,13 @@ public class Model extends JPanel implements ActionListener {
 
             if (inGame) {
                 if (key == KeyEvent.VK_LEFT) {
-                    req_dx = -1;
-                    req_dy = 0;
+                    pokemongo.get_position().decr_x();
                 } else if (key == KeyEvent.VK_RIGHT) {
-                    req_dx = 1;
-                    req_dy = 0;
+                    pokemongo.get_position().incr_x();
                 } else if (key == KeyEvent.VK_UP) {
-                    req_dx = 0;
-                    req_dy = -1;
+                    pokemongo.get_position().decr_y();
                 } else if (key == KeyEvent.VK_DOWN) {
-                    req_dx = 0;
-                    req_dy = 1;
+                    pokemongo.get_position().incr_y();
                 }
             } else {
                 if (key == KeyEvent.VK_SPACE) {
