@@ -71,16 +71,16 @@ public class Player {
         return i_skillitem.get_item(idx_skillitem).learn(i_engimon.get_item(idx_engimon));
     }
 
-    public boolean breed(int engimon1, int engimon2){
-        Engimon parent1 = i_engimon.get_item(engimon1);
-        Engimon parent2 = i_engimon.get_item(engimon2);
-        if (parent1.get_level() < 4 || parent2.get_level() < 4){
-            return false;
-        }
-        if((parent1.is_fire() && parent2.is_electric()) || (parent1.is_electric() && parent2.is_fire())){
-
-        }else if()
-    }
+//    public boolean breed(int engimon1, int engimon2){
+//        Engimon parent1 = i_engimon.get_item(engimon1);
+//        Engimon parent2 = i_engimon.get_item(engimon2);
+//        if (parent1.get_level() < 4 || parent2.get_level() < 4){
+//            return false;
+//        }
+//        if((parent1.is_fire() && parent2.is_electric()) || (parent1.is_electric() && parent2.is_fire())){
+//
+//        }else if()
+//    }
 
     //nampilin list command
     //move
