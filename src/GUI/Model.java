@@ -69,10 +69,6 @@ public class Model extends JPanel implements ActionListener {
         }catch(FileNotFoundException ex){
             System.out.println("File Tidak Ditemukan");
         }
-        int x = pokemongo.get_position().get_x();
-        int y = pokemongo.get_position().get_y();
-        System.out.println(x);
-        System.out.println(y);
         d = new Dimension(400, 400);
 
     }
