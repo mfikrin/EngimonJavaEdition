@@ -4,14 +4,17 @@ package src.GUI;
 import javax.swing.*;
 
 public class App extends JFrame{
-
+    public Model model;
     public App() {
-        add(new Model());
+        model = new Model();
+//        System.out.println(model.jumlahGerakan);
+        add(model);
     }
 
 
     public static void main(String[] args) {
         App pokemon = new App();
+//        System.out.println(pokemon.model.jumlahGerakan);
         pokemon.setVisible(true);
         pokemon.setTitle("Pokemon");
         pokemon.setSize(380,420);

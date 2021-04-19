@@ -2,6 +2,7 @@ package src.GUI;
 
 import src.Entity.Engimon.Electric.Aroos;
 import src.Entity.Engimon.Engimon;
+import src.Entity.Engimon.Fire.Aapee;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import javax.swing.ImageIcon;
@@ -26,14 +29,19 @@ public class Model extends JPanel implements ActionListener {
     private final int SCREEN_SIZE = N_BLOCKS * BLOCK_SIZE;
     private int req_dx, req_dy;
 
-    private  Image pokemon;
+//    image
+    private  Image pokemonImage;
+//    engimon
     private Engimon pokemongo;
+    private ArrayList<Engimon> engimonEnemy;
+
+    public int jumlahGerakan = 0;
 
 
     private int levelData[][] = new int[15][15];
     public Model() {
 
-        this.pokemongo = new Aroos();
+        loadFirstEngimon();
         loadImages();
         initVariables();
         addKeyListener(new TAdapter());
@@ -41,8 +49,28 @@ public class Model extends JPanel implements ActionListener {
 
     }
     private void loadImages() {
-        pokemon = new ImageIcon("./src/GUI/images/ghost.gif").getImage();
+        pokemonImage = new ImageIcon("./src/GUI/images/ghost.gif").getImage();
+
     }
+
+    private void spawnEngimonEnemy()
+    {
+        Random randomNumbers = new Random();
+        int x = randomNumbers.nextInt(15);
+        int y = randomNumbers.nextInt(15);
+        Engimon enemy =  new Aapee();
+        enemy.get_position().setPosition(x,y);
+        engimonEnemy.add(enemy);
+
+    }
+
+
+    private void loadFirstEngimon()
+    {
+//        ini masih statik ngeluarin across, nanti dibuat random
+        this.pokemongo = new Aroos();
+    }
+
 
     private void initVariables() {
         try{
@@ -57,9 +85,7 @@ public class Model extends JPanel implements ActionListener {
                 {
                     char c = getDataString.charAt(j);
                     this.levelData[i][j] = Character.getNumericValue(c);
-                    System.out.print(this.levelData[i][j]);
                 }
-                System.out.println();
                 i+=1;
             }
 
@@ -73,20 +99,44 @@ public class Model extends JPanel implements ActionListener {
 
     }
     private void drawPokemon(Graphics2D g2d, int x, int y) {
-        g2d.drawImage(pokemon, x, y, 6, 6,this);
+        g2d.drawImage(pokemonImage, x, y, 6, 6,this);
     }
 
-    private void drawMaze(Graphics2D g2d) {
+    private void drawEngimonEnemy(Graphics2D g2d, int x, int y) {
+        g2d.drawImage(pokemonImage, x, y, 6, 6,this);
+    }
 
+    private Boolean isEnemyHere(int i, int j)
+    {
+        for (Engimon enemy : engimonEnemy)
+        {
+            if (enemy.get_position().get_x() == j && enemy.get_position().get_y() == i )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+    private void drawMaze(Graphics2D g2d) {
+//        System.out.println(jumlahGerakan);
         int i = 0;
-        int x, y;
+        int x, y,z;
         for (y = 0; y < SCREEN_SIZE; y += BLOCK_SIZE) {
             int j = 0;
             for (x = 0; x < SCREEN_SIZE; x += BLOCK_SIZE) {
                 if (j == pokemongo.get_position().get_x() && i == pokemongo.get_position().get_y())
                 {
                     drawPokemon(g2d,x + 10, y + 10 );
-                } else{
+                }
+//                else if (isEnemyHere(i,j))
+//                {
+//                    drawEngimonEnemy(g2d,x + 10, y + 10 );
+//                }
+                else{
                     if (levelData[i][j]  == 1) {
                         g2d.setColor(new Color(255,255,255));
                         g2d.fillOval(x + 10, y + 10, 6, 6);
@@ -104,11 +154,13 @@ public class Model extends JPanel implements ActionListener {
                         g2d.fillOval(x + 10, y + 10, 6, 6);
                     }
                 }
-
-
                 j+=1;
             }
             i+=1;
+        }
+        if (jumlahGerakan % 5 == 1)
+        {
+            System.out.println(jumlahGerakan);
         }
     }
 
@@ -128,8 +180,12 @@ public class Model extends JPanel implements ActionListener {
     //controls
     class TAdapter extends KeyAdapter {
 
+
+
+
         @Override
         public void keyPressed(KeyEvent e) {
+            jumlahGerakan +=1;
 
             int key = e.getKeyCode();
 
