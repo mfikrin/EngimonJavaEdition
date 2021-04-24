@@ -1,6 +1,6 @@
-package src.GUI;
+package GUI;
 
-import src.GUI.GamePanel;
+import GUI.GamePanel;
 
 import javax.swing.JFrame;
 

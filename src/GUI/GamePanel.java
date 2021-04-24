@@ -1,4 +1,4 @@
-package src.GUI;
+package GUI;
 
 import java.lang.*;
 
@@ -16,8 +16,8 @@ import java.awt.event.*;
 
 // External Import, moved later
 import java.util.*;
-import src.Entity.Engimon.*;
-import src.Entity.Engimon.Fire.*;
+import Entity.Engimon.*;
+import Entity.Engimon.Fire.*;
 // import src.Entity.Position;
 
 // -------
@@ -168,8 +168,8 @@ public class GamePanel extends JPanel implements ActionListener{
         System.out.println(px);
         System.out.println(py);
         for (Engimon e : this.list_engimon_enemy) {
-            int ex = e.get_pos_x();
-            int ey = e.get_pos_y();
+            int ex = e.get_pos().get_x();
+            int ey = e.get_pos().get_y();
             // check west, north, east, south
             if ((px == ex+1 && py == ey) || (px == ex-1 && py == ey) || (px == ex && py == ey+1) || (px == ex && py == ey-1)){
                 return true;
@@ -320,8 +320,8 @@ public class GamePanel extends JPanel implements ActionListener{
     }
     public void draw_enemies(Graphics2D g2d){
         for (Engimon e : list_engimon_enemy) {
-            int x = e.get_pos_x();
-            int y = e.get_pos_y();
+            int x = e.get_pos().get_x();
+            int y = e.get_pos().get_y();
             // WRONG, need to be fixed
             String sp = e.get_species();
             // |---
