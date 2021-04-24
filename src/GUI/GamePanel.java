@@ -102,7 +102,7 @@ public class GamePanel extends JPanel implements ActionListener{
         this.landscape = new int[SCREEN_HEIGHT/TILE_SIZE][SCREEN_WIDTH/TILE_SIZE];
         try{
             // #PATH
-            File file = new File("./src/FileEksternal/map.txt");
+            File file = new File("./FileEksternal/map.txt");
 
             Scanner scan = new Scanner(file);
 
@@ -255,10 +255,10 @@ public class GamePanel extends JPanel implements ActionListener{
     
     public void draw_battle(Graphics2D g2d){
         System.out.println("Battle");
-        Image p = new ImageIcon("./src/images/transparent/engimon_electric.gif").getImage();
-        Image e = new ImageIcon("./src/images/transparent/engimon_Earth.gif").getImage();
+        Image p = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
+        Image e = new ImageIcon("./images/transparent/engimon_Earth.gif").getImage();
 
-        Image bg = new ImageIcon("./src/images/battle/bg_3_lives.png").getImage();
+        Image bg = new ImageIcon("./images/battle/bg_3_lives.png").getImage();
         g2d.drawImage(bg, 0,0, SCREEN_WIDTH, SCREEN_HEIGHT, this);
         g2d.drawImage(p, 2*TILE_SIZE,7*TILE_SIZE, 4*TILE_SIZE, 4*TILE_SIZE, this);
         g2d.drawImage(e, 11*TILE_SIZE,5*TILE_SIZE, 2*TILE_SIZE, 2*TILE_SIZE, this);
@@ -266,7 +266,7 @@ public class GamePanel extends JPanel implements ActionListener{
     
     public void draw_main_menu(Graphics2D g2d){
         System.out.println("main menu");
-        Image banner = new ImageIcon("./src/images/title_banner.gif").getImage();
+        Image banner = new ImageIcon("./images/title_banner.gif").getImage();
         g2d.drawImage(banner, 0,0, SCREEN_WIDTH, SCREEN_HEIGHT, this);
     }
     public void draw_explore_world(Graphics2D g2d){
@@ -278,7 +278,7 @@ public class GamePanel extends JPanel implements ActionListener{
     }
     public void draw_landscape(Graphics2D g2d){
         // then draw from data
-        String base_path = "./src/images/landscape/";
+        String base_path = "./images/landscape/";
         for (int i=0; i<this.landscape.length; i++){
             for (int j=0; j<this.landscape[i].length; j++){
                 Image landscape_cell;
@@ -308,8 +308,8 @@ public class GamePanel extends JPanel implements ActionListener{
     }
     public void draw_characters(Graphics2D g2d){
         // #PATH
-        Image player = new ImageIcon("./src/images/transparent/player.gif").getImage();
-        Image active_engimon = new ImageIcon("./src/images/transparent/engimon_"+this.active_engimon_type+".gif").getImage();
+        Image player = new ImageIcon("./images/transparent/player.gif").getImage();
+        Image active_engimon = new ImageIcon("./images/transparent/engimon_"+this.active_engimon_type+".gif").getImage();
         // Image enemy1 = new ImageIcon("./src/images/transparent/engimon_earth.gif").getImage();
         
         // g2d.drawImage(enemy1, 0, 0, TILE_SIZE, TILE_SIZE, this);
@@ -326,7 +326,7 @@ public class GamePanel extends JPanel implements ActionListener{
             String sp = e.get_species();
             // |---
             // test_print(sp);
-            Image enemy_image = new ImageIcon("./src/images/transparent/engimon_"+sp+".gif").getImage();
+            Image enemy_image = new ImageIcon("./images/transparent/engimon_"+sp+".gif").getImage();
             g2d.drawImage(enemy_image, x*TILE_SIZE, y*TILE_SIZE, TILE_SIZE,TILE_SIZE, this);
         }
 
