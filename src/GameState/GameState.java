@@ -1,4 +1,4 @@
-package src.GameState;
+package GameState;
 
 import java.util.Stack;
 

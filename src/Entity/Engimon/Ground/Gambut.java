@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Ground;
+package Entity.Engimon.Ground;
 
-import src.Entity.Skill.Ground.NaturalSkills.Dig;
+import Entity.Skill.Ground.NaturalSkills.Dig;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Gambut extends GroundEngimon{
+public class Gambut extends GroundEngimon {
     public Gambut() {
         super();
-        super.add_skill(new Dig());
+        try {
+            super.add_skill(new Dig());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

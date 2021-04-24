@@ -1,10 +1,18 @@
-package src.Entity.Engimon.WaterIce;
+package Entity.Engimon.WaterIce;
 
-import src.Entity.Skill.WaterIce.Slush;
+import Entity.Skill.WaterIce.Slush;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Cumulo extends WaterIceEngimon{
+public class Cumulo extends WaterIceEngimon {
     public Cumulo() {
         super();
-        super.add_skill(new Slush());
+        try {
+            super.add_skill(new Slush());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

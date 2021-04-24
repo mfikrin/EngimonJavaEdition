@@ -1,6 +1,6 @@
-package src.Entity.Skill.Water;
+package Entity.Skill.Water;
 
-public class Flood extends WaterSkill{
+public class Flood extends WaterSkill {
     public Flood() {
         super();
         super.set_nbpower(10);

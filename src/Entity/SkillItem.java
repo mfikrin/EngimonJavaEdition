@@ -1,31 +1,44 @@
-package src.Entity;
+package Entity;
 
-import src.Entity.Engimon.Engimon;
-import src.Entity.Skill.Skill;
+import Entity.Engimon.Engimon;
+import Entity.Skill.Skill;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
+import Exception.ZeroQuantityException;
 
-public class SkillItem {
+public class SkillItem{
     private Skill contained_skill;
     private int quantity;
 
-    public SkillItem(Skill skill){
+    public SkillItem(Skill skill) {
         contained_skill = skill.clone();
-        quantity = 0;
+        quantity = 1;
     }
-    public void incr_quantity(){
-        quantity++;
-    }
-    public boolean learn(Engimon learner){
-        if (quantity > 0){
-            if (learner.add_skill(contained_skill.clone())){
-                quantity--;
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-    public int get_quantity(){
+
+    public int get_quantity() {
         return quantity;
     }
-    //untuk lebih dari 4 skill kayaknya diatur di player atau gui2an
+
+    public void incr_quantity() {
+        quantity++;
+    }
+    public void decr_quantity() {
+        if (quantity > 0) {
+            quantity--;
+        }
+    }
+    public void learn(Engimon learner) throws ElementNotSuitableException, SkillFullException, ZeroQuantityException {
+        if (quantity > 0) {
+            learner.add_skill(contained_skill.clone());
+            quantity--;
+        }else {
+            throw new ZeroQuantityException("Skill Item Quantity < 0", null);
+        }
+    }
+
+    public void debug_print() {
+        System.out.println("Skill Item Data : ");
+        contained_skill.debug_print();
+        System.out.println("Quantity : " + quantity);
+    }
 }

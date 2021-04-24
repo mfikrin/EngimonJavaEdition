@@ -1,18 +1,18 @@
-package src.Entity.Skill.Ice;
+package Entity.Skill.Ice;
 
-import src.Entity.Skill.Skill;
+import Entity.Skill.Skill;
 
-public class IceSkill extends Skill{
+public class IceSkill extends Skill {
     public IceSkill(){
         super();
     }
 
-    public IceSkill(IceSkill other){
+    public IceSkill(IceSkill other) {
         super(other);
     }
 
     @Override
-    public IceSkill clone(){
+    public IceSkill clone() {
         return new IceSkill(this);
     }
 

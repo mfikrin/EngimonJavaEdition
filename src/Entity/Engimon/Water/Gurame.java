@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Water;
+package Entity.Engimon.Water;
 
-import src.Entity.Skill.Water.NaturalSkills.Mizu;
+import Entity.Skill.Water.NaturalSkills.Mizu;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Gurame extends WaterEngimon{
+public class Gurame extends WaterEngimon {
     public Gurame() {
         super();
-        super.add_skill(new Mizu());
+        try {
+            super.add_skill(new Mizu());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

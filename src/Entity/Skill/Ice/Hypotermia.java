@@ -1,6 +1,6 @@
-package src.Entity.Skill.Ice;
+package Entity.Skill.Ice;
 
-public class Hypotermia extends IceSkill{
+public class Hypotermia extends IceSkill {
     public Hypotermia() {
         super();
         super.set_nbpower(20);

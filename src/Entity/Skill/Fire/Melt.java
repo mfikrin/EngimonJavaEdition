@@ -1,6 +1,6 @@
-package src.Entity.Skill.Fire;
+package Entity.Skill.Fire;
 
-public class Melt extends FireSkill{
+public class Melt extends FireSkill {
     public Melt() {
         super();
         super.set_nbpower(25);

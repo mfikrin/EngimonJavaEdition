@@ -1,10 +1,18 @@
-package src.Entity.Engimon.WaterIce;
+package Entity.Engimon.WaterIce;
 
-import src.Entity.Skill.WaterIce.Frigid;
+import Entity.Skill.WaterIce.Frigid;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Strato extends WaterIceEngimon{
+public class Strato extends WaterIceEngimon {
     public Strato() {
         super();
-        super.add_skill(new Frigid());
+        try {
+            super.add_skill(new Frigid());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

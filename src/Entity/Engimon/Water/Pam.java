@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Water;
+package Entity.Engimon.Water;
 
-import src.Entity.Skill.Water.NaturalSkills.Pressure;
+import Entity.Skill.Water.NaturalSkills.Pressure;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Pam extends WaterEngimon{
+public class Pam extends WaterEngimon {
     public Pam() {
         super();
-        super.add_skill(new Pressure());
+        try {
+            super.add_skill(new Pressure());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,15 +1,14 @@
-package src.Entity.Engimon.Fire;
+package Entity.Engimon.Fire;
 
-import src.Entity.Engimon.Engimon;
+import Entity.Engimon.Engimon;
 
-public class FireEngimon extends Engimon{
+public class FireEngimon extends Engimon {
     public FireEngimon() {
         super();
     }
     
     @Override
     public boolean is_fire() {
-        // TODO Auto-generated method stub
         return true;
     }
 }

@@ -1,18 +1,21 @@
-package src.Entity.Skill.Water;
+package Entity.Skill.Water;
 
-import src.Entity.Skill.Skill;
+import Entity.Skill.Skill;
 
-public class WaterSkill extends Skill{
-    public WaterSkill(){
+public class WaterSkill extends Skill {
+    public WaterSkill() {
         super();
     }
-    public WaterSkill(WaterSkill other){
+
+    public WaterSkill(WaterSkill other) {
         super(other);
     }
+
     @Override
-    public WaterSkill clone(){
+    public WaterSkill clone() {
         return new WaterSkill(this);
     }
+    
     @Override
     public boolean is_water() {
         return true;

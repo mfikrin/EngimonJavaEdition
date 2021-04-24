@@ -1,4 +1,4 @@
-package src.Entity;
+package Entity;
 
 public interface Clone <T> {
     public T clone();

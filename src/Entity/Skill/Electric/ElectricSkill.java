@@ -1,18 +1,18 @@
-package src.Entity.Skill.Electric;
+package Entity.Skill.Electric;
 
-import src.Entity.Skill.Skill;
+import Entity.Skill.Skill;
 
-public class ElectricSkill extends Skill{
-    public ElectricSkill(){
+public class ElectricSkill extends Skill {
+    public ElectricSkill() {
         super();
     }
 
-    public ElectricSkill(ElectricSkill other){
+    public ElectricSkill(ElectricSkill other) {
         super(other);
     }
 
     @Override
-    public Skill clone(){
+    public Skill clone() {
         return new ElectricSkill(this);
     }
 

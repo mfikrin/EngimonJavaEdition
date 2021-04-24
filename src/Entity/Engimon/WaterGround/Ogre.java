@@ -1,10 +1,18 @@
-package src.Entity.Engimon.WaterGround;
+package Entity.Engimon.WaterGround;
 
-import src.Entity.Skill.WaterGround.Mud;
+import Entity.Skill.WaterGround.Mud;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Ogre extends WaterGroundEngimon{
+public class Ogre extends WaterGroundEngimon {
     public Ogre() {
         super();
-        super.add_skill(new Mud());
+        try {
+            super.add_skill(new Mud());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Fire;
+package Entity.Engimon.Fire;
 
-import src.Entity.Skill.Fire.NaturalSkills.Cremation;
+import Entity.Skill.Fire.NaturalSkills.Cremation;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Compfer extends FireEngimon{
+public class Compfer extends FireEngimon {
     public Compfer() {
         super();
-        super.add_skill(new Cremation());
+        try {
+            super.add_skill(new Cremation());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

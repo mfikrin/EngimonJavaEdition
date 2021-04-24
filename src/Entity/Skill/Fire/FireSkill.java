@@ -1,18 +1,21 @@
-package src.Entity.Skill.Fire;
+package Entity.Skill.Fire;
 
-import src.Entity.Skill.Skill;
+import Entity.Skill.Skill;
 
-public class FireSkill extends Skill{
-    public FireSkill(){
+public class FireSkill extends Skill {
+    public FireSkill() {
         super();
     }
-    public FireSkill(FireSkill other){
+
+    public FireSkill(FireSkill other) {
         super(other);
     }
+
     @Override
-    public FireSkill clone(){
+    public FireSkill clone() {
         return new FireSkill(this);
     }
+    
     @Override
     public boolean is_fire() {
         return true;

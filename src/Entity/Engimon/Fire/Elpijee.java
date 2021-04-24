@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Fire;
+package Entity.Engimon.Fire;
 
-import src.Entity.Skill.Fire.NaturalSkills.Scorch;
+import Entity.Skill.Fire.NaturalSkills.Scorch;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Elpijee extends FireEngimon{
+public class Elpijee extends FireEngimon {
     public Elpijee() {
         super();
-        super.add_skill(new Scorch());
+        try {
+            super.add_skill(new Scorch());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

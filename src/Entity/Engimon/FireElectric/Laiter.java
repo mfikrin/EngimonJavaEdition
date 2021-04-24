@@ -1,10 +1,18 @@
-package src.Entity.Engimon.FireElectric;
+package Entity.Engimon.FireElectric;
 
-import src.Entity.Skill.FireElectric.Plasma;
+import Entity.Skill.FireElectric.Plasma;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Laiter {
-//    public Laiter() {
-//        super();
-//        super.add_skill(new Plasma());
-//    }
+public class Laiter extends FireElectricEngimon {
+    public Laiter() {
+        super();
+        try {
+            super.add_skill(new Plasma());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
+    }
 }

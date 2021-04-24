@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Electric;
+package Entity.Engimon.Electric;
 
-import src.Entity.Skill.Electric.NaturalSkills.Charge;
+import Entity.Skill.Electric.NaturalSkills.Charge;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Choolok extends ElectricEngimon{
+public class Choolok extends ElectricEngimon {
     public Choolok() {
         super();
-        super.add_skill(new Charge());
+        try {
+            super.add_skill(new Charge());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

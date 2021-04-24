@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Electric;
+package Entity.Engimon.Electric;
 
-import src.Entity.Skill.Electric.NaturalSkills.Gamma;
+import Entity.Skill.Electric.NaturalSkills.Gamma;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Esidisi extends ElectricEngimon{
+public class Esidisi extends ElectricEngimon {
     public Esidisi() {
         super();
-        super.add_skill(new Gamma());
+        try {
+            super.add_skill(new Gamma());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

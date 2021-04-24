@@ -1,10 +1,18 @@
-package src.Entity.Engimon.WaterGround;
+package Entity.Engimon.WaterGround;
 
-import src.Entity.Skill.WaterGround.Aquades;
+import Entity.Skill.WaterGround.Aquades;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Beloot extends WaterGroundEngimon{
+public class Beloot extends WaterGroundEngimon {
     public Beloot() {
         super();
-        super.add_skill(new Aquades());
+        try {
+            super.add_skill(new Aquades());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

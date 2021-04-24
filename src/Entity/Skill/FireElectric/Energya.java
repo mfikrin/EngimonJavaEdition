@@ -1,8 +1,8 @@
-package src.Entity.Skill.FireElectric;
+package Entity.Skill.FireElectric;
 
-public class Energya {
-//    public Energya() {
-//        super();
-//        super.set_nbpower(20);
-//    }
+public class Energya extends FireElectricSkill {
+    public Energya() {
+        super();
+        super.set_nbpower(20);
+    }
 }

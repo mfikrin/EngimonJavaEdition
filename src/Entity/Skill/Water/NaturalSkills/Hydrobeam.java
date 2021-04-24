@@ -1,8 +1,8 @@
-package src.Entity.Skill.Water.NaturalSkills;
+package Entity.Skill.Water.NaturalSkills;
 
-import src.Entity.Skill.Water.WaterSkill;
+import Entity.Skill.Water.WaterSkill;
 
-public class Hydrobeam extends WaterSkill{
+public class Hydrobeam extends WaterSkill {
     public Hydrobeam() {
         super();
         super.set_nbpower(20);

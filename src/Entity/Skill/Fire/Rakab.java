@@ -1,7 +1,7 @@
-package src.Entity.Skill.Fire;
+package Entity.Skill.Fire;
 
-public class Rakab extends FireSkill{
-    public Rakab(){
+public class Rakab extends FireSkill {
+    public Rakab() {
         super();
         super.set_nbpower(10);
     }

@@ -1,8 +1,8 @@
-package src.Entity.Skill.FireElectric;
+package Entity.Skill.FireElectric;
 
-public class Plasma {
-//    public Plasma() {
-//        super();
-//        super.set_nbpower(20);
-//    }
+public class Plasma extends FireElectricSkill {
+    public Plasma() {
+        super();
+        super.set_nbpower(20);
+    }
 }

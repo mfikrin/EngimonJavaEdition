@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Electric;
+package Entity.Engimon.Electric;
 
-import src.Entity.Skill.Electric.NaturalSkills.Electrons;
+import Entity.Skill.Electric.NaturalSkills.Electrons;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
 public class Aroos extends ElectricEngimon {
     public Aroos() {
         super();
-        super.add_skill(new Electrons());
+        try {
+            super.add_skill(new Electrons());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

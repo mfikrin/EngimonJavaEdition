@@ -1,6 +1,6 @@
-package src.Entity.Skill.WaterGround;
+package Entity.Skill.WaterGround;
 
-public class Mud extends WaterGroundSkill{
+public class Mud extends WaterGroundSkill {
     public Mud() {
         super();
         super.set_nbpower(20);

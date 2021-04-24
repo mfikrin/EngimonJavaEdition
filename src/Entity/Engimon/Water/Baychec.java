@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Water;
+package Entity.Engimon.Water;
 
-import src.Entity.Skill.Water.NaturalSkills.Drown;
+import Entity.Skill.Water.NaturalSkills.Drown;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Baychec extends WaterEngimon{
+public class Baychec extends WaterEngimon {
     public Baychec() {
         super();
-        super.add_skill(new Drown());
+        try {
+            super.add_skill(new Drown());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

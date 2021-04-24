@@ -1,24 +1,28 @@
-package src.Entity.Skill.FireElectricNatural;
+package Entity.Skill.FireElectric;
 
-import src.Entity.Skill.Skill;
+import Entity.Skill.Skill;
 
-public class FireElectricSkill extends Skill{
+public class FireElectricSkill extends Skill {
     public FireElectricSkill() {
         super();
     }
-    public FireElectricSkill(FireElectricSkill other){
+
+    public FireElectricSkill(FireElectricSkill other) {
         super(other);
     }
+
     @Override
-    public FireElectricSkill clone(){
+    public FireElectricSkill clone() {
         return new FireElectricSkill(this);
     }
+
     @Override
-    public boolean is_fire(){
+    public boolean is_fire() {
         return true;
     }
+
     @Override
-    public boolean is_electric(){
+    public boolean is_electric() {
         return true;
     }
 }

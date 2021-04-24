@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Ground;
+package Entity.Engimon.Ground;
 
-import src.Entity.Skill.Ground.NaturalSkills.Crush;
+import Entity.Skill.Ground.NaturalSkills.Crush;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Airon extends GroundEngimon{
+public class Airon extends GroundEngimon {
     public Airon() {
         super();
-        super.add_skill(new Crush());
+        try {
+            super.add_skill(new Crush());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

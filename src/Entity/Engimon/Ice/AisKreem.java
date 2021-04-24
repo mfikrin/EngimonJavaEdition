@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Ice;
+package Entity.Engimon.Ice;
 
-import src.Entity.Skill.Ice.NaturalSkills.Avalanche;
+import Entity.Skill.Ice.NaturalSkills.Avalanche;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class AisKreem extends IceEngimon{
+public class AisKreem extends IceEngimon {
     public AisKreem() {
         super();
-        super.add_skill(new Avalanche());
+        try {
+            super.add_skill(new Avalanche());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

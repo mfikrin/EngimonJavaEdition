@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Ice;
+package Entity.Engimon.Ice;
 
-import src.Entity.Skill.Ice.NaturalSkills.Chill;
+import Entity.Skill.Ice.NaturalSkills.Chill;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Buckoo extends IceEngimon{
+public class Buckoo extends IceEngimon {
     public Buckoo() {
         super();
-        super.add_skill(new Chill());
+        try {
+            super.add_skill(new Chill());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

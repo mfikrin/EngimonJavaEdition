@@ -1,6 +1,6 @@
-package src.Entity.Engimon.Water;
+package Entity.Engimon.Water;
 
-import src.Entity.Engimon.Engimon;
+import Entity.Engimon.Engimon;
 
 public class WaterEngimon extends Engimon{
 
@@ -10,7 +10,6 @@ public class WaterEngimon extends Engimon{
     
     @Override
     public boolean is_water() {
-        // TODO Auto-generated method stub
         return true;
     }
     

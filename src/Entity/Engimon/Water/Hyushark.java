@@ -1,10 +1,18 @@
-package src.Entity.Engimon.Water;
+package Entity.Engimon.Water;
 
-import src.Entity.Skill.Water.NaturalSkills.Splash;
+import Entity.Skill.Water.NaturalSkills.Splash;
+import Exception.ElementNotSuitableException;
+import Exception.SkillFullException;
 
-public class Hyushark extends WaterEngimon{
+public class Hyushark extends WaterEngimon {
     public Hyushark() {
         super();
-        super.add_skill(new Splash());
+        try {
+            super.add_skill(new Splash());
+        } catch (SkillFullException e) {
+            e.printStackTrace();
+        } catch (ElementNotSuitableException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,20 +1,23 @@
-package src.Entity.Skill.Ground;
+package Entity.Skill.Ground;
 
-import src.Entity.Skill.Skill;
+import Entity.Skill.Skill;
 
-public class GroundSkill extends Skill{
+public class GroundSkill extends Skill {
     public GroundSkill(){
         super();
     }
-    public GroundSkill(GroundSkill other){
+
+    public GroundSkill(GroundSkill other) {
         super(other);
     }
+
     @Override
-    public GroundSkill clone(){
+    public GroundSkill clone() {
         return new GroundSkill(this);
     }
+
     @Override
-    public boolean is_ground(){
+    public boolean is_ground() {
         return true;
     }
 }

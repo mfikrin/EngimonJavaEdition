@@ -1,4 +1,4 @@
-package src.Entity;
+package Entity;
 
 public interface Element{
     public boolean is_fire();
