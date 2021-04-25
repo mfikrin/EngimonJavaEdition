@@ -3,7 +3,7 @@ package Entity.Skill;
 import Entity.Element;
 import Entity.Clone;
 
-public class Skill implements Element,Clone<Skill> {
+public abstract class Skill implements Element,Clone<Skill> {
     private String name = getClass().getSimpleName();
     private int numerik_base_power = 0;
     private int mastery_level = 1;
@@ -22,9 +22,7 @@ public class Skill implements Element,Clone<Skill> {
     }
 
     //Clone
-    public Skill clone() {
-        return new Skill(this);
-    }
+    public abstract Skill clone();
 
     //Getter
     public int get_nbpower() {

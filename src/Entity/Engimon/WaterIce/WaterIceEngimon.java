@@ -7,6 +7,10 @@ public class WaterIceEngimon extends Engimon {
         super();
     }
 
+    public WaterIceEngimon(WaterIceEngimon e) {
+        super(e);
+    }
+
     @Override
     public boolean is_water(){
         return true;
@@ -15,5 +19,10 @@ public class WaterIceEngimon extends Engimon {
     @Override
     public boolean is_ice(){
         return true;
+    }
+
+    @Override
+    public Engimon clone() {
+        return new WaterIceEngimon(this);
     }
 }
