@@ -9,6 +9,10 @@ public class Inventory <T> {
         inventory = new ArrayList<T>();
     }
 
+    public ArrayList<T> get_list() {
+        return inventory;
+    }
+
     public T get_item(int i) {
         return inventory.get(i);
     }
