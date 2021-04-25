@@ -18,6 +18,7 @@ import java.awt.event.*;
 import java.util.*;
 
 import Entity.Position;
+import Entity.Map;
 import Entity.Engimon.*;
 import Entity.Engimon.Fire.*;
 // import src.Entity.Position;
@@ -25,6 +26,9 @@ import Entity.Engimon.Fire.*;
 // -------
 
 public class GamePanel extends JPanel implements ActionListener {
+
+    private Map map = new Map();
+    // ----------------------------------- //
 
     private static final int TILE_SIZE = 40;
     private static final int SCREEN_WIDTH = 15 * TILE_SIZE;
@@ -179,28 +183,30 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void load_map_data() {
-        this.landscape = new int[SCREEN_HEIGHT / TILE_SIZE][SCREEN_WIDTH / TILE_SIZE];
-        try {
-            // #PATH
-            File file = new File("./FileEksternal/map.txt");
+        this.landscape = map.get_landscape();
+        // this.landscape = new int[SCREEN_HEIGHT / TILE_SIZE][SCREEN_WIDTH /
+        // TILE_SIZE];
+        // try {
+        // // #PATH
+        // File file = new File("./FileEksternal/map.txt");
 
-            Scanner scan = new Scanner(file);
+        // Scanner scan = new Scanner(file);
 
-            int i = 0;
-            while (scan.hasNextLine()) {
-                String getDataString = scan.nextLine();
-                for (int j = 0; j < getDataString.length(); j++) {
-                    char c = getDataString.charAt(j);
-                    this.landscape[i][j] = Character.getNumericValue(c);
-                    System.out.print(this.landscape[i][j]);
-                }
-                System.out.println();
-                i += 1;
-            }
-            scan.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("File Tidak Ditemukan");
-        }
+        // int i = 0;
+        // while (scan.hasNextLine()) {
+        // String getDataString = scan.nextLine();
+        // for (int j = 0; j < getDataString.length(); j++) {
+        // char c = getDataString.charAt(j);
+        // this.landscape[i][j] = Character.getNumericValue(c);
+        // System.out.print(this.landscape[i][j]);
+        // }
+        // System.out.println();
+        // i += 1;
+        // }
+        // scan.close();
+        // } catch (FileNotFoundException ex) {
+        // System.out.println("File Tidak Ditemukan");
+        // }
     }
 
     private void init_data() {
