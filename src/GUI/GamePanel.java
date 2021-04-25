@@ -23,6 +23,13 @@ import Entity.Position;
 import Entity.Map;
 import Entity.Engimon.*;
 import Entity.Engimon.Fire.*;
+import Entity.Engimon.Electric.*;
+import Entity.Engimon.FireElectric.*;
+import Entity.Engimon.Ground.*;
+import Entity.Engimon.Ice.*;
+import Entity.Engimon.Water.*;
+import Entity.Engimon.WaterGround.*;
+import Entity.Engimon.WaterIce.*;
 // import src.Entity.Position;
 
 // -------
@@ -84,11 +91,46 @@ public class GamePanel extends JPanel implements ActionListener {
 
     // EXTERNAL FUNCTIONs, moved later
     private void spawnEngimonEnemy() {
+        int x, y, z, k;
         Random randomNumbers = new Random();
-        int x = randomNumbers.nextInt(15);
-        int y = randomNumbers.nextInt(15);
+        k = randomNumbers.nextInt(4);
+        Engimon enemy;
+        // mountain 1
+        if (k == 0) {
+            enemy = new Aapee();
+            // random position
+            do {
+                x = randomNumbers.nextInt(15);
+                y = randomNumbers.nextInt(15);
+            } while (!map.is_mountain(y, x));
+        }
+        // water 2
+        else if (k == 1) {
+            enemy = new Baychec();
+            // random position
+            do {
+                x = randomNumbers.nextInt(15);
+                y = randomNumbers.nextInt(15);
+            } while (!map.is_sea(y, x));
+        }
+        // grassland 3
+        else if (k == 2) {
+            enemy = new Airon();
+            // random position
+            do {
+                x = randomNumbers.nextInt(15);
+                y = randomNumbers.nextInt(15);
+            } while (!map.is_grassland(y, x));
+        }
+        // ice 4
+        else {
+            enemy = new AisKreem();
+            do {
+                x = randomNumbers.nextInt(15);
+                y = randomNumbers.nextInt(15);
+            } while (!map.is_tundra(y, x));
+        }
         Position p = new Position(x, y);
-        Engimon enemy = new Aapee();
         enemy.set_pos(p);
         list_engimon_enemy.add(enemy);
     }
@@ -123,10 +165,10 @@ public class GamePanel extends JPanel implements ActionListener {
             Position newPosition;
             Position oldPosition = e.get_pos();
             // jika tidak menabrak tembok
-            System.out.print("old ");
-            System.out.print(oldPosition.get_x());
-            System.out.print(",");
-            System.out.println(oldPosition.get_y());
+            // System.out.print("old ");
+            // System.out.print(oldPosition.get_x());
+            // System.out.print(",");
+            // System.out.println(oldPosition.get_y());
             do {
                 // e.set_pos(oldPosition);
                 // random arah gerakan
@@ -416,13 +458,25 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void draw_enemies(Graphics2D g2d) {
         for (Engimon e : list_engimon_enemy) {
+            Image enemy_image;
             int x = e.get_pos().get_x();
             int y = e.get_pos().get_y();
             // WRONG, need to be fixed
             String sp = e.get_species();
             // |---
             // test_print(sp);
-            Image enemy_image = new ImageIcon("./images/transparent/engimon_" + sp + ".gif").getImage();
+            // jika fire
+            if (e.is_fire()) {
+                enemy_image = new ImageIcon("./images/transparent/engimon_fire.gif").getImage();
+            } else if (e.is_water()) {
+                enemy_image = new ImageIcon("./images/transparent/engimon_water.gif").getImage();
+            } else if (e.is_ground()) {
+                enemy_image = new ImageIcon("./images/transparent/engimon_Earth.gif").getImage();
+            } else {
+                enemy_image = new ImageIcon("./images/transparent/engimon_ice.gif").getImage();
+            }
+            // enemy_image = new ImageIcon("./images/transparent/engimon_" + sp +
+            // ".gif").getImage();
             g2d.drawImage(enemy_image, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, this);
         }
 
