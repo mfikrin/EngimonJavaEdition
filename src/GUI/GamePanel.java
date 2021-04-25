@@ -160,65 +160,68 @@ public class GamePanel extends JPanel implements ActionListener {
         return P.get_x() == active_engimon_x && P.get_y() == active_engimon_y;
     }
 
+    public Boolean isCompatibleEnemy(Engimon enemy, Position newPosition) {
+        // if (!((enemy.is_fire() && map.is_mountain(newPosition)) || (enemy.is_water()
+        // && map.is_sea(newPosition))
+        // || ((enemy.is_ground() || enemy.is_electric()) &&
+        // map.is_grassland(newPosition))
+        // || (enemy.is_ice() && map.is_tundra(newPosition)))) {
+        // System.out.print(newPosition.get_x());
+        // System.out.print(newPosition.get_y());
+        // System.out.println("not compate");
+        // }
+        // return ((enemy.is_fire() && map.is_mountain(newPosition)) ||
+        // (enemy.is_water() && map.is_sea(newPosition))
+        // || ((enemy.is_ground() || enemy.is_electric()) &&
+        // map.is_grassland(newPosition))
+        // || (enemy.is_ice() && map.is_tundra(newPosition)));
+        if (map.is_mountain(newPosition)) {
+            System.out.println("mountain");
+            return enemy.is_fire();
+        } else if (map.is_sea(newPosition)) {
+            System.out.println("water");
+            return enemy.is_water();
+        } else if (map.is_grassland(newPosition)) {
+            System.out.println("electric");
+            return (enemy.is_ground() || enemy.is_electric());
+        } else if (map.is_tundra(newPosition)) {
+            System.out.println("ice");
+            return enemy.is_ice();
+        } else {
+            return true;
+        }
+
+    }
+
     private void moveEngimonEnemy() {
         for (Engimon e : list_engimon_enemy) {
             Position newPosition;
             Position oldPosition = e.get_pos();
             // jika tidak menabrak tembok
-            // System.out.print("old ");
-            // System.out.print(oldPosition.get_x());
-            // System.out.print(",");
-            // System.out.println(oldPosition.get_y());
             do {
-                // e.set_pos(oldPosition);
-                // random arah gerakan
                 Random randomNumbers = new Random();
                 int k = randomNumbers.nextInt(4);
                 // gerak ke atas
                 if (k == 0) {
-                    // oldPosition.decr_y();
                     newPosition = new Position(oldPosition.get_x(), oldPosition.get_y() - 1);
-                    // System.out.println(e.get_pos().get_y());
                 }
                 // gerak ke kanan
                 else if (k == 1) {
-                    // oldPosition.incr_x();
                     newPosition = new Position(oldPosition.get_x() + 1, oldPosition.get_y());
-                    // System.out.println(e.get_pos().get_x());
                 }
                 // gerak ke bawah
                 else if (k == 2) {
-                    // oldPosition.incr_y();
                     newPosition = new Position(oldPosition.get_x(), oldPosition.get_y() + 1);
-                    // System.out.println(e.get_pos().get_y());
                 }
                 // bergerak ke kiri
                 else {
-                    // oldPosition.decr_x();
                     newPosition = new Position(oldPosition.get_x() - 1, oldPosition.get_y());
-                    // System.out.println(e.get_pos().get_x());
                 }
-                // System.out.print("old1 ");
-                // System.out.print(oldPosition.get_x());
-                // System.out.print(",");
-                // System.out.println(oldPosition.get_y());
-                // System.out.print("new1 ");
-                // System.out.print(newPosition.get_x());
-                // System.out.print(",");
-                // System.out.println(newPosition.get_y());
             } while (isHitWall(newPosition) || isHitOtherEnemy(newPosition) || isHitPlayer(newPosition)
-                    || isHitEngimonPlayer(newPosition));
+                    || isHitEngimonPlayer(newPosition) || !isCompatibleEnemy(e, newPosition));
             e.set_pos(newPosition);
-            // System.out.print("new ");
-            // System.out.print(e.get_pos().get_x());
-            // System.out.print(",");
-            // System.out.println(e.get_pos().get_y());
         }
     }
-
-    // public Boolean isHitPlayer(Position P) {
-
-    // }
 
     // ============================================== //
 
@@ -461,11 +464,6 @@ public class GamePanel extends JPanel implements ActionListener {
             Image enemy_image;
             int x = e.get_pos().get_x();
             int y = e.get_pos().get_y();
-            // WRONG, need to be fixed
-            String sp = e.get_species();
-            // |---
-            // test_print(sp);
-            // jika fire
             if (e.is_fire()) {
                 enemy_image = new ImageIcon("./images/transparent/engimon_fire.gif").getImage();
             } else if (e.is_water()) {
@@ -592,13 +590,14 @@ public class GamePanel extends JPanel implements ActionListener {
         repaint();
     }
 
-    public MessageBox show_command_list(){
+    public MessageBox show_command_list() {
         MessageBox command_list = new MessageBox();
-        command_list.write("Navigasi: w/a/s/d atau tanda panah", "B: Battle     E: Inventory", "I: Interact     C: Check active Engimon");
+        command_list.write("Navigasi: w/a/s/d atau tanda panah", "B: Battle     E: Inventory",
+                "I: Interact     C: Check active Engimon");
         return command_list;
     }
 
-    public MessageBox interact(){
+    public MessageBox interact() {
         MessageBox interact = new MessageBox();
         interact.write("Halo!", "Saya " + active_engimon_type, "");
         return interact;
