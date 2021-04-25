@@ -1,6 +1,6 @@
 package Entity;
 
-import java.util.ArrayList;//mau make map bebas
+import java.util.ArrayList;
 
 public class Inventory <T> {
     private ArrayList<T> inventory;
@@ -19,6 +19,10 @@ public class Inventory <T> {
 
     public int size() {
         return inventory.size();
+    }
+
+    public void set_item(int idx, T item) {
+        inventory.set(idx, item);
     }
 
     public void add_item(T item) {

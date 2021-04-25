@@ -60,6 +60,27 @@ public class Player {
         }
     }
 
+    public void add_skill_item(SkillItem si) throws InventoryFullException {
+        if (get_total_inventory_capacity() < max_inv_capacity_player){
+            boolean found = false;
+            for(int i = 0; i < i_skillitem.size(); ++i) {
+                if (i_skillitem.get_item(i).get_name().equals(si.get_name())) {
+                    found = true;
+                    SkillItem chosen_si = i_skillitem.get_item(i);
+                    chosen_si.incr_quantity();
+                    //yang dibawah bisa dicomment kalau ternyata yg atas udh reference ke yg oinventory
+                    i_skillitem.set_item(i, chosen_si);
+                }
+            }
+
+            if (!found) {
+                i_skillitem.add_item(si);
+            }
+        }else {
+            throw new InventoryFullException("Inventory has reached it's max capcity!", null);
+        }
+    }
+
     public void free_engimon(int idx_engimon) {
         i_engimon.remove(idx_engimon);
     }
