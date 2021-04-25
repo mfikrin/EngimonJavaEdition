@@ -68,6 +68,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private boolean is_escape = false;
 
     // |-END Test Attributes
+    // ============== Function ENGIMON ENEMY===================== //
 
     // EXTERNAL FUNCTIONs, moved later
     private void spawnEngimonEnemy() {
@@ -81,6 +82,91 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     // END External Functions
+
+    public Boolean isHitWall(Position P) {
+        return P.get_x() > 14 || P.get_y() > 14 || P.get_x() < 0 || P.get_y() < 0;
+    }
+
+    public Boolean isHitOtherEnemy(Position P) {
+        int a = 0;
+        for (Engimon e : list_engimon_enemy) {
+            if (e.get_pos().get_x() == P.get_x() && e.get_pos().get_y() == P.get_y()) {
+                a += 1;
+            }
+        }
+        return a > 1;
+
+    }
+
+    public Boolean isHitPlayer(Position P) {
+        return P.get_x() == player_x && P.get_y() == player_y;
+    }
+
+    public Boolean isHisEngimonPlayer(Position P) {
+        return P.get_x() == active_engimon_x && P.get_y() == active_engimon_y;
+    }
+
+    private void moveEngimonEnemy() {
+        for (Engimon e : list_engimon_enemy) {
+            Position newPosition;
+            Position oldPosition = e.get_pos();
+            // jika tidak menabrak tembok
+            System.out.print("old ");
+            System.out.print(oldPosition.get_x());
+            System.out.print(",");
+            System.out.println(oldPosition.get_y());
+            do {
+                // e.set_pos(oldPosition);
+                // random arah gerakan
+                Random randomNumbers = new Random();
+                int k = randomNumbers.nextInt(4);
+                // gerak ke atas
+                if (k == 0) {
+                    // oldPosition.decr_y();
+                    newPosition = new Position(oldPosition.get_x(), oldPosition.get_y() - 1);
+                    // System.out.println(e.get_pos().get_y());
+                }
+                // gerak ke kanan
+                else if (k == 1) {
+                    // oldPosition.incr_x();
+                    newPosition = new Position(oldPosition.get_x() + 1, oldPosition.get_y());
+                    // System.out.println(e.get_pos().get_x());
+                }
+                // gerak ke bawah
+                else if (k == 2) {
+                    // oldPosition.incr_y();
+                    newPosition = new Position(oldPosition.get_x(), oldPosition.get_y() + 1);
+                    // System.out.println(e.get_pos().get_y());
+                }
+                // bergerak ke kiri
+                else {
+                    // oldPosition.decr_x();
+                    newPosition = new Position(oldPosition.get_x() - 1, oldPosition.get_y());
+                    // System.out.println(e.get_pos().get_x());
+                }
+                // System.out.print("old1 ");
+                // System.out.print(oldPosition.get_x());
+                // System.out.print(",");
+                // System.out.println(oldPosition.get_y());
+                // System.out.print("new1 ");
+                // System.out.print(newPosition.get_x());
+                // System.out.print(",");
+                // System.out.println(newPosition.get_y());
+            } while (isHitWall(newPosition) || isHitOtherEnemy(newPosition) || isHitPlayer(newPosition)
+                    || isHisEngimonPlayer(newPosition));
+            e.set_pos(newPosition);
+            // System.out.print("new ");
+            // System.out.print(e.get_pos().get_x());
+            // System.out.print(",");
+            // System.out.println(e.get_pos().get_y());
+        }
+    }
+
+    // public Boolean isHitPlayer(Position P) {
+
+    // }
+
+    // ============================================== //
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -136,7 +222,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private void update_state() {
         // -- cek
         if (current_state == STATE_EXPLORE_WORLD) {
-            test_print("check surronding");
+            // test_print("check surronding");
             battle_ready = check_surrrounding_enemy();
             System.out.println(battle_ready);
             if (battle_ready) {
@@ -177,7 +263,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         count_i++;
         // test_print(Integer.toString(count_i));
-        if (count_i % 300 == 299) {
+        if (count_i % 1000 == 1) {
             spawnEngimonEnemy();
             test_print("anjay");
             System.out.println(list_engimon_enemy.size());
@@ -232,7 +318,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void draw_explore_world(Graphics2D g2d) {
-        System.out.println("in");
+        // System.out.println("in");
 
         draw_landscape(g2d);
         draw_characters(g2d);
@@ -309,7 +395,6 @@ public class GamePanel extends JPanel implements ActionListener {
             // spawnEngimonEnemy();
             // }
             // ------
-
             // Nanti yang diubah bukan value atribut GamePanel, tapi data di backend
             if (direction.equals("LEFT")) {
                 this.active_engimon_x = this.player_x;
@@ -328,6 +413,9 @@ public class GamePanel extends JPanel implements ActionListener {
                 this.active_engimon_y = this.player_y;
                 this.player_y += TILE_SIZE;
             }
+
+            // gerakkan engimon enemy
+            moveEngimonEnemy();
         }
     }
 
@@ -355,7 +443,7 @@ public class GamePanel extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
 
             int key = e.getKeyCode();
-            System.out.println("keypressed");
+            // System.out.println("keypressed");
             if (current_state == STATE_MAIN_MENU) {
                 System.out.println("in main menu");
                 System.out.println(key);
