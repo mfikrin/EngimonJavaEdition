@@ -19,6 +19,14 @@ public class SkillItem{
         return quantity;
     }
 
+    public Skill get_skill() {
+        return contained_skill;
+    }
+
+    public int get_nbpower() {
+        return contained_skill.get_nbpower();
+    }
+
     public void incr_quantity() {
         quantity++;
     }
