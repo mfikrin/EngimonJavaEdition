@@ -28,4 +28,9 @@ public class Inventory <T> {
     public void remove(int i) {
         inventory.remove(i);
     }
+
+    public void set_list(ArrayList<T> new_list) {
+        inventory.clear();
+        inventory = new_list;
+    }
 }

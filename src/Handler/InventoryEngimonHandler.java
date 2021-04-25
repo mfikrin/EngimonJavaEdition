@@ -39,6 +39,24 @@ public class InventoryEngimonHandler {
         }
         sort_level(fire_electric);
         sort_level(water_ground);
+        sort_level(water_ice);
+        sort_level(fire);
+        sort_level(water);
+        sort_level(electric);
+        sort_level(ground);
+        sort_level(ice);
+
+        al_engimon.clear();
+        al_engimon.addAll(fire_electric);
+        al_engimon.addAll(water_ground);
+        al_engimon.addAll(water_ice);
+        al_engimon.addAll(fire);
+        al_engimon.addAll(water);
+        al_engimon.addAll(electric);
+        al_engimon.addAll(ground);
+        al_engimon.addAll(ice);
+
+        invent.set_list(al_engimon);
     }
 
     private static void sort_level(ArrayList<Engimon> a) {
