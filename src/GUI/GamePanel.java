@@ -1,5 +1,7 @@
 package GUI;
 
+// import src.GameState.GameS;
+
 import java.lang.*;
 
 import java.io.File;
@@ -40,11 +42,17 @@ public class GamePanel extends JPanel implements ActionListener {
     private final int STATE_BREED = 4;
 
     private int current_state = STATE_MAIN_MENU;
+    
+    // FLAGS |=~
+    private boolean flag_message_box; 
     // ----------------------------------- //
-
+    
     private boolean battle_ready = false;
 
     // =================================== //
+    // gui components
+    private MessageBox message_box;
+    // ---
 
     private int player_x;
     private int player_y;
@@ -102,7 +110,7 @@ public class GamePanel extends JPanel implements ActionListener {
         return P.get_x() == player_x && P.get_y() == player_y;
     }
 
-    public Boolean isHisEngimonPlayer(Position P) {
+    public Boolean isHitEngimonPlayer(Position P) {
         return P.get_x() == active_engimon_x && P.get_y() == active_engimon_y;
     }
 
@@ -153,7 +161,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 // System.out.print(",");
                 // System.out.println(newPosition.get_y());
             } while (isHitWall(newPosition) || isHitOtherEnemy(newPosition) || isHitPlayer(newPosition)
-                    || isHisEngimonPlayer(newPosition));
+                    || isHitEngimonPlayer(newPosition));
             e.set_pos(newPosition);
             // System.out.print("new ");
             // System.out.print(e.get_pos().get_x());
@@ -211,6 +219,10 @@ public class GamePanel extends JPanel implements ActionListener {
         this.active_engimon_y = 0 * TILE_SIZE;
         this.active_engimon_type = "electric";
         this.list_engimon_enemy = new ArrayList<Engimon>();
+        this.message_box = new MessageBox();
+
+        // set flag(s)
+        this.flag_message_box = false;
         // END to be...
 
         load_map_data();
@@ -218,6 +230,19 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     // Helper functions
+
+    private void clear_message_box(){
+        this.flag_message_box = false;
+        message_box.write("", "", "");
+    }
+
+    private void engimon_interract(){
+        this.flag_message_box = true;
+        message_box.write("Halo!", "aku engimon", "");
+        System.out.println(".............interacttt");
+
+    }
+
 
     private void update_state() {
         // -- cek
@@ -300,6 +325,21 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     // -----
 
+    private void draw_message_box(Graphics2D g2d) {
+        System.out.println("...........draw mbox");
+        Image bg_m_box = new ImageIcon("./images/background.png").getImage();
+        g2d.drawImage(bg_m_box, 0 * TILE_SIZE, 12 * TILE_SIZE, SCREEN_WIDTH, 3 * TILE_SIZE, this);
+        
+        int font_size = 16;
+        Font font = new Font("Serif", Font.PLAIN, font_size);
+        g2d.setFont(font);
+        g2d.drawString(message_box.get_l1(), TILE_SIZE/2, 13*TILE_SIZE-TILE_SIZE/5);
+        g2d.drawString(message_box.get_l2(), TILE_SIZE/2, 14*TILE_SIZE-TILE_SIZE/5-8);
+        g2d.drawString(message_box.get_l3(), TILE_SIZE/2, 15*TILE_SIZE-TILE_SIZE/5-16);
+
+
+    }
+
     public void draw_battle(Graphics2D g2d) {
         System.out.println("Battle");
         Image p = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
@@ -315,6 +355,26 @@ public class GamePanel extends JPanel implements ActionListener {
         // System.out.println("main menu");
         Image banner = new ImageIcon("./images/title_banner.gif").getImage();
         g2d.drawImage(banner, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, this);
+        Image e1 = new ImageIcon("./images/transparent/engimon_Aapee.gif").getImage();
+        Image e2 = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
+        Image e3 = new ImageIcon("./images/transparent/engimon_Earth.gif").getImage();
+        Image e4 = new ImageIcon("./images/transparent/engimon_ice.gif").getImage();
+        Image e5 = new ImageIcon("./images/transparent/engimon_water.gif").getImage();
+        Image e6 = new ImageIcon("./images/transparent/engimon_water_ice.gif").getImage();
+        Image e7 = new ImageIcon("./images/transparent/engimon_water_earth.gif").getImage();
+        Image e8 = new ImageIcon("./images/transparent/engimon_fire_electric.gif").getImage();
+
+
+        g2d.drawImage(e1, 0 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
+        g2d.drawImage(e2, 2 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
+        g2d.drawImage(e3, 4 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
+        g2d.drawImage(e4, 6 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
+        g2d.drawImage(e5, 8 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
+        g2d.drawImage(e6, 10 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
+        g2d.drawImage(e7, 12 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
+        g2d.drawImage(e8, 14 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
+
+
     }
 
     public void draw_explore_world(Graphics2D g2d) {
@@ -323,6 +383,10 @@ public class GamePanel extends JPanel implements ActionListener {
         draw_landscape(g2d);
         draw_characters(g2d);
         draw_enemies(g2d);
+
+        if (flag_message_box == true){
+            draw_message_box(g2d);
+        }
     }
 
     public void draw_landscape(Graphics2D g2d) {
@@ -454,22 +518,32 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
 
             } else if (current_state == STATE_EXPLORE_WORLD) {
-                if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
-                    move("LEFT");
-                } else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
-                    move("RIGHT");
-                } else if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
-                    move("UP");
-                } else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
-                    move("DOWN");
-                } else if (key == KeyEvent.VK_ESCAPE) {
-                    current_state = STATE_MAIN_MENU;
-                } else if (key == KeyEvent.VK_B) {
-                    if (battle_ready) {
-                        current_state = STATE_BATTLE;
-                        repaint();
+                if (flag_message_box == true){
+                    if (key == KeyEvent.VK_ENTER) {
+                        clear_message_box();
+                    }
+                } else {
+                    if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
+                        move("LEFT");
+                    } else if (key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) {
+                        move("RIGHT");
+                    } else if (key == KeyEvent.VK_UP || key == KeyEvent.VK_W) {
+                        move("UP");
+                    } else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
+                        move("DOWN");
+                    } else if (key == KeyEvent.VK_ESCAPE) {
+                        current_state = STATE_MAIN_MENU;
+                    } else if (key == KeyEvent.VK_B) {
+                        if (battle_ready) {
+                            current_state = STATE_BATTLE;
+                            repaint();
+                        }
+                    } else if (key == KeyEvent.VK_I){
+                        engimon_interract();
+                        // flag_message_box = !flag_message_box;
                     }
                 }
+
 
             } else if (current_state == STATE_BATTLE) {
                 if (key == KeyEvent.VK_ESCAPE) {
