@@ -46,11 +46,11 @@ public class GamePanel extends JPanel implements ActionListener {
     private final int STATE_BREED = 4;
 
     private int current_state = STATE_MAIN_MENU;
-    
+
     // FLAGS |=~
-    private boolean flag_message_box; 
+    private boolean flag_message_box;
     // ----------------------------------- //
-    
+
     private boolean battle_ready = false;
 
     // =================================== //
@@ -192,29 +192,6 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void load_map_data() {
         this.landscape = map.get_landscape();
-        // this.landscape = new int[SCREEN_HEIGHT / TILE_SIZE][SCREEN_WIDTH /
-        // TILE_SIZE];
-        // try {
-        // // #PATH
-        // File file = new File("./FileEksternal/map.txt");
-
-        // Scanner scan = new Scanner(file);
-
-        // int i = 0;
-        // while (scan.hasNextLine()) {
-        // String getDataString = scan.nextLine();
-        // for (int j = 0; j < getDataString.length(); j++) {
-        // char c = getDataString.charAt(j);
-        // this.landscape[i][j] = Character.getNumericValue(c);
-        // System.out.print(this.landscape[i][j]);
-        // }
-        // System.out.println();
-        // i += 1;
-        // }
-        // scan.close();
-        // } catch (FileNotFoundException ex) {
-        // System.out.println("File Tidak Ditemukan");
-        // }
     }
 
     private void init_data() {
@@ -237,18 +214,17 @@ public class GamePanel extends JPanel implements ActionListener {
 
     // Helper functions
 
-    private void clear_message_box(){
+    private void clear_message_box() {
         this.flag_message_box = false;
         message_box.write("", "", "");
     }
 
-    private void engimon_interract(){
+    private void engimon_interract() {
         this.flag_message_box = true;
         message_box.write("Halo!", "aku engimon", "");
         System.out.println(".............interacttt");
 
     }
-
 
     private void update_state() {
         // -- cek
@@ -335,14 +311,13 @@ public class GamePanel extends JPanel implements ActionListener {
         System.out.println("...........draw mbox");
         Image bg_m_box = new ImageIcon("./images/background.png").getImage();
         g2d.drawImage(bg_m_box, 0 * TILE_SIZE, 12 * TILE_SIZE, SCREEN_WIDTH, 3 * TILE_SIZE, this);
-        
+
         int font_size = 16;
         Font font = new Font("Serif", Font.PLAIN, font_size);
         g2d.setFont(font);
-        g2d.drawString(message_box.get_l1(), TILE_SIZE/2, 13*TILE_SIZE-TILE_SIZE/5);
-        g2d.drawString(message_box.get_l2(), TILE_SIZE/2, 14*TILE_SIZE-TILE_SIZE/5-8);
-        g2d.drawString(message_box.get_l3(), TILE_SIZE/2, 15*TILE_SIZE-TILE_SIZE/5-16);
-
+        g2d.drawString(message_box.get_l1(), TILE_SIZE / 2, 13 * TILE_SIZE - TILE_SIZE / 5);
+        g2d.drawString(message_box.get_l2(), TILE_SIZE / 2, 14 * TILE_SIZE - TILE_SIZE / 5 - 8);
+        g2d.drawString(message_box.get_l3(), TILE_SIZE / 2, 15 * TILE_SIZE - TILE_SIZE / 5 - 16);
 
     }
 
@@ -370,7 +345,6 @@ public class GamePanel extends JPanel implements ActionListener {
         Image e7 = new ImageIcon("./images/transparent/engimon_water_earth.gif").getImage();
         Image e8 = new ImageIcon("./images/transparent/engimon_fire_electric.gif").getImage();
 
-
         g2d.drawImage(e1, 0 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
         g2d.drawImage(e2, 2 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
         g2d.drawImage(e3, 4 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
@@ -379,7 +353,6 @@ public class GamePanel extends JPanel implements ActionListener {
         g2d.drawImage(e6, 10 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
         g2d.drawImage(e7, 12 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
         g2d.drawImage(e8, 14 * TILE_SIZE, 14 * TILE_SIZE, 1 * TILE_SIZE, 1 * TILE_SIZE, this);
-
 
     }
 
@@ -390,7 +363,7 @@ public class GamePanel extends JPanel implements ActionListener {
         draw_characters(g2d);
         draw_enemies(g2d);
 
-        if (flag_message_box == true){
+        if (flag_message_box == true) {
             draw_message_box(g2d);
         }
     }
@@ -524,7 +497,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
 
             } else if (current_state == STATE_EXPLORE_WORLD) {
-                if (flag_message_box == true){
+                if (flag_message_box == true) {
                     if (key == KeyEvent.VK_ENTER) {
                         clear_message_box();
                     }
@@ -544,12 +517,11 @@ public class GamePanel extends JPanel implements ActionListener {
                             current_state = STATE_BATTLE;
                             repaint();
                         }
-                    } else if (key == KeyEvent.VK_I){
+                    } else if (key == KeyEvent.VK_I) {
                         engimon_interract();
                         // flag_message_box = !flag_message_box;
                     }
                 }
-
 
             } else if (current_state == STATE_BATTLE) {
                 if (key == KeyEvent.VK_ESCAPE) {
