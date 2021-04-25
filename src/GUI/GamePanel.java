@@ -565,4 +565,16 @@ public class GamePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
+
+    public MessageBox show_command_list(){
+        MessageBox command_list = new MessageBox();
+        command_list.write("Navigasi: w/a/s/d atau tanda panah", "B: Battle     E: Inventory", "I: Interact     C: Check active Engimon");
+        return command_list;
+    }
+
+    public MessageBox interact(){
+        MessageBox interact = new MessageBox();
+        interact.write("Halo!", "Saya " + active_engimon_type, "");
+        return interact;
+    }
 }
