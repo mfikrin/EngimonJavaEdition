@@ -60,6 +60,17 @@ public class Player {
         pos_engimon = active_engimon.get_pos();
     }
 
+    public int get_id_active_engimon() {
+        int i = 0;
+        for (Engimon e : i_engimon.get_list()) {
+            if (e == active_engimon) {
+                return i;
+            }
+            i += 1;
+        }
+        return -1;
+    }
+
     public void add_engimon(Engimon e) throws InventoryFullException {
         if (get_total_inventory_capacity() < max_inv_capacity_player) {
             i_engimon.add_item(e);
