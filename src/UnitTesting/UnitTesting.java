@@ -12,6 +12,30 @@ import Generator.EngimonGenerator;
 import Generator.SkillGenerator;
 
 public class UnitTesting {
+
+    public static void test() {
+        test_one();
+        test_two();
+        test_three();
+        test_four();
+        test_five();
+        test_six();
+        test_seven();
+        test_eight();
+        test_nine();
+        test_ten();
+        test_eleven();
+        test_twelve();
+        test_thirteen();
+        test_fourteen();
+        test_fifteen();
+        test_sixteen();
+        test_seventeen();
+        test_eighteen();
+        test_nineteen();
+        test_twenty();
+        test_twentyone();
+    }
     public static void test_one() {
         Engimon e = EngimonGenerator.generate_fire();
         assert e.is_fire();

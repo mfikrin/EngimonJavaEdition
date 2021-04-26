@@ -12,7 +12,7 @@ public class WaterGroundSkill extends Skill {
     }
 
     @Override
-    public WaterGroundSkill clone() {
+    public Skill clone() {
         return new WaterGroundSkill(this);
     }
     
