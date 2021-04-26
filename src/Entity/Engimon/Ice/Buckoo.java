@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Buckoo extends IceEngimon {
     public Buckoo() {
         super();
+        dialogue = "Buckkkkkk! Bucckkk!";
         try {
             super.add_skill(new Chill());
         } catch (SkillFullException e) {

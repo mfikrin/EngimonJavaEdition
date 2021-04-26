@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class AisKreem extends IceEngimon {
     public AisKreem() {
         super();
+        dialogue = ".....(silent)";
         try {
             super.add_skill(new Avalanche());
         } catch (SkillFullException e) {

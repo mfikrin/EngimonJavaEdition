@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Esidisi extends ElectricEngimon {
     public Esidisi() {
         super();
+        dialogue = "EYSIDISI!";
         try {
             super.add_skill(new Gamma());
         } catch (SkillFullException e) {

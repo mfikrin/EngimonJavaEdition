@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Elpijee extends FireEngimon {
     public Elpijee() {
         super();
+        dialogue = "GASSS!!!";
         try {
             super.add_skill(new Scorch());
         } catch (SkillFullException e) {

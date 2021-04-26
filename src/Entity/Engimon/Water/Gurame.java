@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Gurame extends WaterEngimon {
     public Gurame() {
         super();
+        dialogue = "Gurrrrr";
         try {
             super.add_skill(new Mizu());
         } catch (SkillFullException e) {

@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Compfer extends FireEngimon {
     public Compfer() {
         super();
+        dialogue = "Compfer!!!";
         try {
             super.add_skill(new Cremation());
         } catch (SkillFullException e) {

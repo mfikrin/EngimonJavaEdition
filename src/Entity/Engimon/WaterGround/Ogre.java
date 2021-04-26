@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Ogre extends WaterGroundEngimon {
     public Ogre() {
         super();
+        dialogue = "Hurrahhhhh!!!";
         try {
             super.add_skill(new Mud());
         } catch (SkillFullException e) {

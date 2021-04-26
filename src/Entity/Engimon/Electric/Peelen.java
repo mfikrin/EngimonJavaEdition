@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Peelen extends ElectricEngimon {
     public Peelen() {
         super();
+        dialogue = "Peelellelelle....";
         try {
             super.add_skill(new Thunderbolt());
         } catch (SkillFullException e) {

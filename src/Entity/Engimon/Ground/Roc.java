@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Roc extends GroundEngimon {
     public Roc() {
         super();
+        dialogue = "RRRRRooocccccc...";
         try {
             super.add_skill(new Sabaku());
         } catch (SkillFullException e) {

@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Cornslate extends ElectricEngimon {
     public Cornslate() {
         super();
+        dialogue = "!@#iqeuiw.... Kzzstst%#@..";
         try {
             super.add_skill(new Volt());
         } catch (SkillFullException e) {

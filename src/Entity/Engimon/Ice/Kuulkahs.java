@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Kuulkahs extends IceEngimon {
     public Kuulkahs() {
         super();
+        dialogue = "Kahhhsssshhshsh....";
         try {
             super.add_skill(new Cold());
         } catch (SkillFullException e) {

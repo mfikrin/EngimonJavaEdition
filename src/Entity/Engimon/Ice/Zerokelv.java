@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Zerokelv extends IceEngimon {
     public Zerokelv() {
         super();
+        dialogue = "Freeezzee... Atom Stayyy....";
         try {
             super.add_skill(new Sublimation());
         } catch (SkillFullException e) {

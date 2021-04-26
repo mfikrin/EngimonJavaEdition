@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Dolphzig extends WaterEngimon {
     public Dolphzig() {
         super();
+        dialogue = "Zigggllleerr!!";
         try {
             super.add_skill(new Hydrobeam());
         } catch (SkillFullException e) {

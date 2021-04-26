@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Strato extends WaterIceEngimon {
     public Strato() {
         super();
+        dialogue = "Shoooshhh... Shooshhh....";
         try {
             super.add_skill(new Frigid());
         } catch (SkillFullException e) {

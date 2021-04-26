@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Azula extends FireElectricEngimon {
     public Azula() {
         super();
+        dialogue = "Zzzzzz...";
         try {
             super.add_skill(new Energya());
         } catch (SkillFullException e) {

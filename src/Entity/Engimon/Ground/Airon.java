@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Airon extends GroundEngimon {
     public Airon() {
         super();
+        dialogue = "RRrrrrrooonn...";
         try {
             super.add_skill(new Crush());
         } catch (SkillFullException e) {

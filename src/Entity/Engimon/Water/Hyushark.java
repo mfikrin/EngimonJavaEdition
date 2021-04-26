@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Hyushark extends WaterEngimon {
     public Hyushark() {
         super();
+        dialogue = "Hyuuuu...nnnn";
         try {
             super.add_skill(new Splash());
         } catch (SkillFullException e) {

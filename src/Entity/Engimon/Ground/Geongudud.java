@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Geongudud extends GroundEngimon {
     public Geongudud() {
         super();
+        dialogue = "Duddddd....";
         try {
             super.add_skill(new Geospit());
         } catch (SkillFullException e) {

@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Baychec extends WaterEngimon {
     public Baychec() {
         super();
+        dialogue = "Gaaddaaa owwwjeyykk...";
         try {
             super.add_skill(new Drown());
         } catch (SkillFullException e) {

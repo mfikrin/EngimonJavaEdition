@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Ashatee extends FireEngimon {
     public Ashatee() {
         super();
+        dialogue = "Ssshhhh.... Shaaateeee...";
         try {
             super.add_skill(new Combustion());
         } catch (SkillFullException e) {

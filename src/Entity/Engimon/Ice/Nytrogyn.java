@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Nytrogyn extends IceEngimon {
     public Nytrogyn() {
         super();
+        dialogue = "NO2!";
         try {
             super.add_skill(new Snow());
         } catch (SkillFullException e) {

@@ -23,6 +23,7 @@ public abstract class Engimon implements Element,Clone<Engimon> {
     private String[][] parent = {{"-","-"},{"-","-"}};
     private ArrayList<Skill> list_skill;
     private Position pos = new Position(0,0);
+    protected String dialogue = "";
 
 
     //Constructor
@@ -45,6 +46,7 @@ public abstract class Engimon implements Element,Clone<Engimon> {
             this.list_skill.add(skill.clone());
         }
         this.pos = new Position(other.pos);
+        this.dialogue = other.dialogue;
     }
 
     //Clone
@@ -85,6 +87,10 @@ public abstract class Engimon implements Element,Clone<Engimon> {
 
     public String[][] get_parent() {
         return parent;
+    }
+
+    public String get_dialogue() {
+        return dialogue;
     }
 
     public int get_max_exp() {

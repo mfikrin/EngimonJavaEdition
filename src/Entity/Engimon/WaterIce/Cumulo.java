@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Cumulo extends WaterIceEngimon {
     public Cumulo() {
         super();
+        dialogue = "Sheeehhssss.... Sheesshhhh...";
         try {
             super.add_skill(new Slush());
         } catch (SkillFullException e) {

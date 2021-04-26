@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Cowrake extends FireEngimon {
     public Cowrake() {
         super();
+        dialogue = "RAKE RAKE RAKE!";
         try {
             super.add_skill(new Molten());
         } catch (SkillFullException e) {

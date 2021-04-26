@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Laiter extends FireElectricEngimon {
     public Laiter() {
         super();
+        dialogue = "Kzzssttt....";
         try {
             super.add_skill(new Plasma());
         } catch (SkillFullException e) {

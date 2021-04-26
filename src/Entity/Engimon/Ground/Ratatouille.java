@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Ratatouille extends GroundEngimon {
     public Ratatouille() {
         super();
+        dialogue = "LINGUIIINIII~~~";
         try {
             super.add_skill(new Terroar());
         } catch (SkillFullException e) {

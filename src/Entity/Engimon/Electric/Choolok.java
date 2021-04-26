@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Choolok extends ElectricEngimon {
     public Choolok() {
         super();
+        dialogue = "Chooooo... Chooo... LOK!";
         try {
             super.add_skill(new Charge());
         } catch (SkillFullException e) {

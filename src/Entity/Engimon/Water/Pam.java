@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Pam extends WaterEngimon {
     public Pam() {
         super();
+        dialogue = "Pam Pam Pam!";
         try {
             super.add_skill(new Pressure());
         } catch (SkillFullException e) {

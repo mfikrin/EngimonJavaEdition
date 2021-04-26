@@ -7,6 +7,7 @@ import Exception.SkillFullException;
 public class Beloot extends WaterGroundEngimon {
     public Beloot() {
         super();
+        dialogue = "Shlllrrkkk... Shlrrrkkrk..";
         try {
             super.add_skill(new Aquades());
         } catch (SkillFullException e) {
