@@ -376,6 +376,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
         count_i++;
         // test_print(Integer.toString(count_i));
+        if (count_i % 100 == 1) {
+            moveEngimonEnemy();
+        }
         if (count_i % 2000 == 1) {
             spawnEngimonEnemy();
             test_print("anjay");
@@ -832,7 +835,7 @@ public class GamePanel extends JPanel implements ActionListener {
             }
 
             // gerakkan engimon enemy
-            moveEngimonEnemy();
+            // moveEngimonEnemy();
         }
     }
 
