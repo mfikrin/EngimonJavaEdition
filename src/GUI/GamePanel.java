@@ -465,10 +465,10 @@ public class GamePanel extends JPanel implements ActionListener {
             p = new ImageIcon("./images/transparent/engimon_ice.gif").getImage();
         }
         Image e;
-        if (check_surrrounding_enemy().is_electric()) {
-            e = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
-        } else if (check_surrrounding_enemy().is_fire()) {
+        if (check_surrrounding_enemy().is_fire()) {
             e = new ImageIcon("./images/transparent/engimon_fire.gif").getImage();
+        } else if (check_surrrounding_enemy().is_electric()) {
+            e = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
         } else if (check_surrrounding_enemy().is_water()) {
             e = new ImageIcon("./images/transparent/engimon_water.gif").getImage();
         } else if (check_surrrounding_enemy().is_ground()) {
@@ -552,6 +552,7 @@ public class GamePanel extends JPanel implements ActionListener {
             massage_battle = 2;
             list_engimon_enemy.remove(check_surrrounding_enemy());
         } else if (battle.get_power_level(1) * x < battle.get_power_level(2) * y) {
+
             massage_battle = 3;
             player.get_engimon().set_live(live - 1);
         } else {
@@ -991,7 +992,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     fightEnemy();
                 } else if (key == KeyEvent.VK_S) {
                     // player.set_active_engimon(1);
-                    // current_state = STATE_EXPLORE_WORLD;
+                    current_state = STATE_EXPLORE_WORLD;
                     // repaint();
                 } else if (key == KeyEvent.VK_B) {
                     massage_battle = 1;
