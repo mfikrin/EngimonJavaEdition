@@ -4,7 +4,10 @@ import Entity.Player;
 import Entity.SkillItem;
 import Entity.Engimon.Engimon;
 import Entity.Skill.Skill;
+import Exception.ElementNotSuitableException;
+import Exception.InsufficientLevelException;
 import Exception.InventoryFullException;
+import Exception.SkillFullException;
 import Generator.EngimonGenerator;
 import Generator.SkillGenerator;
 
@@ -255,6 +258,212 @@ public class UnitTesting {
             p.add_engimon(EngimonGenerator.generate_rand_engimon());
         } catch (InventoryFullException e) {
             assert true;
+        }
+    }
+
+    public static void test_fifteen() {
+        Player p = new Player();
+
+        Engimon e1 = EngimonGenerator.generate_fire();
+        Engimon e2 = EngimonGenerator.generate_electric();
+
+        while(e1.get_level() < 10) {
+            e1.add_exp(1);
+        }
+
+        while(e2.get_level() < 10) {
+            e2.add_exp(1);
+        }
+
+        try {
+            p.add_engimon(e1);
+            p.add_engimon(e2);
+        } catch (InventoryFullException e) {
+            assert false;
+        }
+
+        try {
+            p.breed(0, 1);
+        } catch (InsufficientLevelException | SkillFullException | ElementNotSuitableException e) {
+            assert false;
+        }
+
+        p.set_active_engimon(2);
+        assert p.get_engimon().is_fire() && p.get_engimon().is_electric();
+    }
+
+    public static void test_sixteen() {
+        Player p = new Player();
+
+        Engimon e1 = EngimonGenerator.generate_water();
+        Engimon e2 = EngimonGenerator.generate_ground();
+
+        while(e1.get_level() < 10) {
+            e1.add_exp(1);
+        }
+
+        while(e2.get_level() < 10) {
+            e2.add_exp(1);
+        }
+
+        try {
+            p.add_engimon(e1);
+            p.add_engimon(e2);
+        } catch (InventoryFullException e) {
+            assert false;
+        }
+
+        try {
+            p.breed(0, 1);
+        } catch (InsufficientLevelException | SkillFullException | ElementNotSuitableException e) {
+            assert false;
+        }
+
+        p.set_active_engimon(2);
+        assert p.get_engimon().is_water() && p.get_engimon().is_ground();
+    }
+
+    public static void test_seventeen() {
+        Player p = new Player();
+
+        Engimon e1 = EngimonGenerator.generate_water();
+        Engimon e2 = EngimonGenerator.generate_ice();
+
+        while(e1.get_level() < 10) {
+            e1.add_exp(1);
+        }
+
+        while(e2.get_level() < 10) {
+            e2.add_exp(1);
+        }
+
+        try {
+            p.add_engimon(e1);
+            p.add_engimon(e2);
+        } catch (InventoryFullException e) {
+            assert false;
+        }
+
+        try {
+            p.breed(0, 1);
+        } catch (InsufficientLevelException | SkillFullException | ElementNotSuitableException e) {
+            assert false;
+        }
+
+        p.set_active_engimon(2);
+        assert p.get_engimon().is_water() && p.get_engimon().is_ice();
+    }
+
+    public static void test_eighteen() {
+        Player p = new Player();
+
+        Engimon e1 = EngimonGenerator.generate_water();
+        Engimon e2 = EngimonGenerator.generate_fire();
+
+        while(e1.get_level() < 10) {
+            e1.add_exp(1);
+        }
+
+        while(e2.get_level() < 10) {
+            e2.add_exp(1);
+        }
+
+        try {
+            p.add_engimon(e1);
+            p.add_engimon(e2);
+        } catch (InventoryFullException e) {
+            assert false;
+        }
+
+        try {
+            p.breed(0, 1);
+        } catch (InsufficientLevelException | SkillFullException | ElementNotSuitableException e) {
+            assert false;
+        }
+
+        p.set_active_engimon(2);
+        assert p.get_engimon().is_fire();
+    }
+
+    public static void test_nineteen() {
+        Player p = new Player();
+
+        Engimon e1 = EngimonGenerator.generate_water();
+        Engimon e2 = EngimonGenerator.generate_electric();
+
+        while(e1.get_level() < 10) {
+            e1.add_exp(1);
+        }
+
+        while(e2.get_level() < 10) {
+            e2.add_exp(1);
+        }
+
+        try {
+            p.add_engimon(e1);
+            p.add_engimon(e2);
+        } catch (InventoryFullException e) {
+            assert false;
+        }
+
+        try {
+            p.breed(0, 1);
+        } catch (InsufficientLevelException | SkillFullException | ElementNotSuitableException e) {
+            assert false;
+        }
+
+        p.set_active_engimon(2);
+        assert p.get_engimon().is_electric();
+    }
+
+    public static void test_twenty() {
+        Player p = new Player();
+
+        Engimon e1 = EngimonGenerator.generate_water();
+        Engimon e2 = EngimonGenerator.generate_ground();
+
+        try {
+            p.add_engimon(e1);
+            p.add_engimon(e2);
+        } catch (InventoryFullException e) {
+            assert false;
+        }
+
+        try {
+            p.breed(0, 1);
+        } catch (InsufficientLevelException | SkillFullException | ElementNotSuitableException e) {
+            assert true;
+        }
+    }
+
+    public static void test_twentyone() {
+        Engimon e = EngimonGenerator.generate_fire();
+
+        try {
+            e.add_skill(SkillGenerator.generate_water());
+        } catch (SkillFullException e1) {
+            assert false;;
+        } catch (ElementNotSuitableException e1) {
+            assert true;
+        }
+
+        try {
+            e.add_skill(SkillGenerator.generate_fire());
+            e.add_skill(SkillGenerator.generate_fire());
+            e.add_skill(SkillGenerator.generate_fire());
+            e.add_skill(SkillGenerator.generate_fire());
+        } catch (SkillFullException e1) {
+            assert false;
+        } catch (ElementNotSuitableException e1) {
+            assert false;
+        }
+
+        try {
+            e.add_skill(SkillGenerator.generate_fire());
+        } catch (SkillFullException e1) {
+            assert true;
+        } catch (ElementNotSuitableException e1) {
+            assert false;
         }
     }
 
