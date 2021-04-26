@@ -25,6 +25,13 @@ public class Player {
     }
 
     //Getter
+    public Inventory<Engimon> get_inventory_engimon(){
+        return i_engimon;
+    }
+    public Inventory<SkillItem> get_inventory_skill_item(){
+        return i_skillitem;
+    }
+
     public Engimon get_engimon() {
         return active_engimon;
     }
