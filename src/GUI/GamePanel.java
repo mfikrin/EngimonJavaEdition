@@ -21,6 +21,7 @@ import java.util.*;
 
 import Entity.Position;
 import Entity.Map;
+import Entity.Player;
 import Entity.Engimon.*;
 import Entity.Engimon.Fire.*;
 import Entity.Engimon.Electric.*;
@@ -31,7 +32,7 @@ import Entity.Engimon.Water.*;
 import Entity.Engimon.WaterGround.*;
 import Entity.Engimon.WaterIce.*;
 // import src.Entity.Position;
-
+import Exception.InventoryFullException;
 import Generator.EngimonGenerator;
 
 // -------
@@ -87,6 +88,8 @@ public class GamePanel extends JPanel implements ActionListener {
     // tester atributes, disposed later
     private static int count_i = 0;
     private boolean is_escape = false;
+
+    private Player player = new Player();
 
     // |-END Test Attributes
     // ============== Function ENGIMON ENEMY===================== //
@@ -241,6 +244,13 @@ public class GamePanel extends JPanel implements ActionListener {
         // set flag(s)
         this.flag_message_box = false;
         // END to be...
+
+        try {
+            player.add_engimon(EngimonGenerator.generate_rand_engimon());
+            player.set_active_engimon(0);
+        } catch (InventoryFullException e) {
+            System.out.println("Cannot generate active engimon...");
+        }
 
         load_map_data();
 
