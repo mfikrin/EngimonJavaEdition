@@ -588,6 +588,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     } else if (key == KeyEvent.VK_ESCAPE) {
                         current_state = STATE_MAIN_MENU;
                     } else if (key == KeyEvent.VK_B) {
+                        update_state();
                         if (battle_ready) {
                             current_state = STATE_BATTLE;
                             repaint();
