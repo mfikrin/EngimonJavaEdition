@@ -406,7 +406,7 @@ public class UnitTesting {
         }
 
         p.set_active_engimon(2);
-        assert p.get_engimon().is_fire();
+        assert p.get_engimon().is_water();
     }
 
     public static void test_nineteen() {
@@ -472,7 +472,6 @@ public class UnitTesting {
         }
 
         try {
-            e.add_skill(SkillGenerator.generate_fire());
             e.add_skill(SkillGenerator.generate_fire());
             e.add_skill(SkillGenerator.generate_fire());
             e.add_skill(SkillGenerator.generate_fire());
