@@ -41,6 +41,7 @@ import Exception.InsufficientLevelException;
 import Exception.InventoryFullException;
 import Exception.MovementException;
 import Exception.SkillFullException;
+import Exception.ZeroQuantityException;
 import Generator.EngimonGenerator;
 import Generator.SkillGenerator;
 
@@ -70,14 +71,14 @@ public class GamePanel extends JPanel implements ActionListener {
     // FLAGS |=~
     private boolean flag_message_box;
     private boolean flag_inventory;
-    private int inv_x = 0;
-    private int inv_y = 0;
-    private boolean inv_mark_engimon = true;
-    private int inv_page = 1;
-    private int inv_max_page = 5;
-    private String inv_status = "";
-    private ArrayList<Integer> arr_to_breed = new ArrayList<>();
-    private boolean ready_breed = false;
+        private int inv_x = 0;
+        private int inv_y = 0;
+        private boolean inv_mark_engimon = true;
+        private int inv_page = 1;
+        private int inv_max_page = 5;
+        private String inv_status = "";
+        private ArrayList<Integer> arr_to_breed = new ArrayList<>();
+        private boolean ready_breed = false;
 
     // ----------------------------------- //
 
@@ -148,12 +149,16 @@ public class GamePanel extends JPanel implements ActionListener {
             } while (!map.is_grassland(y, x));
         }
         // ice 4
-        else {
+        else if (k==3) {
             enemy = EngimonGenerator.generate_ice();
             do {
                 x = randomNumbers.nextInt(15);
                 y = randomNumbers.nextInt(15);
             } while (!map.is_tundra(y, x));
+        } else {
+            enemy = EngimonGenerator.generate_electric();
+            x = randomNumbers.nextInt(15);
+            y = randomNumbers.nextInt(15);
         }
         Position p = new Position(x, y);
         enemy.set_pos(p);
@@ -161,18 +166,46 @@ public class GamePanel extends JPanel implements ActionListener {
         list_engimon_enemy.add(enemy);
 
         // --
-        try {
-            player.add_engimon(enemy);
-        } catch (Exception e) {
-            // TODO: handle exception
-            // e.printStackTrace();
-        }
     }
 
     // END External Functions
 
     public Boolean isHitWall(Position P) {
         return P.get_x() > 14 || P.get_y() > 14 || P.get_x() < 0 || P.get_y() < 0;
+    }
+
+    private void check_active_engimon(){
+        this.flag_message_box = true;
+        Engimon ep = player.get_engimon();
+        String element = "";
+        if (ep.is_fire() && ep.is_electric()) {
+            element = "fire, electric";
+        } else if (ep.is_water() && ep.is_ice()) {
+            element = "water, ice";
+        } else if (ep.is_water() && ep.is_ground()) {
+            element = "water, earth";
+        } else if (ep.is_fire()) {
+            element = "fire";
+        } else if (ep.is_electric()) {
+            element = "electric";
+        } else if (ep.is_water()) {
+            element = "water";
+        } else if (ep.is_ice()) {
+            element = "ice";
+        } else if (ep.is_ground()) {
+            element = "earth";
+        }
+        ArrayList<Skill> all_skill = ep.get_all_skill();
+        String skills = "";
+        int iii=all_skill.size();
+        for (Skill skill : all_skill) {
+            skills += skill.get_name();
+            if (iii>1){
+                skills += ", ";
+            }
+            iii--;
+        }
+        message_box.write("Active engimon: "+player.get_engimon().get_name(), "Element(s): "+element, "Skills: "+skills);
     }
 
     public Boolean isHitOtherEnemy(Position P) {
@@ -262,9 +295,21 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void init_data() {
         try {
-            player.add_engimon(EngimonGenerator.generate_rand_engimon());
-            player.add_engimon(EngimonGenerator.generate_rand_engimon());
-            player.add_engimon(EngimonGenerator.generate_rand_engimon());
+            Engimon e1 = EngimonGenerator.generate_rand_engimon();
+            while(e1.get_level() < 5) {
+                e1.add_exp(1);
+            }
+            Engimon e2 = EngimonGenerator.generate_rand_engimon();
+            while(e2.get_level() < 5) {
+                e2.add_exp(1);
+            }
+            Engimon e3 = EngimonGenerator.generate_rand_engimon();
+            while(e3.get_level() < 5) {
+                e3.add_exp(1);
+            }
+            player.add_engimon(e1);
+            player.add_engimon(e2);
+            player.add_engimon(e3);
             player.set_active_engimon(0);
         } catch (InventoryFullException e) {
             System.out.println("Cannot generate active engimon...");
@@ -314,9 +359,9 @@ public class GamePanel extends JPanel implements ActionListener {
 
     // Helper functions
 
-    private void change_engimon_handler() {
-        int marker_idx = (inv_page - 1) * 20 + inv_y * 10 + inv_x;
-        player.set_active_engimon(marker_idx);
+    private void change_engimon_handler(){
+        int marker_idx = (inv_page-1)*20 + inv_y*10 + inv_x;
+        player.set_active_engimon(marker_idx); 
     }
 
     private void clear_message_box() {
@@ -327,7 +372,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private void show_command_list() {
         this.flag_message_box = true;
         message_box.write("Navigasi: w/a/s/d atau tanda panah", "B: Battle     E: Inventory",
-                "I: Interact     C: Check active Engimon");
+                "I: Interact     V: Check active Engimon");
     }
 
     private void interact() {
@@ -665,12 +710,11 @@ public class GamePanel extends JPanel implements ActionListener {
                 g2d.drawImage(ep_img, x_start + (ec - 1) * TILE_SIZE, 13 * TILE_SIZE / 2 + (er - 1) * TILE_SIZE,
                         TILE_SIZE, TILE_SIZE, this);
                 System.out.println(ep.get_species());
-
-                if (idx_active == item_counter - 1) {
+                
+                if (idx_active == item_counter-1){
                     Image e_marker = new ImageIcon("./images/engimon_marker.png").getImage();
-                    g2d.drawImage(e_marker, x_start + (ec - 1) * TILE_SIZE, 13 * TILE_SIZE / 2 + (er - 1) * TILE_SIZE,
-                            TILE_SIZE, TILE_SIZE, this);
-
+                    g2d.drawImage(e_marker, x_start+(ec-1)*TILE_SIZE, 13*TILE_SIZE/2 + (er-1)*TILE_SIZE, TILE_SIZE, TILE_SIZE, this);
+                
                 }
             }
 
@@ -767,7 +811,7 @@ public class GamePanel extends JPanel implements ActionListener {
         // System.out.println("...........draw mbox");
         Image bg_m_box = new ImageIcon("./images/background.png").getImage();
         g2d.drawImage(bg_m_box, 0 * TILE_SIZE, 12 * TILE_SIZE, SCREEN_WIDTH, 3 * TILE_SIZE, this);
-
+    
         int font_size = 16;
         Font font = new Font("Serif", Font.PLAIN, font_size);
         g2d.setFont(font);
@@ -813,25 +857,26 @@ public class GamePanel extends JPanel implements ActionListener {
         // #PATH
         String element = "";
         Engimon ep = player.get_engimon();
-        if (ep.is_fire() && ep.is_electric()) {
+        if (ep.is_fire() && ep.is_electric()){
             element = "fire_electric";
-        } else if (ep.is_water() && ep.is_ice()) {
+        } else if (ep.is_water() && ep.is_ice()){
             element = "water_ice";
-        } else if (ep.is_water() && ep.is_ground()) {
+        } else if (ep.is_water() && ep.is_ground()){
             element = "water_earth";
-        } else if (ep.is_fire()) {
+        } else if (ep.is_fire()){
             element = "fire";
-        } else if (ep.is_electric()) {
+        } else if (ep.is_electric()){
             element = "electric";
-        } else if (ep.is_water()) {
+        } else if (ep.is_water()){
             element = "water";
-        } else if (ep.is_ice()) {
+        } else if (ep.is_ice()){
             element = "ice";
-        } else if (ep.is_ground()) {
+        } else if (ep.is_ground()){
             element = "earth";
-        }
+        } 
         Image player = new ImageIcon("./images/transparent/player.gif").getImage();
-        Image active_engimon = new ImageIcon("./images/transparent/engimon_" + element + ".gif").getImage();
+        Image active_engimon = new ImageIcon("./images/transparent/engimon_" + element + ".gif")
+                .getImage();
         // Image enemy1 = new
         // ImageIcon("./src/images/transparent/engimon_earth.gif").getImage();
 
@@ -841,7 +886,7 @@ public class GamePanel extends JPanel implements ActionListener {
         g2d.drawImage(active_engimon, this.active_engimon_x, this.active_engimon_y, TILE_SIZE, TILE_SIZE, this);
         Image e_marker = new ImageIcon("./images/engimon_marker.png").getImage();
         g2d.drawImage(e_marker, this.active_engimon_x, this.active_engimon_y, TILE_SIZE, TILE_SIZE, this);
-
+                
     }
 
     public void draw_enemies(Graphics2D g2d) {
@@ -891,7 +936,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 // moveEngimonEnemy();
             }
         } catch (MovementException e) {
-            // nothing todo
+            //nothing todo
         }
     }
 
@@ -900,22 +945,28 @@ public class GamePanel extends JPanel implements ActionListener {
         Position p;
         if (e != null) {
             p = check_surrrounding_enemy().get_pos();
-        } else {
-            p = new Position(-999, -999);
+        }else {
+            p = new Position(-999,-999);
         }
-        if (direction.equals("LEFT") && this.player_x > 0 && this.player_x != (p.get_x() + 1) * TILE_SIZE) {
+        if (direction.equals("LEFT")
+            && this.player_x > 0
+            && this.player_x != (p.get_x() + 1) * TILE_SIZE){
             return true;
-        } else if (direction.equals("RIGHT") && this.player_x < (SCREEN_WIDTH) - (1 * TILE_SIZE)
-                && this.player_x != (p.get_x() - 1) * TILE_SIZE) {
+        } else if (direction.equals("RIGHT")
+            && this.player_x < (SCREEN_WIDTH) - (1 * TILE_SIZE)
+            && this.player_x != (p.get_x() - 1) * TILE_SIZE) {
             return true;
-        } else if (direction.equals("UP") && this.player_y > 0 && this.player_y != (p.get_y() + 1) * TILE_SIZE) {
+        } else if (direction.equals("UP")
+            && this.player_y > 0
+            && this.player_y != (p.get_y() + 1) * TILE_SIZE){
             return true;
-        } else if (direction.equals("DOWN") && this.player_y < (SCREEN_HEIGHT) - (1 * TILE_SIZE)
-                && this.player_y != (p.get_y() - 1) * TILE_SIZE) {
+        } else if (direction.equals("DOWN")
+            && this.player_y < (SCREEN_HEIGHT) - (1 * TILE_SIZE)
+            && this.player_y != (p.get_y() - 1) * TILE_SIZE){
             return true;
         }
         throw new MovementException("Movement Invalid", null);
-    }
+    } 
 
     private void test_print(String s) {
         System.out.println("Tes tes.. " + s);
@@ -988,9 +1039,8 @@ public class GamePanel extends JPanel implements ActionListener {
                             if (idx < player.get_inventory_engimon().size()) {
                                 if (idx == player.get_inventory_engimon().get_index(player.get_engimon())) {
                                     inv_status = "You can't free active engimon!";
-                                } else {
-                                    inv_status = "You have freed "
-                                            + player.get_inventory_engimon().get_item(idx).get_name();
+                                }else{
+                                    inv_status = "You have freed " + player.get_inventory_engimon().get_item(idx).get_name();
                                     player.free_engimon(idx);
                                 }
                             } else {
@@ -1005,18 +1055,18 @@ public class GamePanel extends JPanel implements ActionListener {
                                 inv_status = "No Skill Item is selected!";
                             }
                         }
-                    } else if (key == KeyEvent.VK_B) {
-                        if (inv_mark_engimon == true) {
-                            int idx = (inv_page - 1) * 20 + inv_y * 10 + inv_x;
-                            if (player.get_inventory_engimon().get_item(idx).get_level() >= 4) {
+                    }else if (key == KeyEvent.VK_B){
+                        if (inv_mark_engimon == true){
+                            int idx = (inv_page-1)*20 + inv_y*10 + inv_x;
+                            if (player.get_inventory_engimon().get_item(idx).get_level() >= 4 ){
                                 arr_to_breed.add(idx);
                             }
-                            if (arr_to_breed.size() == 2) {
+                            if (arr_to_breed.size() == 2){
                                 ready_breed = true;
                             }
-                            if (ready_breed) {
+                            if (ready_breed){
                                 try {
-                                    player.breed(arr_to_breed.get(0), arr_to_breed.get(1));
+                                    player.breed(arr_to_breed.get(0),arr_to_breed.get(1));
                                     inv_status = "You have breed new engimon";
                                 } catch (InsufficientLevelException e1) {
                                     inv_status = "Insufficient parent level";
@@ -1029,9 +1079,26 @@ public class GamePanel extends JPanel implements ActionListener {
                                 ready_breed = false;
                             }
 
+                        }   
+                    }else if (key == KeyEvent.VK_L && !inv_mark_engimon) {
+                        int idx = (inv_page-1)*20 + inv_y*10 + inv_x;
+                        if (idx < player.get_inventory_skill_item().size()) {
+                            try {
+                                player.get_inventory_skill_item().get_item(idx).learn(player.get_engimon());
+                                inv_status = player.get_engimon().get_name() + " have learned " + player.get_inventory_skill_item().get_item(idx).get_name() + "!";
+                                if (player.get_inventory_skill_item().get_item(idx).get_quantity() == 0) {
+                                    player.get_inventory_skill_item().remove(idx);
+                                }
+                            } catch (ElementNotSuitableException e1) {
+                                inv_status = "Active Engimon isn't suitable";
+                            } catch (SkillFullException e1) {
+                                inv_status = "No more slot for skill!";
+                            } catch (ZeroQuantityException e1) {
+                               inv_status = "Zero quantity error...";
+                            }
                         }
                     }
-
+                    
                     else if (key == KeyEvent.VK_C) {
                         change_engimon_handler();
                     }
@@ -1065,6 +1132,8 @@ public class GamePanel extends JPanel implements ActionListener {
                         System.out.println(".........Inventory###################");
                         flag_inventory = true;
                         // flag_message_box = !flag_message_box;
+                    }else if (key == KeyEvent.VK_V) {
+                        check_active_engimon();
                     }
                 }
 

@@ -173,6 +173,12 @@ public class Player {
         // code goes here..
     }
 
+    public void set_engimon_pos(Position pos2) {
+        if (active_engimon != null) {
+            active_engimon.set_pos(pos2);
+        }
+    }
+
     // battle dengan engimon yg adjacent (ketika battle tampilkan detail engimon
     // lawan ke layar)
 

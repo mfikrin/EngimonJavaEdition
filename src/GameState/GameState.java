@@ -1,9 +1,9 @@
-package GameState;
+package src.GameState;
 
 import Entity.Engimon.Engimon;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import Entity.Player;
+import src.Entity.Player;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -54,6 +54,17 @@ public class GameState{
     // GETTER
     public Stack<GameState> get_GameState_history(){
         return GameState_history;
+    }
+
+    public void update_gamestate(String statePath) throws IOException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("GameState.txt"))
+        GameState g = (GameState) in.readObject();
+        current_GameState = g;
+    }
+
+    public void save_gameState(String statepath){
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("GameState.txt"))
+        out.writeObject(current_GameState)
     }
 
     public GameState get_current_GameState(){
