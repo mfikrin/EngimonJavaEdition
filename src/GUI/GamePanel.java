@@ -873,6 +873,12 @@ public class GamePanel extends JPanel implements ActionListener {
                 if (flag_message_box == true) {
                     if (key == KeyEvent.VK_ENTER) {
                         clear_message_box();
+                    } else if (key == KeyEvent.VK_B) {
+                        update_state();
+                        if (battle_ready) {
+                            current_state = STATE_BATTLE;
+                        }
+                        repaint();
                     }
                 } else if (flag_inventory == true) {
                     if (key == KeyEvent.VK_E) {
@@ -920,6 +926,12 @@ public class GamePanel extends JPanel implements ActionListener {
                                 // message box
                             }
                         }
+                    } else if (key == KeyEvent.VK_B) {
+                        update_state();
+                        if (battle_ready) {
+                            current_state = STATE_BATTLE;
+                        }
+                        repaint();
                     }
                 } else {
                     if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
@@ -933,6 +945,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     } else if (key == KeyEvent.VK_ESCAPE) {
                         current_state = STATE_MAIN_MENU;
                     } else if (key == KeyEvent.VK_B) {
+                        update_state();
                         System.out.println(
                                 "###########################\n##########BATTLE###########\n###########################");
                         if (battle_ready) {
