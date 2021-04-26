@@ -28,8 +28,12 @@ public class Battle {
         ArrayList<Double> a_adv1 = new ArrayList<>();
         ArrayList<Double> a_adv2 = new ArrayList<>();
 
-        int[] idx_e1 = retrieve_adv_idx(e1);
-        int[] idx_e2 = retrieve_adv_idx(e2);
+        int[] idx_e1 = {-1,-1};
+        retrieve_adv_idx(idx_e1,e1);
+        retrieve_adv_idx(idx_e1,e1);
+        int[] idx_e2 = {-1,-1};
+        retrieve_adv_idx(idx_e2,e2);
+        retrieve_adv_idx(idx_e2,e2);
 
         for(int i : idx_e1) {
             for(int j : idx_e2) {
@@ -59,15 +63,16 @@ public class Battle {
         return -1;
     }
 
-    private static int[] retrieve_adv_idx(Engimon e) {
-        int[] idx = {-1,-1};
+    private static int[] retrieve_adv_idx(int[] idx,Engimon e) {
         boolean condition = idx[0] == -1;
 
         if (e.is_fire()) {
             if (condition) {
                 idx[0] = idx_fire;
             }else {
-                idx[1] = idx_fire;
+                if (idx[0] != idx_fire) {
+                    idx[1] = idx_fire;
+                }
             }
         }
 
@@ -76,7 +81,9 @@ public class Battle {
             {
                 idx[0] = idx_water;
             }else {
-                idx[1] = idx_water;
+                if (idx[0] != idx_water) {
+                    idx[1] = idx_water;
+                }
             }
         }
 
@@ -84,7 +91,9 @@ public class Battle {
             if (condition) {
                 idx[0] = idx_electric;
             }else {
-                idx[1] = idx_electric;
+                if (idx[0] != idx_electric) {
+                    idx[1] = idx_electric;
+                }
             }
         }
 
@@ -92,7 +101,9 @@ public class Battle {
             if (condition) {
                 idx[0] = idx_ground;
             }else {
-                idx[1] = idx_ground;
+                if (idx[0] != idx_ground) {
+                    idx[1] = idx_ground;
+                }
             }
         }
 
@@ -100,7 +111,9 @@ public class Battle {
             if (condition) {
                 idx[0] = idx_ice;
             }else {
-                idx[1] = idx_ice;
+                if (idx[0] != idx_ice) {
+                    idx[1] = idx_ice;
+                }
             }
         }
         return idx;
