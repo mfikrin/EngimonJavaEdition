@@ -5,7 +5,7 @@ package GUI;
 import java.lang.*;
 
 import java.io.File;
-import java.util.Scanner;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.io.FileNotFoundException;
 
 import javax.swing.JPanel;
@@ -74,7 +74,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private int landscape[][];
 
-    private ArrayList<Engimon> list_engimon_enemy;
+    private Queue<Engimon> list_engimon_enemy;
 
     // --temp
     private final int max_step_count = 5;
@@ -161,40 +161,22 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public Boolean isCompatibleEnemy(Engimon enemy, Position newPosition) {
-        // if (!((enemy.is_fire() && map.is_mountain(newPosition)) || (enemy.is_water()
-        // && map.is_sea(newPosition))
-        // || ((enemy.is_ground() || enemy.is_electric()) &&
-        // map.is_grassland(newPosition))
-        // || (enemy.is_ice() && map.is_tundra(newPosition)))) {
-        // System.out.print(newPosition.get_x());
-        // System.out.print(newPosition.get_y());
-        // System.out.println("not compate");
-        // }
-        // return ((enemy.is_fire() && map.is_mountain(newPosition)) ||
-        // (enemy.is_water() && map.is_sea(newPosition))
-        // || ((enemy.is_ground() || enemy.is_electric()) &&
-        // map.is_grassland(newPosition))
-        // || (enemy.is_ice() && map.is_tundra(newPosition)));
         if (map.is_mountain(newPosition)) {
-            System.out.println("mountain");
             return enemy.is_fire();
         } else if (map.is_sea(newPosition)) {
-            System.out.println("water");
             return enemy.is_water();
         } else if (map.is_grassland(newPosition)) {
-            System.out.println("electric");
             return (enemy.is_ground() || enemy.is_electric());
         } else if (map.is_tundra(newPosition)) {
-            System.out.println("ice");
             return enemy.is_ice();
         } else {
-            return true;
+            return false;
         }
-
     }
 
     private void moveEngimonEnemy() {
         for (Engimon e : list_engimon_enemy) {
+            int pengulangan = 0;
             Position newPosition;
             Position oldPosition = e.get_pos();
             // jika tidak menabrak tembok
@@ -217,9 +199,14 @@ public class GamePanel extends JPanel implements ActionListener {
                 else {
                     newPosition = new Position(oldPosition.get_x() - 1, oldPosition.get_y());
                 }
-            } while (isHitWall(newPosition) || isHitOtherEnemy(newPosition) || isHitPlayer(newPosition)
-                    || isHitEngimonPlayer(newPosition) || !isCompatibleEnemy(e, newPosition));
-            e.set_pos(newPosition);
+                pengulangan += 1;
+            } while ((isHitWall(newPosition) || isHitOtherEnemy(newPosition) || isHitPlayer(newPosition)
+                    || isHitEngimonPlayer(newPosition) || !isCompatibleEnemy(e, newPosition)) && pengulangan < 4);
+            if (pengulangan >= 4) {
+                e.set_pos(oldPosition);
+            } else {
+                e.set_pos(newPosition);
+            }
         }
     }
 
@@ -246,7 +233,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.active_engimon_x = 0 * TILE_SIZE;
         this.active_engimon_y = 0 * TILE_SIZE;
         this.active_engimon_type = "electric";
-        this.list_engimon_enemy = new ArrayList<Engimon>();
+        this.list_engimon_enemy = new LinkedList<Engimon>();
         this.message_box = new MessageBox();
 
         // set flag(s)
@@ -315,7 +302,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         count_i++;
         // test_print(Integer.toString(count_i));
-        if (count_i % 1000 == 1) {
+        if (count_i % 2000 == 1) {
             spawnEngimonEnemy();
             test_print("anjay");
             System.out.println(list_engimon_enemy.size());
