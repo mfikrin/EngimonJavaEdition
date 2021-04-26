@@ -35,8 +35,11 @@ import Entity.Engimon.WaterGround.*;
 import Entity.Engimon.WaterIce.*;
 import Entity.SkillItem;
 import Entity.Skill.Skill;
+import Exception.ElementNotSuitableException;
+import Exception.InsufficientLevelException;
 // import src.Entity.Position;
 import Exception.InventoryFullException;
+import Exception.SkillFullException;
 import Generator.EngimonGenerator;
 import Generator.SkillGenerator;
 
@@ -72,6 +75,9 @@ public class GamePanel extends JPanel implements ActionListener {
         private int inv_page = 1;
         private int inv_max_page = 5;
         private String inv_status = "";
+        private ArrayList<Integer> arr_to_breed = new ArrayList<>();
+        private boolean ready_breed = false;
+
     // ----------------------------------- //
 
     private boolean battle_ready = false;
@@ -964,6 +970,31 @@ public class GamePanel extends JPanel implements ActionListener {
                                 inv_status = "No Skill Item is selected!";
                             }
                         }
+                    }else if (key == KeyEvent.VK_B){
+                        if (inv_mark_engimon == true){
+                            int idx = (inv_page-1)*20 + inv_y*10 + inv_x;
+                            if (player.get_inventory_engimon().get_item(idx).get_level() >= 4 ){
+                                arr_to_breed.add(idx);
+                            }
+                            if (arr_to_breed.size() == 2){
+                                ready_breed = true;
+                            }
+                            if (ready_breed){
+                                try {
+                                    player.breed(arr_to_breed.get(0),arr_to_breed.get(1));
+                                    inv_status = "You have breed new engimon";
+                                } catch (InsufficientLevelException e1) {
+                                    inv_status = "Insufficient parent level";
+                                } catch (SkillFullException e1) {
+
+                                } catch (ElementNotSuitableException e1) {
+                                    inv_status = "Element Not Suitable";
+                                }
+                                arr_to_breed.clear();
+                                ready_breed = false;
+                            }
+
+                        }   
                     }
                     
                     else if (key == KeyEvent.VK_C) {
