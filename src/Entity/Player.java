@@ -120,6 +120,10 @@ public class Player {
         }
     }
 
+    public void set_pos(Position p) {
+        this.pos = p;
+    }
+
     public void breed(int idx_parent1, int idx_parent2) throws InsufficientLevelException, SkillFullException, ElementNotSuitableException
     {
         Engimon result = Breeding.breed(i_engimon.get_item(idx_parent1), i_engimon.get_item(idx_parent2));
