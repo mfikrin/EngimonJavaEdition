@@ -947,8 +947,12 @@ public class GamePanel extends JPanel implements ActionListener {
                         int idx = (inv_page - 1) * 20 + inv_y * 10 + inv_x;
                         if (inv_mark_engimon) {
                             if (idx < player.get_inventory_engimon().size()) {
-                                inv_status = "You have freed " + player.get_inventory_engimon().get_item(idx).get_name();
-                                player.free_engimon(idx);
+                                if (idx == player.get_inventory_engimon().get_index(player.get_engimon())) {
+                                    inv_status = "You can't free active engimon!";
+                                }else{
+                                    inv_status = "You have freed " + player.get_inventory_engimon().get_item(idx).get_name();
+                                    player.free_engimon(idx);
+                                }
                             } else {
                                 inv_status = "No Engimon is selected!";
                             }
