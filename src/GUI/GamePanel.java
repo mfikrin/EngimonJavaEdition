@@ -5,7 +5,7 @@ package GUI;
 import java.lang.*;
 
 import java.io.File;
-import java.util.Scanner;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.io.FileNotFoundException;
 
 import javax.swing.JPanel;
@@ -23,6 +23,13 @@ import Entity.Position;
 import Entity.Map;
 import Entity.Engimon.*;
 import Entity.Engimon.Fire.*;
+import Entity.Engimon.Electric.*;
+import Entity.Engimon.FireElectric.*;
+import Entity.Engimon.Ground.*;
+import Entity.Engimon.Ice.*;
+import Entity.Engimon.Water.*;
+import Entity.Engimon.WaterGround.*;
+import Entity.Engimon.WaterIce.*;
 // import src.Entity.Position;
 
 // -------
@@ -67,7 +74,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private int landscape[][];
 
-    private ArrayList<Engimon> list_engimon_enemy;
+    private Queue<Engimon> list_engimon_enemy;
 
     // --temp
     private final int max_step_count = 5;
@@ -84,11 +91,46 @@ public class GamePanel extends JPanel implements ActionListener {
 
     // EXTERNAL FUNCTIONs, moved later
     private void spawnEngimonEnemy() {
+        int x, y, z, k;
         Random randomNumbers = new Random();
-        int x = randomNumbers.nextInt(15);
-        int y = randomNumbers.nextInt(15);
+        k = randomNumbers.nextInt(4);
+        Engimon enemy;
+        // mountain 1
+        if (k == 0) {
+            enemy = new Aapee();
+            // random position
+            do {
+                x = randomNumbers.nextInt(15);
+                y = randomNumbers.nextInt(15);
+            } while (!map.is_mountain(y, x));
+        }
+        // water 2
+        else if (k == 1) {
+            enemy = new Baychec();
+            // random position
+            do {
+                x = randomNumbers.nextInt(15);
+                y = randomNumbers.nextInt(15);
+            } while (!map.is_sea(y, x));
+        }
+        // grassland 3
+        else if (k == 2) {
+            enemy = new Airon();
+            // random position
+            do {
+                x = randomNumbers.nextInt(15);
+                y = randomNumbers.nextInt(15);
+            } while (!map.is_grassland(y, x));
+        }
+        // ice 4
+        else {
+            enemy = new AisKreem();
+            do {
+                x = randomNumbers.nextInt(15);
+                y = randomNumbers.nextInt(15);
+            } while (!map.is_tundra(y, x));
+        }
         Position p = new Position(x, y);
-        Engimon enemy = new Aapee();
         enemy.set_pos(p);
         list_engimon_enemy.add(enemy);
     }
@@ -118,65 +160,55 @@ public class GamePanel extends JPanel implements ActionListener {
         return P.get_x() == active_engimon_x && P.get_y() == active_engimon_y;
     }
 
+    public Boolean isCompatibleEnemy(Engimon enemy, Position newPosition) {
+        if (map.is_mountain(newPosition)) {
+            return enemy.is_fire();
+        } else if (map.is_sea(newPosition)) {
+            return enemy.is_water();
+        } else if (map.is_grassland(newPosition)) {
+            return (enemy.is_ground() || enemy.is_electric());
+        } else if (map.is_tundra(newPosition)) {
+            return enemy.is_ice();
+        } else {
+            return false;
+        }
+    }
+
     private void moveEngimonEnemy() {
         for (Engimon e : list_engimon_enemy) {
+            int pengulangan = 0;
             Position newPosition;
             Position oldPosition = e.get_pos();
             // jika tidak menabrak tembok
-            System.out.print("old ");
-            System.out.print(oldPosition.get_x());
-            System.out.print(",");
-            System.out.println(oldPosition.get_y());
             do {
-                // e.set_pos(oldPosition);
-                // random arah gerakan
                 Random randomNumbers = new Random();
                 int k = randomNumbers.nextInt(4);
                 // gerak ke atas
                 if (k == 0) {
-                    // oldPosition.decr_y();
                     newPosition = new Position(oldPosition.get_x(), oldPosition.get_y() - 1);
-                    // System.out.println(e.get_pos().get_y());
                 }
                 // gerak ke kanan
                 else if (k == 1) {
-                    // oldPosition.incr_x();
                     newPosition = new Position(oldPosition.get_x() + 1, oldPosition.get_y());
-                    // System.out.println(e.get_pos().get_x());
                 }
                 // gerak ke bawah
                 else if (k == 2) {
-                    // oldPosition.incr_y();
                     newPosition = new Position(oldPosition.get_x(), oldPosition.get_y() + 1);
-                    // System.out.println(e.get_pos().get_y());
                 }
                 // bergerak ke kiri
                 else {
-                    // oldPosition.decr_x();
                     newPosition = new Position(oldPosition.get_x() - 1, oldPosition.get_y());
-                    // System.out.println(e.get_pos().get_x());
                 }
-                // System.out.print("old1 ");
-                // System.out.print(oldPosition.get_x());
-                // System.out.print(",");
-                // System.out.println(oldPosition.get_y());
-                // System.out.print("new1 ");
-                // System.out.print(newPosition.get_x());
-                // System.out.print(",");
-                // System.out.println(newPosition.get_y());
-            } while (isHitWall(newPosition) || isHitOtherEnemy(newPosition) || isHitPlayer(newPosition)
-                    || isHitEngimonPlayer(newPosition));
-            e.set_pos(newPosition);
-            // System.out.print("new ");
-            // System.out.print(e.get_pos().get_x());
-            // System.out.print(",");
-            // System.out.println(e.get_pos().get_y());
+                pengulangan += 1;
+            } while ((isHitWall(newPosition) || isHitOtherEnemy(newPosition) || isHitPlayer(newPosition)
+                    || isHitEngimonPlayer(newPosition) || !isCompatibleEnemy(e, newPosition)) && pengulangan < 4);
+            if (pengulangan >= 4) {
+                e.set_pos(oldPosition);
+            } else {
+                e.set_pos(newPosition);
+            }
         }
     }
-
-    // public Boolean isHitPlayer(Position P) {
-
-    // }
 
     // ============================================== //
 
@@ -201,7 +233,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.active_engimon_x = 0 * TILE_SIZE;
         this.active_engimon_y = 0 * TILE_SIZE;
         this.active_engimon_type = "electric";
-        this.list_engimon_enemy = new ArrayList<Engimon>();
+        this.list_engimon_enemy = new LinkedList<Engimon>();
         this.message_box = new MessageBox();
 
         // set flag(s)
@@ -280,7 +312,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         count_i++;
         // test_print(Integer.toString(count_i));
-        if (count_i % 1000 == 1) {
+        if (count_i % 2000 == 1) {
             spawnEngimonEnemy();
             test_print("anjay");
             System.out.println(list_engimon_enemy.size());
@@ -426,13 +458,20 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void draw_enemies(Graphics2D g2d) {
         for (Engimon e : list_engimon_enemy) {
+            Image enemy_image;
             int x = e.get_pos().get_x();
             int y = e.get_pos().get_y();
-            // WRONG, need to be fixed
-            String sp = e.get_species();
-            // |---
-            // test_print(sp);
-            Image enemy_image = new ImageIcon("./images/transparent/engimon_" + sp + ".gif").getImage();
+            if (e.is_fire()) {
+                enemy_image = new ImageIcon("./images/transparent/engimon_fire.gif").getImage();
+            } else if (e.is_water()) {
+                enemy_image = new ImageIcon("./images/transparent/engimon_water.gif").getImage();
+            } else if (e.is_ground()) {
+                enemy_image = new ImageIcon("./images/transparent/engimon_Earth.gif").getImage();
+            } else {
+                enemy_image = new ImageIcon("./images/transparent/engimon_ice.gif").getImage();
+            }
+            // enemy_image = new ImageIcon("./images/transparent/engimon_" + sp +
+            // ".gif").getImage();
             g2d.drawImage(enemy_image, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, this);
         }
 
@@ -548,4 +587,16 @@ public class GamePanel extends JPanel implements ActionListener {
         repaint();
     }
 
+    public MessageBox show_command_list() {
+        MessageBox command_list = new MessageBox();
+        command_list.write("Navigasi: w/a/s/d atau tanda panah", "B: Battle     E: Inventory",
+                "I: Interact     C: Check active Engimon");
+        return command_list;
+    }
+
+    public MessageBox interact() {
+        MessageBox interact = new MessageBox();
+        interact.write("Halo!", "Saya " + active_engimon_type, "");
+        return interact;
+    }
 }

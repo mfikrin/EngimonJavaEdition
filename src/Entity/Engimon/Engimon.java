@@ -9,7 +9,7 @@ import Exception.SkillFullException;
 import Entity.Position;
 import Entity.Element;
 
-public class Engimon implements Element,Clone<Engimon> {
+public abstract class Engimon implements Element,Clone<Engimon> {
 
     static final int ratio_exp = 100;
     static final int max_skills = 4;
@@ -48,9 +48,7 @@ public class Engimon implements Element,Clone<Engimon> {
     }
 
     //Clone
-    public Engimon clone() {
-        return new Engimon(this);
-    }
+    public abstract Engimon clone();
 
     //Getter
     public String get_name() {

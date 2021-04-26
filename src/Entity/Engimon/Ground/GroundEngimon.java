@@ -8,9 +8,18 @@ public class GroundEngimon extends Engimon {
         super();
     }
 
+    public GroundEngimon(GroundEngimon e) {
+        super(e);
+    }
+
     @Override
     public boolean is_ground() {
         return true;
+    }
+
+    @Override
+    public Engimon clone() {
+        return new GroundEngimon(this);
     }
     
 }

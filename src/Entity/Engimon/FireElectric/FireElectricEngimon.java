@@ -6,6 +6,10 @@ public class FireElectricEngimon extends Engimon {
     public FireElectricEngimon() {
         super();
     }
+
+    public FireElectricEngimon(FireElectricEngimon e) {
+        super(e);
+    }
     
     @Override
     public boolean is_fire() {
@@ -15,6 +19,11 @@ public class FireElectricEngimon extends Engimon {
     @Override
     public boolean is_electric() {
         return true;
+    }
+
+    @Override
+    public Engimon clone() {
+        return new FireElectricEngimon(this);
     }
     
 }
