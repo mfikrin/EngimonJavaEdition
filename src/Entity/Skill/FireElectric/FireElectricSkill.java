@@ -12,7 +12,7 @@ public class FireElectricSkill extends Skill {
     }
 
     @Override
-    public FireElectricSkill clone() {
+    public Skill clone() {
         return new FireElectricSkill(this);
     }
 

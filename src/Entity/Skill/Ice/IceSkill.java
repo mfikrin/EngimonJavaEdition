@@ -12,7 +12,7 @@ public class IceSkill extends Skill {
     }
 
     @Override
-    public IceSkill clone() {
+    public Skill clone() {
         return new IceSkill(this);
     }
 

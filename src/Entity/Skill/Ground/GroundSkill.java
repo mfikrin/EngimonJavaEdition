@@ -12,7 +12,7 @@ public class GroundSkill extends Skill {
     }
 
     @Override
-    public GroundSkill clone() {
+    public Skill clone() {
         return new GroundSkill(this);
     }
 

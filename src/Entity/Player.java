@@ -61,13 +61,15 @@ public class Player {
     }
 
     public void add_skill_item(SkillItem si) throws InventoryFullException {
-        if (get_total_inventory_capacity() < max_inv_capacity_player){
+        if (get_total_inventory_capacity() + si.get_quantity() <= max_inv_capacity_player){
             boolean found = false;
             for(int i = 0; i < i_skillitem.size(); ++i) {
                 if (i_skillitem.get_item(i).get_name().equals(si.get_name())) {
                     found = true;
                     SkillItem chosen_si = i_skillitem.get_item(i);
-                    chosen_si.incr_quantity();
+                    for(int j = 0; j < si.get_quantity(); ++j) {
+                        chosen_si.incr_quantity();
+                    }
                     //yang dibawah bisa dicomment kalau ternyata yg atas udh reference ke yg oinventory
                     i_skillitem.set_item(i, chosen_si);
                 }
