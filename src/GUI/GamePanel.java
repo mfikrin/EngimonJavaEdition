@@ -66,12 +66,12 @@ public class GamePanel extends JPanel implements ActionListener {
     // FLAGS |=~
     private boolean flag_message_box;
     private boolean flag_inventory;
-    private int inv_x = 0;
-    private int inv_y = 0;
-    private boolean inv_mark_engimon = true;
-    private int inv_page = 1;
-    private int inv_max_page = 5;
-    private String inv_status = "";
+        private int inv_x = 0;
+        private int inv_y = 0;
+        private boolean inv_mark_engimon = true;
+        private int inv_page = 1;
+        private int inv_max_page = 5;
+        private String inv_status = "";
     // ----------------------------------- //
 
     private boolean battle_ready = false;
@@ -740,7 +740,7 @@ public class GamePanel extends JPanel implements ActionListener {
         g2d.drawString(l2, TILE_SIZE / 2, 14 * TILE_SIZE - TILE_SIZE / 5 - 8);
         g2d.drawString(l3, TILE_SIZE / 2, 15 * TILE_SIZE - TILE_SIZE / 5 - 16);
         g2d.drawString("page: " + Integer.toString(inv_page) + "/5", 12 * TILE_SIZE, 13 * TILE_SIZE - TILE_SIZE / 5);
-
+        g2d.drawString(inv_status, 10*TILE_SIZE + TILE_SIZE/2, 14*TILE_SIZE);
     }
 
     public void draw_landscape(Graphics2D g2d) {
@@ -918,12 +918,14 @@ public class GamePanel extends JPanel implements ActionListener {
                         int idx = (inv_page - 1) * 20 + inv_y * 10 + inv_x;
                         if (inv_mark_engimon) {
                             if (idx < player.get_inventory_engimon().size()) {
+                                inv_status = "You have freed " + player.get_inventory_engimon().get_item(idx).get_name();
                                 player.free_engimon(idx);
                             } else {
                                 inv_status = "No Engimon is selected!";
                             }
                         } else {
                             if (idx < player.get_inventory_skill_item().size()) {
+                                inv_status = "You have thrown " + player.get_inventory_skill_item().get_item(idx).get_name() + " X 1";
                                 player.remove_skillitem(idx, 1);
                             } else {
                                 inv_status = "No Skill Item is selected!";
