@@ -1,9 +1,9 @@
-package src.GameState;
+package GameState;
 
 import Entity.Engimon.Engimon;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
-import src.Entity.Player;
+import Entity.Player;
 
 import java.io.FileWriter;
 import java.io.IOException;
