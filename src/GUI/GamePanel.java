@@ -32,6 +32,8 @@ import Entity.Engimon.WaterGround.*;
 import Entity.Engimon.WaterIce.*;
 // import src.Entity.Position;
 
+import Generator.EngimonGenerator;
+
 // -------
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -91,13 +93,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
     // EXTERNAL FUNCTIONs, moved later
     private void spawnEngimonEnemy() {
-        int x, y, z, k;
+        int x, y, k;
         Random randomNumbers = new Random();
         k = randomNumbers.nextInt(4);
         Engimon enemy;
         // mountain 1
         if (k == 0) {
-            enemy = new Aapee();
+            enemy = EngimonGenerator.generate_fire();
             // random position
             do {
                 x = randomNumbers.nextInt(15);
@@ -106,7 +108,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         // water 2
         else if (k == 1) {
-            enemy = new Baychec();
+            enemy = EngimonGenerator.generate_water();
             // random position
             do {
                 x = randomNumbers.nextInt(15);
@@ -115,7 +117,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         // grassland 3
         else if (k == 2) {
-            enemy = new Airon();
+            enemy = EngimonGenerator.generate_ground();
             // random position
             do {
                 x = randomNumbers.nextInt(15);
@@ -124,7 +126,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         // ice 4
         else {
-            enemy = new AisKreem();
+            enemy = EngimonGenerator.generate_ice();
             do {
                 x = randomNumbers.nextInt(15);
                 y = randomNumbers.nextInt(15);
