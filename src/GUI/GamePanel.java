@@ -232,25 +232,38 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void init_data() {
+        try {
+            player.add_engimon(EngimonGenerator.generate_rand_engimon());
+            player.add_engimon(EngimonGenerator.generate_rand_engimon());
+            player.add_engimon(EngimonGenerator.generate_rand_engimon());
+            player.set_active_engimon(0);
+        } catch (InventoryFullException e) {
+            System.out.println("Cannot generate active engimon...");
+        }
         // to be replaced by data from gamestate
-        this.player_x = 1 * TILE_SIZE;
-        this.player_y = 0 * TILE_SIZE;
+        this.player_x = player.get_pos().get_x() * TILE_SIZE;
+        this.player_y = player.get_pos().get_y() * TILE_SIZE;
         this.active_engimon_x = 0 * TILE_SIZE;
         this.active_engimon_y = 0 * TILE_SIZE;
-        this.active_engimon_type = "electric";
+        // ===== menentukan tipe ========
+        if (player.get_engimon().is_fire()) {
+            this.active_engimon_type = "fire";
+        } else if (player.get_engimon().is_water()) {
+            this.active_engimon_type = "water";
+        } else if (player.get_engimon().is_ground()) {
+            this.active_engimon_type = "Earth";
+        } else if (player.get_engimon().is_ice()) {
+            this.active_engimon_type = "ice";
+        } else {
+            this.active_engimon_type = "electric";
+        }
+        // ==============================
         this.list_engimon_enemy = new LinkedList<Engimon>();
         this.message_box = new MessageBox();
 
         // set flag(s)
         this.flag_message_box = false;
         // END to be...
-
-        try {
-            player.add_engimon(EngimonGenerator.generate_rand_engimon());
-            player.set_active_engimon(0);
-        } catch (InventoryFullException e) {
-            System.out.println("Cannot generate active engimon...");
-        }
 
         load_map_data();
 
@@ -270,12 +283,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
-    public void show_command_list(){
+    public void show_command_list() {
         this.flag_message_box = true;
-        message_box.write("Navigasi: w/a/s/d atau tanda panah", "B: Battle     E: Inventory", "I: Interact     C: Check active Engimon");
+        message_box.write("Navigasi: w/a/s/d atau tanda panah", "B: Battle     E: Inventory",
+                "I: Interact     C: Check active Engimon");
     }
 
-    public void interact(){
+    public void interact() {
         this.flag_message_box = true;
         message_box.write("Halo!", "Saya " + active_engimon_type, "");
     }
