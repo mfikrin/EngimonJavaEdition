@@ -833,6 +833,21 @@ public class GamePanel extends JPanel implements ActionListener {
                             inv_mark_engimon = false;
                             inv_y = 0;
                         } 
+                    } else if (key == KeyEvent.VK_G) {
+                        int idx = (inv_page-1)*20 + inv_y*10 + inv_x;
+                        if (inv_mark_engimon) {
+                            if (idx < player.get_inventory_engimon().size()) {
+                                player.free_engimon(idx);
+                            }else {
+                                //message box
+                            }
+                        }else {
+                            if (idx < player.get_inventory_skill_item().size()) {
+                                player.remove_skillitem(idx,1);
+                            }else {
+                                //message box
+                            }
+                        }
                     }
                 } else {
                     if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
@@ -846,11 +861,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     } else if (key == KeyEvent.VK_ESCAPE) {
                         current_state = STATE_MAIN_MENU;
                     } else if (key == KeyEvent.VK_B) {
-<<<<<<< HEAD
                         System.out.println("###########################\n##########BATTLE###########\n###########################");
-=======
-                        update_state();
->>>>>>> 9f3e8aeece50844acd39876a4664af1bd34dafe3
                         if (battle_ready) {
                             current_state = STATE_BATTLE;
                             repaint();
