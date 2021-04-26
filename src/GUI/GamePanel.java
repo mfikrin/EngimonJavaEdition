@@ -71,6 +71,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private boolean inv_mark_engimon = true;
     private int inv_page = 1;
     private int inv_max_page = 5;
+    private String inv_status = "";
     // ----------------------------------- //
 
     private boolean battle_ready = false;
@@ -873,12 +874,6 @@ public class GamePanel extends JPanel implements ActionListener {
                 if (flag_message_box == true) {
                     if (key == KeyEvent.VK_ENTER) {
                         clear_message_box();
-                    } else if (key == KeyEvent.VK_B) {
-                        update_state();
-                        if (battle_ready) {
-                            current_state = STATE_BATTLE;
-                        }
-                        repaint();
                     }
                 } else if (flag_inventory == true) {
                     if (key == KeyEvent.VK_E) {
@@ -886,30 +881,38 @@ public class GamePanel extends JPanel implements ActionListener {
                     } else if (key == KeyEvent.VK_RIGHT) {
                         if (inv_x < 9) {
                             inv_x += 1;
+                            inv_status = "";
                         } else if (inv_page < inv_max_page) {
                             inv_page++;
                             inv_x = 0;
+                            inv_status = "";
                         }
                     } else if (key == KeyEvent.VK_LEFT) {
                         if (inv_x > 0) {
                             inv_x -= 1;
+                            inv_status = "";
                         } else if (inv_page > 1) {
                             inv_page--;
                             inv_x = 9;
+                            inv_status = "";
                         }
                     } else if (key == KeyEvent.VK_UP) {
                         if (inv_y > 0) {
                             inv_y -= 1;
+                            inv_status = "";
                         } else if (inv_mark_engimon == false) {
                             inv_mark_engimon = true;
                             inv_y = 1;
+                            inv_status = "";
                         }
                     } else if (key == KeyEvent.VK_DOWN) {
                         if (inv_y < 1) {
                             inv_y += 1;
+                            inv_status = "";
                         } else if (inv_mark_engimon == true) {
                             inv_mark_engimon = false;
                             inv_y = 0;
+                            inv_status = "";
                         }
                     } else if (key == KeyEvent.VK_G) {
                         int idx = (inv_page - 1) * 20 + inv_y * 10 + inv_x;
@@ -917,21 +920,15 @@ public class GamePanel extends JPanel implements ActionListener {
                             if (idx < player.get_inventory_engimon().size()) {
                                 player.free_engimon(idx);
                             } else {
-                                // message box
+                                inv_status = "No Engimon is selected!";
                             }
                         } else {
                             if (idx < player.get_inventory_skill_item().size()) {
                                 player.remove_skillitem(idx, 1);
                             } else {
-                                // message box
+                                inv_status = "No Skill Item is selected!";
                             }
                         }
-                    } else if (key == KeyEvent.VK_B) {
-                        update_state();
-                        if (battle_ready) {
-                            current_state = STATE_BATTLE;
-                        }
-                        repaint();
                     }
                 } else {
                     if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
@@ -988,4 +985,5 @@ public class GamePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         repaint();
     }
+
 }
