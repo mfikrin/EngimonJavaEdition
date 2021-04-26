@@ -985,7 +985,7 @@ public class GamePanel extends JPanel implements ActionListener {
                             repaint();
                         }
                     } else if (key == KeyEvent.VK_I) {
-                        interract();
+                        interact();
                         // flag_message_box = !flag_message_box;
                     } else if (key == KeyEvent.VK_C) {
                         System.out.println("....draw comlist###################");
