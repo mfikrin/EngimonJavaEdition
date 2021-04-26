@@ -325,7 +325,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void interact() {
         this.flag_message_box = true;
-        message_box.write(player.get_engimon().get_dialogue(), "Aku " + active_engimon_type, "");
+        message_box.write(player.get_engimon().get_dialogue(), "Aku " + player.get_engimon().get_name(), "");
     }
 
     private void update_state() {
