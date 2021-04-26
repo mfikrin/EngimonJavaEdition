@@ -1,7 +1,10 @@
 package UnitTesting;
 
+import Entity.Player;
+import Entity.SkillItem;
 import Entity.Engimon.Engimon;
 import Entity.Skill.Skill;
+import Exception.InventoryFullException;
 import Generator.EngimonGenerator;
 import Generator.SkillGenerator;
 
@@ -228,6 +231,31 @@ public class UnitTesting {
         }
 
         assert s.get_mlevel() == 3;
+    }
+
+    public static void test_fourteen() {
+        Player p = new Player();
+        SkillItem si = new SkillItem(SkillGenerator.generate_random_skill());
+        while(si.get_quantity() < 100) {
+            si.incr_quantity();
+        }
+        try {
+            p.add_skill_item(si);
+        } catch (InventoryFullException e) {
+            assert false;
+        }
+
+        try {
+            p.add_skill_item(si);
+        } catch (InventoryFullException e) {
+            assert true;
+        }
+
+        try {
+            p.add_engimon(EngimonGenerator.generate_rand_engimon());
+        } catch (InventoryFullException e) {
+            assert true;
+        }
     }
 
 
