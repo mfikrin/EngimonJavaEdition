@@ -396,7 +396,7 @@ public class GamePanel extends JPanel implements ActionListener {
             if (count_i % 100 == 1) {
                 moveEngimonEnemy();
             }
-            if (count_i % 1000 == 1 && list_engimon_enemy.size() < 6) {
+            if (count_i % 1000 == 100 && list_engimon_enemy.size() < 6) {
                 spawnEngimonEnemy();
                 test_print("anjay");
                 System.out.println(list_engimon_enemy.size());
