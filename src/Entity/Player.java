@@ -25,16 +25,20 @@ public class Player {
     }
 
     // Getter
+    public Inventory<Engimon> get_inventory_engimon() {
+        return i_engimon;
+    }
+
+    public Inventory<SkillItem> get_inventory_skill_item() {
+        return i_skillitem;
+    }
+
     public Engimon get_engimon() {
         return active_engimon;
     }
 
     public Position get_pos() {
         return pos;
-    }
-
-    public Inventory<Engimon> getInventory() {
-        return i_engimon;
     }
 
     public Position get_engimon_pos() {
@@ -123,6 +127,10 @@ public class Player {
             pos.incr_x();
             pos_engimon = old_pos;
         }
+    }
+
+    public void set_pos(Position p) {
+        this.pos = p;
     }
 
     public void breed(int idx_parent1, int idx_parent2)
