@@ -381,14 +381,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         count_i++;
         // test_print(Integer.toString(count_i));
-        if (count_i % 100 == 1) {
-            moveEngimonEnemy();
-        }
-        if (count_i % 2000 == 1) {
-            spawnEngimonEnemy();
-            test_print("anjay");
-            System.out.println(list_engimon_enemy.size());
-        }
+
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
@@ -400,6 +393,14 @@ public class GamePanel extends JPanel implements ActionListener {
             break;
         case STATE_EXPLORE_WORLD:
             // System.out.println("should draw maps");
+            if (count_i % 100 == 1) {
+                moveEngimonEnemy();
+            }
+            if (count_i % 1000 == 1 && list_engimon_enemy.size() < 6) {
+                spawnEngimonEnemy();
+                test_print("anjay");
+                System.out.println(list_engimon_enemy.size());
+            }
             draw_explore_world(g2d);
             break;
         case STATE_BATTLE:
@@ -557,9 +558,14 @@ public class GamePanel extends JPanel implements ActionListener {
             massage_battle = 2;
             list_engimon_enemy.remove(check_surrrounding_enemy());
         } else if (battle.get_power_level(1) * x < battle.get_power_level(2) * y) {
-
+            if (live == 1) {
+                // player.get_inventory_engimon().remove(0);
+                player.set_active_engimon(1);
+            } else {
+                player.get_engimon().set_live(live - 1);
+            }
             massage_battle = 3;
-            player.get_engimon().set_live(live - 1);
+
         } else {
             massage_battle = 4;
         }
@@ -884,7 +890,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 // moveEngimonEnemy();
             }
         } catch (MovementException e) {
-            //nothing todo
+            // nothing todo
         }
     }
 
@@ -893,33 +899,22 @@ public class GamePanel extends JPanel implements ActionListener {
         Position p;
         if (e != null) {
             p = check_surrrounding_enemy().get_pos();
-        }else {
-            p = new Position(-999,-999);
+        } else {
+            p = new Position(-999, -999);
         }
-        if (direction.equals("LEFT")
-            && this.player_x > 0
-            && this.player_x != (p.get_x() + 1) * TILE_SIZE){
+        if (direction.equals("LEFT") && this.player_x > 0 && this.player_x != (p.get_x() + 1) * TILE_SIZE) {
             return true;
-        } else if (direction.equals("RIGHT")
-            && this.player_x < (SCREEN_WIDTH) - (1 * TILE_SIZE)
-            && this.player_x != (p.get_x() - 1) * TILE_SIZE) {
+        } else if (direction.equals("RIGHT") && this.player_x < (SCREEN_WIDTH) - (1 * TILE_SIZE)
+                && this.player_x != (p.get_x() - 1) * TILE_SIZE) {
             return true;
-        } else if (direction.equals("UP")
-            && this.player_y > 0
-            && this.player_y != (p.get_y() + 1) * TILE_SIZE){
+        } else if (direction.equals("UP") && this.player_y > 0 && this.player_y != (p.get_y() + 1) * TILE_SIZE) {
             return true;
-        } else if (direction.equals("DOWN")
-            && this.player_y < (SCREEN_HEIGHT) - (1 * TILE_SIZE)
-            && this.player_y != (p.get_y() - 1) * TILE_SIZE){
+        } else if (direction.equals("DOWN") && this.player_y < (SCREEN_HEIGHT) - (1 * TILE_SIZE)
+                && this.player_y != (p.get_y() - 1) * TILE_SIZE) {
             return true;
         }
-<<<<<<< HEAD
-        return false;
-    }
-=======
         throw new MovementException("Movement Invalid", null);
-    } 
->>>>>>> ed2929f9a1c24d2595db220d2a4dde9abf2ab684
+    }
 
     private void test_print(String s) {
         System.out.println("Tes tes.. " + s);
