@@ -20,6 +20,7 @@ import java.awt.event.*;
 import java.util.*;
 
 import Entity.Position;
+import Entity.SkillItem;
 import Entity.Map;
 import Entity.Player;
 import Entity.Engimon.*;
@@ -31,9 +32,12 @@ import Entity.Engimon.Ice.*;
 import Entity.Engimon.Water.*;
 import Entity.Engimon.WaterGround.*;
 import Entity.Engimon.WaterIce.*;
+import Entity.SkillItem;
+import Entity.Skill.Skill;
 // import src.Entity.Position;
 import Exception.InventoryFullException;
 import Generator.EngimonGenerator;
+import Generator.SkillGenerator;
 
 // -------
 
@@ -59,6 +63,12 @@ public class GamePanel extends JPanel implements ActionListener {
 
     // FLAGS |=~
     private boolean flag_message_box;
+    private boolean flag_inventory;
+        private int inv_x = 0;
+        private int inv_y = 0;
+        private boolean inv_mark_engimon = true;
+        private int inv_page = 1;
+        private int inv_max_page = 5;
     // ----------------------------------- //
 
     private boolean battle_ready = false;
@@ -138,6 +148,14 @@ public class GamePanel extends JPanel implements ActionListener {
         Position p = new Position(x, y);
         enemy.set_pos(p);
         list_engimon_enemy.add(enemy);
+
+        // --
+        try {
+            player.add_engimon(enemy);
+        } catch (Exception e) {
+            //TODO: handle exception
+            // e.printStackTrace();
+        }
     }
 
     // END External Functions
@@ -240,6 +258,24 @@ public class GamePanel extends JPanel implements ActionListener {
         } catch (InventoryFullException e) {
             System.out.println("Cannot generate active engimon...");
         }
+
+        try {
+            player.add_skill_item(new SkillItem(SkillGenerator.generate_random_skill()));
+            player.add_skill_item(new SkillItem(SkillGenerator.generate_random_skill()));
+            player.add_skill_item(new SkillItem(SkillGenerator.generate_random_skill()));
+            player.add_skill_item(new SkillItem(SkillGenerator.generate_random_skill()));
+            player.add_skill_item(new SkillItem(SkillGenerator.generate_random_skill()));
+            player.add_skill_item(new SkillItem(SkillGenerator.generate_random_skill()));
+            
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+
+
+
+
+
+
         // to be replaced by data from gamestate
         this.player_x = player.get_pos().get_x() * TILE_SIZE;
         this.player_y = player.get_pos().get_y() * TILE_SIZE;
@@ -251,7 +287,7 @@ public class GamePanel extends JPanel implements ActionListener {
         } else if (player.get_engimon().is_water()) {
             this.active_engimon_type = "water";
         } else if (player.get_engimon().is_ground()) {
-            this.active_engimon_type = "Earth";
+            this.active_engimon_type = "earth";
         } else if (player.get_engimon().is_ice()) {
             this.active_engimon_type = "ice";
         } else {
@@ -263,6 +299,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // set flag(s)
         this.flag_message_box = false;
+        this.flag_inventory = false;
         // END to be...
 
         load_map_data();
@@ -283,13 +320,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
-    public void show_command_list() {
+    private void show_command_list() {
         this.flag_message_box = true;
         message_box.write("Navigasi: w/a/s/d atau tanda panah", "B: Battle     E: Inventory",
                 "I: Interact     C: Check active Engimon");
     }
 
-    public void interact() {
+    private void interact() {
         this.flag_message_box = true;
         message_box.write("Halo!", "Saya " + active_engimon_type, "");
     }
@@ -392,7 +429,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public void draw_battle(Graphics2D g2d) {
         System.out.println("Battle");
         Image p = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
-        Image e = new ImageIcon("./images/transparent/engimon_Earth.gif").getImage();
+        Image e = new ImageIcon("./images/transparent/engimon_earth.gif").getImage();
 
         Image bg = new ImageIcon("./images/battle/bg_3_lives.png").getImage();
         g2d.drawImage(bg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, this);
@@ -406,7 +443,7 @@ public class GamePanel extends JPanel implements ActionListener {
         g2d.drawImage(banner, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, this);
         Image e1 = new ImageIcon("./images/transparent/engimon_Aapee.gif").getImage();
         Image e2 = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
-        Image e3 = new ImageIcon("./images/transparent/engimon_Earth.gif").getImage();
+        Image e3 = new ImageIcon("./images/transparent/engimon_earth.gif").getImage();
         Image e4 = new ImageIcon("./images/transparent/engimon_ice.gif").getImage();
         Image e5 = new ImageIcon("./images/transparent/engimon_water.gif").getImage();
         Image e6 = new ImageIcon("./images/transparent/engimon_water_ice.gif").getImage();
@@ -433,9 +470,169 @@ public class GamePanel extends JPanel implements ActionListener {
 
         if (flag_message_box == true) {
             draw_message_box(g2d);
+        } else if (flag_inventory == true){
+            draw_inventory(g2d);
         }
     }
 
+    private void draw_inventory(Graphics2D g2d){
+        Image bg_inv = new ImageIcon("./images/bg_inventory.png").getImage();
+        int x_start = 5*TILE_SIZE/2;
+        g2d.drawImage(bg_inv, x_start, 5*TILE_SIZE, 10*TILE_SIZE, 5*TILE_SIZE, this);
+        int er = 0;
+        int ec = 0;
+        int sr = 0;
+        int sc = 0;
+        int item_counter = 0;
+        int current_page = 1;
+        for (Engimon ep : player.get_inventory_engimon().get_list()) {
+            item_counter+=1;
+            if (item_counter>20){
+                item_counter-=20;
+                current_page+=1;
+            }
+            if (current_page == inv_page){
+                String element = "";
+                if (ep.is_fire() && ep.is_electric()){
+                    element = "fire_electric";
+                } else if (ep.is_water() && ep.is_ice()){
+                    element = "water_ice";
+                } else if (ep.is_water() && ep.is_ground()){
+                    element = "water_earth";
+                } else if (ep.is_fire()){
+                    element = "fire";
+                } else if (ep.is_electric()){
+                    element = "electric";
+                } else if (ep.is_water()){
+                    element = "water";
+                } else if (ep.is_ice()){
+                    element = "ice";
+                } else if (ep.is_ground()){
+                    element = "earth";
+                } 
+                ec++;
+                if (ec>10){
+                    ec-=10;
+                    er++;
+                }
+                if (er > 2){
+                    er-=2;
+                }
+                Image ep_img = new ImageIcon("./images/transparent/engimon_"+element+".gif").getImage();
+                g2d.drawImage(ep_img, x_start+(ec-1)*TILE_SIZE, 13*TILE_SIZE/2 + (er-1)*TILE_SIZE, TILE_SIZE, TILE_SIZE, this);
+                System.out.println(ep.get_species());
+            }
+
+        }
+        
+        int si_counter = 0;
+        int si_page = 1;
+        for (SkillItem si : player.get_inventory_skill_item().get_list()) {
+            si_counter+=1;
+            if (si_counter>20){
+                si_counter-=20;
+                si_page+=1;
+            }
+            if (si_page == inv_page){
+                String element = "";
+                if (si.get_skill().is_fire() && si.get_skill().is_electric()){
+                    element = "fire_electric";
+                } else if (si.get_skill().is_water() && si.get_skill().is_ice()){
+                    element = "water_ice";
+                } else if (si.get_skill().is_water() && si.get_skill().is_ground()){
+                    element = "water_earth";
+                } else if (si.get_skill().is_fire()){
+                    element = "fire";
+                } else if (si.get_skill().is_electric()){
+                    element = "electric";
+                } else if (si.get_skill().is_water()){
+                    element = "water";
+                } else if (si.get_skill().is_ice()){
+                    element = "ice";
+                } else if (si.get_skill().is_ground()){
+                    element = "earth";
+                } 
+                sc++;
+                if (sc>10){
+                    sc-=10;
+                    sr++;
+                }
+                if (sr > 2){
+                    sr-=2;
+                }
+                System.out.println("#@@@@@@@@@@@@@@@# SI "+element);
+                Image si_img = new ImageIcon("./images/skill_item/si_"+element+".png").getImage();
+                g2d.drawImage(si_img, x_start+(sc-1)*TILE_SIZE, 18*TILE_SIZE/2 + (sr-1)*TILE_SIZE, TILE_SIZE, TILE_SIZE, this);
+            }
+
+        }
+
+
+
+
+
+        Image inv_marker = new ImageIcon("./images/inventory_marker.png").getImage();
+        int start_marker_x = x_start;
+        int start_marker_y = 11*TILE_SIZE/2;
+        if (!inv_mark_engimon){
+            start_marker_y += 5*TILE_SIZE/2;
+        }
+        g2d.drawImage(inv_marker, start_marker_x+inv_x*TILE_SIZE, start_marker_y + inv_y*TILE_SIZE, TILE_SIZE, TILE_SIZE, this);
+
+        
+        // draw info_box (like mnessage box)
+        String l1, l2, l3;
+        if (inv_mark_engimon){
+            l1 = "Engimon: ";
+            l2 = "Level: ";
+            l3 = "Exp | CExp: ";
+        } else {
+            l1 = "Skill Item: ";
+            l2 = "Quantity: ";
+            l3 = "Numerik Base Power: ";
+        }
+
+        if (inv_mark_engimon){
+            int marked_engimon_idx = (inv_page-1)*20 + inv_y*10 + inv_x;
+            int n_engimon = player.get_inventory_engimon().get_list().size();
+            if (marked_engimon_idx<n_engimon){
+                Engimon marked_engimon = player.get_inventory_engimon().get_list().get(marked_engimon_idx);
+                l1+=marked_engimon.get_name();
+                l2+=marked_engimon.get_level();
+                l3+=marked_engimon.get_exp() + " | " + marked_engimon.get_cexp();
+    
+            }
+        } else {
+            // Skill Item case
+            int marked_si_idx = (inv_page-1)*20 + inv_y*10 + inv_x;
+            int n_si = player.get_inventory_skill_item().get_list().size();
+            if (marked_si_idx<n_si){
+                SkillItem si = player.get_inventory_skill_item().get_list().get(marked_si_idx);
+                l1+=si.get_skill().get_name();
+                l2+=si.get_quantity();
+                l3+=si.get_nbpower();
+    
+            }
+
+
+        }
+        
+
+        // System.out.println("...........draw mbox");
+        Image bg_m_box = new ImageIcon("./images/background.png").getImage();
+        g2d.drawImage(bg_m_box, 0 * TILE_SIZE, 12 * TILE_SIZE, SCREEN_WIDTH, 3 * TILE_SIZE, this);
+
+        int font_size = 16;
+        Font font = new Font("Serif", Font.PLAIN, font_size);
+        g2d.setFont(font);
+        g2d.drawString(l1, TILE_SIZE / 2, 13 * TILE_SIZE - TILE_SIZE / 5);
+        g2d.drawString(l2, TILE_SIZE / 2, 14 * TILE_SIZE - TILE_SIZE / 5 - 8);
+        g2d.drawString(l3, TILE_SIZE / 2, 15 * TILE_SIZE - TILE_SIZE / 5 - 16);
+        g2d.drawString("page: "+Integer.toString(inv_page)+"/5", 12*TILE_SIZE, 13 * TILE_SIZE - TILE_SIZE / 5);
+        
+        
+    }
+    
     public void draw_landscape(Graphics2D g2d) {
         // then draw from data
         String base_path = "./images/landscape/";
@@ -492,7 +689,7 @@ public class GamePanel extends JPanel implements ActionListener {
             } else if (e.is_water()) {
                 enemy_image = new ImageIcon("./images/transparent/engimon_water.gif").getImage();
             } else if (e.is_ground()) {
-                enemy_image = new ImageIcon("./images/transparent/engimon_Earth.gif").getImage();
+                enemy_image = new ImageIcon("./images/transparent/engimon_earth.gif").getImage();
             } else {
                 enemy_image = new ImageIcon("./images/transparent/engimon_ice.gif").getImage();
             }
@@ -576,6 +773,38 @@ public class GamePanel extends JPanel implements ActionListener {
                     if (key == KeyEvent.VK_ENTER) {
                         clear_message_box();
                     }
+                } else if (flag_inventory == true) {
+                    if (key == KeyEvent.VK_E) {
+                        flag_inventory = false;
+                    } else if (key == KeyEvent.VK_RIGHT) {
+                        if (inv_x < 9){
+                            inv_x += 1;
+                        } else if (inv_page < inv_max_page){
+                            inv_page++;
+                            inv_x = 0;
+                        }
+                    } else if (key == KeyEvent.VK_LEFT) {
+                        if (inv_x > 0){
+                            inv_x -= 1;
+                        } else if (inv_page > 1){
+                            inv_page--;
+                            inv_x = 9;
+                        } 
+                    } else if (key == KeyEvent.VK_UP) {
+                        if (inv_y > 0){
+                            inv_y -= 1;
+                        } else if (inv_mark_engimon == false) {
+                            inv_mark_engimon = true;
+                            inv_y = 1;
+                        }  
+                    } else if (key == KeyEvent.VK_DOWN) {
+                        if (inv_y < 1){
+                            inv_y += 1;
+                        } else if (inv_mark_engimon == true) {
+                            inv_mark_engimon = false;
+                            inv_y = 0;
+                        } 
+                    }
                 } else {
                     if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) {
                         move("LEFT");
@@ -588,12 +817,21 @@ public class GamePanel extends JPanel implements ActionListener {
                     } else if (key == KeyEvent.VK_ESCAPE) {
                         current_state = STATE_MAIN_MENU;
                     } else if (key == KeyEvent.VK_B) {
+                        System.out.println("###########################\n##########BATTLE###########\n###########################");
                         if (battle_ready) {
                             current_state = STATE_BATTLE;
                             repaint();
                         }
                     } else if (key == KeyEvent.VK_I) {
                         engimon_interract();
+                        // flag_message_box = !flag_message_box;
+                    } else if (key == KeyEvent.VK_C) {
+                        System.out.println("....draw comlist###################");
+                        show_command_list();
+                        // flag_message_box = !flag_message_box;
+                    }else if (key == KeyEvent.VK_E) {
+                        System.out.println(".........Inventory###################");
+                        flag_inventory  = true;
                         // flag_message_box = !flag_message_box;
                     }
                 }
@@ -604,6 +842,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     repaint();
                 }
             }
+            repaint();
 
         }
     }
