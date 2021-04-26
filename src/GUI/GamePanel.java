@@ -20,6 +20,7 @@ import java.awt.event.*;
 import java.util.*;
 
 import Entity.Position;
+import Entity.Battle;
 import Entity.Map;
 import Entity.Player;
 import Entity.Engimon.*;
@@ -56,6 +57,7 @@ public class GamePanel extends JPanel implements ActionListener {
     private final int STATE_BREED = 4;
 
     private int current_state = STATE_MAIN_MENU;
+    private int massage_battle = 1;
 
     // FLAGS |=~
     private boolean flag_message_box;
@@ -360,7 +362,18 @@ public class GamePanel extends JPanel implements ActionListener {
             draw_explore_world(g2d);
             break;
         case STATE_BATTLE:
-            draw_battle(g2d);
+            if (massage_battle == 2) {
+                printMassageBattle2(g2d);
+            } else if (massage_battle == 3) {
+                draw_battle(g2d);
+                printMassageBattle3(g2d);
+            } else if (massage_battle == 4) {
+                draw_battle(g2d);
+                printMassageBattle4(g2d);
+            } else {
+                draw_battle(g2d);
+                printMassageBattle1(g2d);
+            }
             break;
 
         // ...
@@ -393,6 +406,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void draw_battle(Graphics2D g2d) {
+        // this.flag_message_box = true;
         System.out.println("Battle");
         // ambil engimon player
         Image p;
@@ -423,6 +437,81 @@ public class GamePanel extends JPanel implements ActionListener {
         g2d.drawImage(bg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, this);
         g2d.drawImage(p, 2 * TILE_SIZE, 7 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE, this);
         g2d.drawImage(e, 11 * TILE_SIZE, 5 * TILE_SIZE, 2 * TILE_SIZE, 2 * TILE_SIZE, this);
+
+        // printMassageBattle1(g2d);
+        // if (flag_message_box == true) {
+        // draw_message_box(g2d);
+        // }
+
+    }
+
+    public void printMassageBattle1(Graphics2D g2d) {
+        Battle battle = new Battle(player.get_engimon(), check_surrrounding_enemy());
+        String spasi = "                                           ";
+        String string1 = spasi + spasi + "POWER PLAYER: " + Double.toString(battle.get_power_level(1))
+                + ", POWER ENGIMON ENEMY: " + Double.toString(battle.get_power_level(2));
+        String string2 = "";
+        for (Engimon e : player.getInventory().get_list()) {
+            string2 = string2 + e.get_name() + "  ";
+        }
+        String string3 = "PRESS F FOR FIGHT, ESCAPE FOR BACK TO RXPLORE WORLD, S FOR SWITCH ENGIMON PLAYER ";
+
+        message_box.write(string1, string2, string3);
+        g2d.drawString(message_box.get_l1(), TILE_SIZE / 2, 13 * TILE_SIZE - TILE_SIZE / 9);
+        g2d.drawString(message_box.get_l2(), TILE_SIZE / 2, 14 * TILE_SIZE - TILE_SIZE / 5 - 12);
+        g2d.drawString(message_box.get_l3(), TILE_SIZE / 2, 15 * TILE_SIZE - TILE_SIZE / 5 - 20);
+
+    }
+
+    public void printMassageBattle2(Graphics2D g2d) {
+        String string1 = "YOU WIN";
+        String string2 = "";
+        String string3 = "PRESS ESCAPE FOR BACK TO EXPLORE WORLD";
+
+        message_box.write(string1, string2, string3);
+        g2d.drawString(message_box.get_l1(), TILE_SIZE / 2, 13 * TILE_SIZE - TILE_SIZE / 9);
+        g2d.drawString(message_box.get_l2(), TILE_SIZE / 2, 14 * TILE_SIZE - TILE_SIZE / 5 - 12);
+        g2d.drawString(message_box.get_l3(), TILE_SIZE / 2, 15 * TILE_SIZE - TILE_SIZE / 5 - 20);
+    }
+
+    public void printMassageBattle3(Graphics2D g2d) {
+        String string1 = "YOU LOSE";
+        String string2 = "";
+        String string3 = "PRESS B FOR BATTLE AGAIN OR ESCAPE FOR BACK TO EXPLORE WORLD";
+
+        message_box.write(string1, string2, string3);
+        g2d.drawString(message_box.get_l1(), TILE_SIZE / 2, 13 * TILE_SIZE - TILE_SIZE / 9);
+        g2d.drawString(message_box.get_l2(), TILE_SIZE / 2, 14 * TILE_SIZE - TILE_SIZE / 5 - 12);
+        g2d.drawString(message_box.get_l3(), TILE_SIZE / 2, 15 * TILE_SIZE - TILE_SIZE / 5 - 20);
+    }
+
+    public void printMassageBattle4(Graphics2D g2d) {
+        String string1 = "YOU DRAW";
+        String string2 = "";
+        String string3 = "PRESS B FOR BATTLE AGAIN OR ESCAPE FOR BACK TO EXPLORE WORLD";
+
+        message_box.write(string1, string2, string3);
+        g2d.drawString(message_box.get_l1(), TILE_SIZE / 2, 13 * TILE_SIZE - TILE_SIZE / 9);
+        g2d.drawString(message_box.get_l2(), TILE_SIZE / 2, 14 * TILE_SIZE - TILE_SIZE / 5 - 12);
+        g2d.drawString(message_box.get_l3(), TILE_SIZE / 2, 15 * TILE_SIZE - TILE_SIZE / 5 - 20);
+    }
+
+    public void fightEnemy() {
+        Battle battle = new Battle(player.get_engimon(), check_surrrounding_enemy());
+        Double x, y;
+        Random randomNumbers = new Random();
+        x = randomNumbers.nextDouble();
+        y = randomNumbers.nextDouble();
+        int live = player.get_engimon().get_live();
+        if (battle.get_power_level(1) * x > battle.get_power_level(2) * y) {
+            massage_battle = 2;
+            list_engimon_enemy.remove(check_surrrounding_enemy());
+        } else if (battle.get_power_level(1) * x < battle.get_power_level(2) * y) {
+            massage_battle = 3;
+            player.get_engimon().set_live(live - 1);
+        } else {
+            massage_battle = 4;
+        }
     }
 
     public void draw_main_menu(Graphics2D g2d) {
@@ -531,14 +620,6 @@ public class GamePanel extends JPanel implements ActionListener {
     private void move(String direction) {
         if (is_movement_valid(direction)) {
 
-            // --temp
-            // this.step_count += 1;
-            // if (this.step_count % this.max_step_count == 1) {
-            // // this.step_count -= this.max_step_count;
-            // spawnEngimonEnemy();
-            // }
-            // ------
-            // Nanti yang diubah bukan value atribut GamePanel, tapi data di backend
             if (direction.equals("LEFT")) {
                 this.active_engimon_x = this.player_x;
                 this.active_engimon_y = this.player_y;
@@ -626,8 +707,15 @@ public class GamePanel extends JPanel implements ActionListener {
 
             } else if (current_state == STATE_BATTLE) {
                 if (key == KeyEvent.VK_ESCAPE) {
+                    massage_battle = 1;
                     current_state = STATE_EXPLORE_WORLD;
                     repaint();
+                } else if (key == KeyEvent.VK_F) {
+                    fightEnemy();
+                } else if (key == KeyEvent.VK_S) {
+
+                } else if (key == KeyEvent.VK_B) {
+                    massage_battle = 1;
                 }
             }
 
