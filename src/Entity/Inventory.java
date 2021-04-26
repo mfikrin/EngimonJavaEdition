@@ -37,4 +37,8 @@ public class Inventory <T> {
         inventory.clear();
         inventory = new_list;
     }
+
+    public int get_index(T item){
+        return inventory.indexOf(item);
+    }
 }
