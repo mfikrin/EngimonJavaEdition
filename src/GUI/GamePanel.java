@@ -312,13 +312,6 @@ public class GamePanel extends JPanel implements ActionListener {
         message_box.write("", "", "");
     }
 
-    private void engimon_interract() {
-        this.flag_message_box = true;
-        message_box.write("Halo!", "aku engimon", "");
-        System.out.println(".............interacttt");
-
-    }
-
     private void show_command_list() {
         this.flag_message_box = true;
         message_box.write("Navigasi: w/a/s/d atau tanda panah", "B: Battle     E: Inventory",
@@ -950,7 +943,7 @@ public class GamePanel extends JPanel implements ActionListener {
                             repaint();
                         }
                     } else if (key == KeyEvent.VK_I) {
-                        engimon_interract();
+                        interract();
                         // flag_message_box = !flag_message_box;
                     } else if (key == KeyEvent.VK_C) {
                         System.out.println("....draw comlist###################");
