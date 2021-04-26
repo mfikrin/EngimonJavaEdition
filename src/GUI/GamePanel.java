@@ -556,11 +556,12 @@ public class GamePanel extends JPanel implements ActionListener {
         int live = player.get_engimon().get_live();
         if (battle.get_power_level(1) * x > battle.get_power_level(2) * y) {
             massage_battle = 2;
+            player.get_inventory_engimon().add_item(check_surrrounding_enemy());
             list_engimon_enemy.remove(check_surrrounding_enemy());
         } else if (battle.get_power_level(1) * x < battle.get_power_level(2) * y) {
             if (live == 1) {
-                // player.get_inventory_engimon().remove(0);
                 player.set_active_engimon(1);
+                player.get_inventory_engimon().remove(0);
             } else {
                 player.get_engimon().set_live(live - 1);
             }
@@ -1068,7 +1069,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 }
 
             } else if (current_state == STATE_BATTLE) {
-
+                int i = 0;
                 if (key == KeyEvent.VK_ESCAPE) {
                     massage_battle = 1;
                     current_state = STATE_EXPLORE_WORLD;
@@ -1077,12 +1078,12 @@ public class GamePanel extends JPanel implements ActionListener {
                     fightEnemy();
                 } else if (key == KeyEvent.VK_S) {
                     current_state = STATE_EXPLORE_WORLD;
-                    player.set_active_engimon(1);
+                    player.set_active_engimon(2);
                     // repaint();
                 } else if (key == KeyEvent.VK_B) {
                     massage_battle = 1;
                 }
-
+                i += 1;
             }
             repaint();
 
