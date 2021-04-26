@@ -15,6 +15,10 @@ public class SkillItem{
         quantity = 1;
     }
 
+    public String get_name() {
+        return contained_skill.get_name();
+    }
+
     public int get_quantity() {
         return quantity;
     }

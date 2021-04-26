@@ -7,6 +7,10 @@ public class WaterGroundEngimon extends Engimon {
         super();
     }
 
+    public WaterGroundEngimon(WaterGroundEngimon e) {
+        super(e);
+    }
+
     @Override
     public boolean is_water(){
         return true;
@@ -15,5 +19,10 @@ public class WaterGroundEngimon extends Engimon {
     @Override
     public boolean is_ground(){
         return true;
+    }
+
+    @Override
+    public Engimon clone() {
+        return new WaterGroundEngimon(this);
     }
 }
