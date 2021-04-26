@@ -54,18 +54,18 @@ public class Map {
     }
 
     public boolean is_grassland(Position p) {
-        return data[p.get_x()][p.get_y()] == 3;
+        return data[p.get_y()][p.get_x()] == 3;
     }
 
     public boolean is_mountain(Position p) {
-        return data[p.get_x()][p.get_y()] == 1;
+        return data[p.get_y()][p.get_x()] == 1;
     }
 
     public boolean is_sea(Position p) {
-        return data[p.get_x()][p.get_y()] == 2;
+        return data[p.get_y()][p.get_x()] == 2;
     }
 
     public boolean is_tundra(Position p) {
-        return data[p.get_x()][p.get_y()] == 3;
+        return data[p.get_y()][p.get_x()] == 3;
     }
 }
