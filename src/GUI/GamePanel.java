@@ -39,6 +39,7 @@ import Exception.ElementNotSuitableException;
 import Exception.InsufficientLevelException;
 // import src.Entity.Position;
 import Exception.InventoryFullException;
+import Exception.MovementException;
 import Exception.SkillFullException;
 import Generator.EngimonGenerator;
 import Generator.SkillGenerator;
@@ -846,42 +847,61 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     private void move(String direction) {
-        if (is_movement_valid(direction)) {
+        try {
+            if (is_movement_valid(direction)) {
 
-            if (direction.equals("LEFT")) {
-                this.active_engimon_x = this.player_x;
-                this.active_engimon_y = this.player_y;
-                this.player_x -= TILE_SIZE;
-            } else if (direction.equals("RIGHT")) {
-                this.active_engimon_x = this.player_x;
-                this.active_engimon_y = this.player_y;
-                this.player_x += TILE_SIZE;
-            } else if (direction.equals("UP")) {
-                this.active_engimon_x = this.player_x;
-                this.active_engimon_y = this.player_y;
-                this.player_y -= TILE_SIZE;
-            } else if (direction.equals("DOWN")) {
-                this.active_engimon_x = this.player_x;
-                this.active_engimon_y = this.player_y;
-                this.player_y += TILE_SIZE;
+                if (direction.equals("LEFT")) {
+                    this.active_engimon_x = this.player_x;
+                    this.active_engimon_y = this.player_y;
+                    this.player_x -= TILE_SIZE;
+                } else if (direction.equals("RIGHT")) {
+                    this.active_engimon_x = this.player_x;
+                    this.active_engimon_y = this.player_y;
+                    this.player_x += TILE_SIZE;
+                } else if (direction.equals("UP")) {
+                    this.active_engimon_x = this.player_x;
+                    this.active_engimon_y = this.player_y;
+                    this.player_y -= TILE_SIZE;
+                } else if (direction.equals("DOWN")) {
+                    this.active_engimon_x = this.player_x;
+                    this.active_engimon_y = this.player_y;
+                    this.player_y += TILE_SIZE;
+                }
+
+                // gerakkan engimon enemy
+                // moveEngimonEnemy();
             }
-
-            // gerakkan engimon enemy
-            // moveEngimonEnemy();
+        } catch (MovementException e) {
+            //nothing todo
         }
     }
 
-    private boolean is_movement_valid(String direction) {
-        if (direction.equals("LEFT") && this.player_x > 0) {
+    private boolean is_movement_valid(String direction) throws MovementException {
+        Engimon e = check_surrrounding_enemy();
+        Position p;
+        if (e != null) {
+            p = check_surrrounding_enemy().get_pos();
+        }else {
+            p = new Position(-999,-999);
+        }
+        if (direction.equals("LEFT")
+            && this.player_x > 0
+            && this.player_x != (p.get_x() + 1) * TILE_SIZE){
             return true;
-        } else if (direction.equals("RIGHT") && this.player_x < (SCREEN_WIDTH) - (1 * TILE_SIZE)) {
+        } else if (direction.equals("RIGHT")
+            && this.player_x < (SCREEN_WIDTH) - (1 * TILE_SIZE)
+            && this.player_x != (p.get_x() - 1) * TILE_SIZE) {
             return true;
-        } else if (direction.equals("UP") && this.player_y > 0) {
+        } else if (direction.equals("UP")
+            && this.player_y > 0
+            && this.player_y != (p.get_y() + 1) * TILE_SIZE){
             return true;
-        } else if (direction.equals("DOWN") && this.player_y < (SCREEN_HEIGHT) - (1 * TILE_SIZE)) {
+        } else if (direction.equals("DOWN")
+            && this.player_y < (SCREEN_HEIGHT) - (1 * TILE_SIZE)
+            && this.player_y != (p.get_y() - 1) * TILE_SIZE){
             return true;
         }
-        return false;
+        throw new MovementException("Movement Invalid", null);
     } 
 
     private void test_print(String s) {
