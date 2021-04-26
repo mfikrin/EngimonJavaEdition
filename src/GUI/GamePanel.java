@@ -147,6 +147,7 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         Position p = new Position(x, y);
         enemy.set_pos(p);
+        enemy.set_live(1);
         list_engimon_enemy.add(enemy);
 
         // --
@@ -176,11 +177,11 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public Boolean isHitPlayer(Position P) {
-        return P.get_x() == player_x && P.get_y() == player_y;
+        return P.get_x() * TILE_SIZE == this.player_x && P.get_y() * TILE_SIZE == this.player_y;
     }
 
     public Boolean isHitEngimonPlayer(Position P) {
-        return P.get_x() == active_engimon_x && P.get_y() == active_engimon_y;
+        return P.get_x() * TILE_SIZE == active_engimon_x && P.get_y() * TILE_SIZE == active_engimon_y;
     }
 
     public Boolean isCompatibleEnemy(Engimon enemy, Position newPosition) {
@@ -328,14 +329,16 @@ public class GamePanel extends JPanel implements ActionListener {
 
     private void interact() {
         this.flag_message_box = true;
-        message_box.write("Halo!", "Saya " + active_engimon_type, "");
+        message_box.write(player.get_engimon().get_dialogue(), "Aku " + active_engimon_type, "");
     }
 
     private void update_state() {
         // -- cek
         if (current_state == STATE_EXPLORE_WORLD) {
             // test_print("check surronding");
-            battle_ready = check_surrrounding_enemy();
+            if (check_surrrounding_enemy() != null) {
+                battle_ready = true;
+            }
             System.out.println(battle_ready);
             if (battle_ready) {
                 System.out.println("Battle?");
@@ -345,7 +348,7 @@ public class GamePanel extends JPanel implements ActionListener {
         System.out.println(this.list_engimon_enemy.size());
     }
 
-    private boolean check_surrrounding_enemy() {
+    private Engimon check_surrrounding_enemy() {
         int px = this.player_x / TILE_SIZE;
         int py = this.player_y / TILE_SIZE;
         System.out.println(px);
@@ -356,10 +359,10 @@ public class GamePanel extends JPanel implements ActionListener {
             // check west, north, east, south
             if ((px == ex + 1 && py == ey) || (px == ex - 1 && py == ey) || (px == ex && py == ey + 1)
                     || (px == ex && py == ey - 1)) {
-                return true;
+                return e;
             }
         }
-        return false;
+        return null;
     }
 
     // ---
@@ -428,10 +431,36 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void draw_battle(Graphics2D g2d) {
         System.out.println("Battle");
-        Image p = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
-        Image e = new ImageIcon("./images/transparent/engimon_earth.gif").getImage();
+        // Image p = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
+        // Image e = new ImageIcon("./images/transparent/engimon_earth.gif").getImage();
 
-        Image bg = new ImageIcon("./images/battle/bg_3_lives.png").getImage();
+        // Image bg = new ImageIcon("./images/battle/bg_3_lives.png").getImage();
+        // ambil engimon player
+        Image p;
+        if (player.get_engimon().is_electric()) {
+            p = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
+        } else if (player.get_engimon().is_fire()) {
+            p = new ImageIcon("./images/transparent/engimon_fire.gif").getImage();
+        } else if (player.get_engimon().is_ground()) {
+            p = new ImageIcon("./images/transparent/engimon_Earth.gif").getImage();
+        } else if (player.get_engimon().is_ice()) {
+            p = new ImageIcon("./images/transparent/engimon_ice.gif").getImage();
+        } else {
+            p = new ImageIcon("./images/transparent/engimon_water.gif").getImage();
+        }
+        Image e;
+        if (check_surrrounding_enemy().is_electric()) {
+            e = new ImageIcon("./images/transparent/engimon_electric.gif").getImage();
+        } else if (check_surrrounding_enemy().is_fire()) {
+            e = new ImageIcon("./images/transparent/engimon_fire.gif").getImage();
+        } else if (check_surrrounding_enemy().is_ground()) {
+            e = new ImageIcon("./images/transparent/engimon_Earth.gif").getImage();
+        } else if (check_surrrounding_enemy().is_ice()) {
+            e = new ImageIcon("./images/transparent/engimon_ice.gif").getImage();
+        } else {
+            e = new ImageIcon("./images/transparent/engimon_water.gif").getImage();
+        }
+        Image bg = new ImageIcon("./images/battle/bg_" + player.get_engimon().get_live() + "_lives.png").getImage();
         g2d.drawImage(bg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, this);
         g2d.drawImage(p, 2 * TILE_SIZE, 7 * TILE_SIZE, 4 * TILE_SIZE, 4 * TILE_SIZE, this);
         g2d.drawImage(e, 11 * TILE_SIZE, 5 * TILE_SIZE, 2 * TILE_SIZE, 2 * TILE_SIZE, this);
@@ -817,7 +846,11 @@ public class GamePanel extends JPanel implements ActionListener {
                     } else if (key == KeyEvent.VK_ESCAPE) {
                         current_state = STATE_MAIN_MENU;
                     } else if (key == KeyEvent.VK_B) {
+<<<<<<< HEAD
                         System.out.println("###########################\n##########BATTLE###########\n###########################");
+=======
+                        update_state();
+>>>>>>> 9f3e8aeece50844acd39876a4664af1bd34dafe3
                         if (battle_ready) {
                             current_state = STATE_BATTLE;
                             repaint();
