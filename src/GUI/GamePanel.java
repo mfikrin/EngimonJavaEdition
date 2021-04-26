@@ -740,7 +740,7 @@ public class GamePanel extends JPanel implements ActionListener {
         g2d.drawString(l2, TILE_SIZE / 2, 14 * TILE_SIZE - TILE_SIZE / 5 - 8);
         g2d.drawString(l3, TILE_SIZE / 2, 15 * TILE_SIZE - TILE_SIZE / 5 - 16);
         g2d.drawString("page: " + Integer.toString(inv_page) + "/5", 12 * TILE_SIZE, 13 * TILE_SIZE - TILE_SIZE / 5);
-        g2d.drawString(inv_status, 10*TILE_SIZE + TILE_SIZE/2, 14*TILE_SIZE);
+        g2d.drawString(inv_status, 9*TILE_SIZE, 14*TILE_SIZE);
     }
 
     public void draw_landscape(Graphics2D g2d) {
